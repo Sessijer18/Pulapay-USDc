@@ -103,7 +103,9 @@ export interface SendMoneyResponse {
 export function formatAmount(cents: number, currency: Currency = 'XOF'): string {
   const amount = Math.floor(cents);
   if (currency === 'XOF') {
-    return `${amount.toLocaleString('fr-FR')} FCFA`;
+    // XOF: centimes → FCFA (divide by 100, no decimals)
+    const fcfa = Math.floor(amount / 100);
+    return `${fcfa.toLocaleString('fr-FR')} FCFA`;
   }
   // USD: cents → dollars
   const dollars = amount / 100;
