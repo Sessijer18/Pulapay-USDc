@@ -1,0 +1,91 @@
+@font-face {
+    font-family: 'Times New Roman MT Std';
+    src: url('TimesNewRomanMTStd-BoldIt.eot');
+    src: local('Times New Roman MT Std Bold Italic'), local('TimesNewRomanMTStd-BoldIt'),
+        url('TimesNewRomanMTStd-BoldIt.eot?#iefix') format('embedded-opentype'),
+        url('TimesNewRomanMTStd-BoldIt.woff2') format('woff2'),
+        url('TimesNewRomanMTStd-BoldIt.woff') format('woff'),
+        url('TimesNewRomanMTStd-BoldIt.ttf') format('truetype');
+    font-weight: bold;
+    font-style: italic;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Times New Roman MT Std';
+    src: url('TimesNewRomanMTStd-Bold.eot');
+    src: local('Times New Roman MT Std Bold'), local('TimesNewRomanMTStd-Bold'),
+        url('TimesNewRomanMTStd-Bold.eot?#iefix') format('embedded-opentype'),
+        url('TimesNewRomanMTStd-Bold.woff2') format('woff2'),
+        url('TimesNewRomanMTStd-Bold.woff') format('woff'),
+        url('TimesNewRomanMTStd-Bold.ttf') format('truetype');
+    font-weight: bold;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Times New Roman MT Std';
+    src: url('TimesNewRomanMTStd-Cond.eot');
+    src: local('Times New Roman MT Std Condensed'), local('TimesNewRomanMTStd-Cond'),
+        url('TimesNewRomanMTStd-Cond.eot?#iefix') format('embedded-opentype'),
+        url('TimesNewRomanMTStd-Cond.woff2') format('woff2'),
+        url('TimesNewRomanMTStd-Cond.woff') format('woff'),
+        url('TimesNewRomanMTStd-Cond.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Times New Roman MT Std';
+    src: url('TimesNewRomanMTStd-Italic.eot');
+    src: local('Times New Roman MT Std Italic'), local('TimesNewRomanMTStd-Italic'),
+        url('TimesNewRomanMTStd-Italic.eot?#iefix') format('embedded-opentype'),
+        url('TimesNewRomanMTStd-Italic.woff2') format('woff2'),
+        url('TimesNewRomanMTStd-Italic.woff') format('woff'),
+        url('TimesNewRomanMTStd-Italic.ttf') format('truetype');
+    font-weight: normal;
+    font-style: italic;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Times New Roman MT Std';
+    src: url('TimesNewRomanMTStd-BoldCond.eot');
+    src: local('Times New Roman MT Std Bold Condensed'), local('TimesNewRomanMTStd-BoldCond'),
+        url('TimesNewRomanMTStd-BoldCond.eot?#iefix') format('embedded-opentype'),
+        url('TimesNewRomanMTStd-BoldCond.woff2') format('woff2'),
+        url('TimesNewRomanMTStd-BoldCond.woff') format('woff'),
+        url('TimesNewRomanMTStd-BoldCond.ttf') format('truetype');
+    font-weight: bold;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Times New Roman MT Std';
+    src: url('TimesNewRomanMTStd.eot');
+    src: local('Times New Roman MT Std Regular'), local('TimesNewRomanMTStd'),
+        url('TimesNewRomanMTStd.eot?#iefix') format('embedded-opentype'),
+        url('TimesNewRomanMTStd.woff2') format('woff2'),
+        url('TimesNewRomanMTStd.woff') format('woff'),
+        url('TimesNewRomanMTStd.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Times New Roman MT Std';
+    src: url('TimesNewRomanMTStd-CondIt.eot');
+    src: local('Times New Roman MT Std Condensed Italic'), local('TimesNewRomanMTStd-CondIt'),
+        url('TimesNewRomanMTStd-CondIt.eot?#iefix') format('embedded-opentype'),
+        url('TimesNewRomanMTStd-CondIt.woff2') format('woff2'),
+        url('TimesNewRomanMTStd-CondIt.woff') format('woff'),
+        url('TimesNewRomanMTStd-CondIt.ttf') format('truetype');
+    font-weight: normal;
+    font-style: italic;
+    font-display: swap;
+}
+
