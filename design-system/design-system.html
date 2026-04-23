@@ -1,0 +1,1575 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pulapay — Design System v1.0</title>
+<style>
+/* ══════════════════════════════════════════════════
+   FONTS
+══════════════════════════════════════════════════ */
+@font-face { font-family:'Product Sans'; src:local('Product Sans'),local('ProductSans'); font-weight:100 900; font-style:normal; }
+@font-face { font-family:'Product Sans'; src:local('Product Sans Italic'),local('ProductSans-Italic'); font-weight:100 900; font-style:italic; }
+
+/* ══════════════════════════════════════════════════
+   TOKENS
+══════════════════════════════════════════════════ */
+:root {
+  --ink:#0D0D0D; --ink-80:rgba(13,13,13,0.8); --ink-60:rgba(13,13,13,0.6);
+  --white:#FFFFFF;
+  --orange:#FF6B00; --orange-hover:#E55E00; --orange-l:#FFF0E6; --orange-m:rgba(255,107,0,0.12);
+  --green:#1F8A70; --green-deep:#166357; --green-l:#E8F5F1;
+  --violet:#5B2EFF; --violet-l:#EDEAFF;
+  --mist:#F5F5F2; --rule:#E8E8E4; --stone:#6B6B6B;
+  --error:#E53333; --error-l:#FFF0F0;
+  --warn:#F5A623; --warn-l:#FFFBF0;
+
+  --font-ui:'Product Sans','Google Sans',Helvetica,Arial,sans-serif;
+  --font-serif:'Times New Roman MT','Times New Roman',Times,serif;
+
+  --s1:4px; --s2:8px; --s3:12px; --s4:16px; --s5:24px;
+  --s6:32px; --s7:48px; --s8:64px; --s9:96px;
+
+  --r-xs:6px; --r-sm:8px; --r-md:12px; --r-lg:16px; --r-xl:24px; --r-pill:999px;
+
+  --shadow-xs:0 1px 3px rgba(0,0,0,0.06);
+  --shadow-sm:0 2px 8px rgba(0,0,0,0.07);
+  --shadow-md:0 4px 16px rgba(0,0,0,0.09);
+  --shadow-lg:0 12px 40px rgba(0,0,0,0.12);
+  --shadow-xl:0 24px 64px rgba(0,0,0,0.16);
+
+  --ease-out:cubic-bezier(0.16,1,0.3,1);
+  --ease-spring:cubic-bezier(0.34,1.56,0.64,1);
+  --dur-xs:100ms; --dur-sm:150ms; --dur-md:250ms; --dur-lg:400ms;
+}
+
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;font-size:16px;}
+body{font-family:var(--font-ui);background:var(--white);color:var(--ink);overflow-x:hidden;}
+
+body::after{
+  content:'';position:fixed;inset:0;pointer-events:none;z-index:9000;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.022'/%3E%3C/svg%3E");
+}
+
+/* ══════════════════════════════════════════════════
+   SIDEBAR
+══════════════════════════════════════════════════ */
+.sb{position:fixed;left:0;top:0;bottom:0;width:248px;background:var(--ink);display:flex;flex-direction:column;z-index:500;border-right:1px solid rgba(255,255,255,0.05);overflow-y:auto;}
+.sb-top{padding:26px 22px 22px;border-bottom:1px solid rgba(255,255,255,0.06);flex-shrink:0;}
+.sb-logo{font-family:var(--font-ui);font-weight:800;font-size:20px;color:var(--white);letter-spacing:-0.5px;}
+.sb-logo b{color:var(--orange);}
+.sb-tagline{font-size:9px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,0.2);margin-top:5px;}
+.sb-nav{padding:12px 0;flex:1;}
+.sb-g{margin-bottom:2px;}
+.sb-gt{padding:14px 22px 4px;font-size:9px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;color:rgba(255,255,255,0.18);}
+.sb-a{display:flex;align-items:center;gap:9px;padding:7px 22px;font-size:12px;font-weight:500;color:rgba(255,255,255,0.38);text-decoration:none;border-left:2px solid transparent;transition:all var(--dur-sm) ease;cursor:pointer;}
+.sb-a:hover{color:rgba(255,255,255,0.7);background:rgba(255,255,255,0.03);}
+.sb-a.on{color:var(--white);border-left-color:var(--orange);background:rgba(255,255,255,0.05);}
+.sb-dot{width:4px;height:4px;border-radius:50%;background:currentColor;opacity:.5;flex-shrink:0;}
+.sb-foot{padding:14px 22px 22px;border-top:1px solid rgba(255,255,255,0.06);flex-shrink:0;}
+.sb-v{font-size:10px;color:rgba(255,255,255,0.18);line-height:1.7;}
+
+/* ══════════════════════════════════════════════════
+   MAIN
+══════════════════════════════════════════════════ */
+main{margin-left:248px;}
+
+/* ══════════════════════════════════════════════════
+   COVER
+══════════════════════════════════════════════════ */
+.cover{min-height:100vh;background:var(--ink);display:flex;flex-direction:column;justify-content:flex-end;padding:80px 80px;position:relative;overflow:hidden;}
+.cov-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,0.018) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,0.018) 1px,transparent 1px);background-size:56px 56px;}
+.cov-glow1{position:absolute;top:-100px;right:-100px;width:600px;height:600px;background:radial-gradient(circle,rgba(255,107,0,0.09) 0%,transparent 65%);pointer-events:none;}
+.cov-glow2{position:absolute;bottom:-80px;left:15%;width:500px;height:400px;background:radial-gradient(circle,rgba(31,138,112,0.07) 0%,transparent 65%);pointer-events:none;}
+.cov-pill{position:relative;display:inline-flex;align-items:center;gap:7px;background:rgba(255,107,0,0.1);border:1px solid rgba(255,107,0,0.2);color:var(--orange);font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;padding:5px 13px;border-radius:var(--r-pill);margin-bottom:32px;width:fit-content;}
+.cov-dot{width:5px;height:5px;border-radius:50%;background:var(--orange);animation:blink 2s infinite;}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.3}}
+.cov-h{position:relative;font-family:var(--font-ui);font-size:clamp(44px,6vw,80px);font-weight:800;color:var(--white);line-height:.97;letter-spacing:-2.5px;margin-bottom:8px;}
+.cov-h span{color:var(--orange);}
+.cov-sub{position:relative;font-family:var(--font-serif);font-style:italic;font-size:clamp(16px,2vw,24px);color:rgba(255,255,255,0.28);margin-bottom:52px;letter-spacing:-.3px;}
+.cov-meta{position:relative;display:flex;gap:10px;flex-wrap:wrap;}
+.cov-chip{background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.08);padding:5px 12px;border-radius:var(--r-pill);font-size:11px;font-weight:500;color:rgba(255,255,255,0.4);}
+.cov-chip strong{color:rgba(255,255,255,0.7);}
+
+/* ══════════════════════════════════════════════════
+   SECTION LAYOUT
+══════════════════════════════════════════════════ */
+.sec{padding:72px 80px;border-bottom:1px solid var(--rule);}
+.sec.alt{background:var(--mist);}
+.sec.dark{background:var(--ink);}
+
+.eyebrow{display:flex;align-items:center;gap:10px;margin-bottom:36px;}
+.ey-num{font-size:9px;font-weight:800;letter-spacing:3px;text-transform:uppercase;color:var(--orange);}
+.ey-line{width:28px;height:1px;background:var(--orange);opacity:.35;}
+.ey-lbl{font-size:9px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--stone);}
+.ey-lbl.lt{color:rgba(255,255,255,0.28);}
+
+.sec-h{font-family:var(--font-ui);font-size:clamp(28px,3.5vw,42px);font-weight:800;color:var(--ink);line-height:1.02;letter-spacing:-1.3px;margin-bottom:10px;}
+.sec-h em{font-family:var(--font-serif);font-style:italic;font-weight:400;color:var(--green);letter-spacing:-.8px;}
+.sec-h.lt{color:var(--white);}
+.sec-h.lt em{color:var(--orange);}
+.sec-lead{font-size:14px;color:var(--stone);line-height:1.7;max-width:560px;margin-bottom:44px;}
+.sec-lead.lt{color:rgba(255,255,255,.4);}
+
+/* helpers */
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+.g3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;}
+.g4{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;}
+.g5{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;}
+.mt8{margin-top:8px;} .mt12{margin-top:12px;} .mt16{margin-top:16px;}
+.mt24{margin-top:24px;} .mt32{margin-top:32px;} .mt48{margin-top:48px;}
+
+.reveal{opacity:0;transform:translateY(14px);transition:opacity .45s var(--ease-out),transform .45s var(--ease-out);}
+.reveal.on{opacity:1;transform:none;}
+
+.div{display:flex;align-items:center;gap:14px;margin:36px 0 28px;}
+.div-l{flex:1;height:1px;background:var(--rule);}
+.div-t{font-family:var(--font-serif);font-style:italic;font-size:12px;color:var(--stone);white-space:nowrap;}
+.div-l.lt{background:rgba(255,255,255,0.08);}
+.div-t.lt{color:rgba(255,255,255,.3);}
+
+/* ── code block ── */
+pre.cb{font-family:'Courier New',monospace;font-size:11.5px;background:#0D0D0D;color:#e2e8f0;padding:20px 24px;border-radius:var(--r-md);line-height:1.75;overflow-x:auto;border:1px solid rgba(255,255,255,0.07);margin-top:10px;}
+.co{color:#FF8533;} .cg{color:#4EC9A4;} .cb2{color:#79B8FF;} .cm{color:#888;}
+.c-inline{font-family:'Courier New',monospace;font-size:11px;background:var(--mist);padding:2px 6px;border-radius:4px;color:var(--ink);}
+.c-inline.lt{background:rgba(255,255,255,0.09);color:rgba(255,255,255,.75);}
+
+/* ── spec table ── */
+.st{width:100%;border-collapse:collapse;border-radius:var(--r-md);overflow:hidden;border:1px solid var(--rule);}
+.st th{background:var(--ink);color:rgba(255,255,255,.55);font-size:9px;font-weight:700;letter-spacing:2px;text-transform:uppercase;padding:11px 18px;text-align:left;}
+.st td{padding:12px 18px;border-bottom:1px solid var(--rule);font-size:12.5px;color:var(--ink);vertical-align:top;}
+.st tr:last-child td{border-bottom:none;}
+.st tr:nth-child(even) td{background:var(--mist);}
+
+/* ── token pill ── */
+.tok{display:inline-block;font-family:'Courier New',monospace;font-size:10px;font-weight:600;background:var(--mist);border:1px solid var(--rule);padding:2px 8px;border-radius:4px;color:var(--orange);}
+
+/* ══════════════════════════════════════════════════
+   01 — TOKENS: COLORS
+══════════════════════════════════════════════════ */
+.swatch-row{display:flex;gap:3px;margin-bottom:3px;}
+.sw{flex:1;border-radius:var(--r-sm);overflow:hidden;}
+.sw-color{height:64px;}
+.sw-info{padding:10px 11px;background:var(--white);border:1px solid var(--rule);border-top:none;border-radius:0 0 var(--r-sm) var(--r-sm);}
+.sw-name{font-size:10px;font-weight:700;color:var(--ink);}
+.sw-hex{font-family:'Courier New',monospace;font-size:9px;color:var(--stone);margin-top:2px;}
+.sw-role{font-size:9px;color:var(--stone);margin-top:3px;font-style:italic;}
+
+/* ══════════════════════════════════════════════════
+   02 — TOKENS: TYPOGRAPHY
+══════════════════════════════════════════════════ */
+.ts-scale{border:1px solid var(--rule);border-radius:var(--r-lg);overflow:hidden;}
+.ts-row{display:grid;grid-template-columns:160px 1fr 140px;align-items:center;border-bottom:1px solid var(--rule);transition:background var(--dur-sm) ease;}
+.ts-row:last-child{border-bottom:none;}
+.ts-row:hover{background:var(--mist);}
+.ts-spec{padding:18px 18px;border-right:1px solid var(--rule);}
+.ts-role{font-size:9px;font-weight:800;letter-spacing:2.5px;text-transform:uppercase;color:var(--orange);margin-bottom:4px;}
+.ts-val{font-family:'Courier New',monospace;font-size:10px;color:var(--stone);line-height:1.7;}
+.ts-sample{padding:18px 24px;}
+.ts-use{padding:18px 18px;border-left:1px solid var(--rule);font-size:10px;color:var(--stone);font-style:italic;text-align:right;line-height:1.6;}
+
+/* ══════════════════════════════════════════════════
+   03 — TOKENS: SPACING, RADIUS, SHADOW
+══════════════════════════════════════════════════ */
+.sp-strip{display:flex;align-items:flex-end;gap:20px;padding:28px 24px;background:var(--mist);border:1px solid var(--rule);border-radius:var(--r-lg);}
+.sp-i{display:flex;flex-direction:column;align-items:center;gap:8px;}
+.sp-b{width:24px;background:var(--ink);border-radius:3px;}
+.sp-tok{font-family:'Courier New',monospace;font-size:9px;font-weight:700;color:var(--orange);}
+.sp-px{font-size:9px;color:var(--stone);}
+
+.rad-grid{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:16px;}
+.rad-i{display:flex;flex-direction:column;align-items:center;gap:8px;}
+.rad-sq{width:56px;height:56px;background:var(--mist);border:1.5px solid var(--rule);}
+
+.shad-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;}
+.shad-i{background:var(--white);border-radius:var(--r-md);padding:24px 16px;display:flex;flex-direction:column;align-items:center;gap:8px;}
+.shad-sq{width:40px;height:40px;background:var(--white);border-radius:var(--r-sm);}
+
+/* ══════════════════════════════════════════════════
+   04 — COMPONENTS: BUTTONS
+══════════════════════════════════════════════════ */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:7px;font-family:var(--font-ui);font-weight:600;font-size:14px;border:none;border-radius:var(--r-pill);cursor:pointer;padding:12px 26px;transition:all var(--dur-sm) var(--ease-out);letter-spacing:.1px;white-space:nowrap;}
+.btn-primary{background:var(--orange);color:var(--white);}
+.btn-primary:hover{background:var(--orange-hover);transform:translateY(-1px);box-shadow:0 6px 20px rgba(255,107,0,.28);}
+.btn-ink{background:var(--ink);color:var(--white);}
+.btn-ink:hover{background:#1c1c1c;transform:translateY(-1px);}
+.btn-ghost{background:transparent;color:var(--ink);border:1.5px solid var(--rule);}
+.btn-ghost:hover{border-color:var(--ink);}
+.btn-green{background:var(--green);color:var(--white);}
+.btn-green:hover{background:var(--green-deep);transform:translateY(-1px);}
+.btn-danger{background:var(--error-l);color:var(--error);}
+.btn-danger:hover{background:#ffe0e0;}
+.btn-ghost-inv{background:transparent;color:var(--white);border:1.5px solid rgba(255,255,255,.2);}
+.btn-ghost-inv:hover{border-color:rgba(255,255,255,.5);background:rgba(255,255,255,.05);}
+.btn-xs{font-size:11px;padding:6px 14px;}
+.btn-sm{font-size:12px;padding:9px 18px;}
+.btn-lg{font-size:16px;padding:15px 34px;}
+.btn-xl{font-size:18px;padding:18px 40px;}
+.btn-icon{padding:12px;}
+.btn-icon.sm{padding:8px;}
+.btn:disabled{opacity:.38;cursor:not-allowed;transform:none!important;box-shadow:none!important;}
+.btn-loading{position:relative;color:transparent!important;}
+.btn-loading::after{content:'';position:absolute;width:14px;height:14px;border:2px solid rgba(255,255,255,.4);border-top-color:var(--white);border-radius:50%;animation:spin .6s linear infinite;}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+.btn-group{display:flex;gap:1px;overflow:hidden;border-radius:var(--r-pill);border:1.5px solid var(--rule);}
+.btn-group .btn-g{border-radius:0;border:none;background:var(--white);color:var(--stone);font-size:12px;font-weight:600;padding:9px 16px;cursor:pointer;transition:all var(--dur-sm) ease;}
+.btn-group .btn-g.on{background:var(--ink);color:var(--white);}
+.btn-group .btn-g:hover:not(.on){background:var(--mist);}
+
+/* ══════════════════════════════════════════════════
+   05 — COMPONENTS: INPUTS
+══════════════════════════════════════════════════ */
+.inp-wrap{display:flex;flex-direction:column;gap:5px;}
+.inp-lbl{font-size:11px;font-weight:600;color:var(--ink);letter-spacing:.2px;}
+.inp{font-family:var(--font-ui);font-size:14px;color:var(--ink);background:var(--white);border:1.5px solid var(--rule);border-radius:var(--r-md);padding:11px 14px;outline:none;transition:border-color var(--dur-sm) ease,box-shadow var(--dur-sm) ease;width:100%;}
+.inp:focus{border-color:var(--ink);box-shadow:0 0 0 3px rgba(13,13,13,.06);}
+.inp.err{border-color:var(--error);background:var(--error-l);}
+.inp.ok{border-color:var(--green);background:var(--green-l);}
+.inp.warn{border-color:var(--warn);}
+.inp:disabled{background:var(--mist);color:var(--stone);cursor:not-allowed;}
+.inp-hint{font-size:11px;color:var(--stone);margin-top:2px;}
+.inp-hint.err{color:var(--error);}
+.inp-hint.ok{color:var(--green-deep);}
+
+/* with icon */
+.inp-field{position:relative;}
+.inp-field .inp{padding-left:40px;}
+.inp-field .inp-ico{position:absolute;left:13px;top:50%;transform:translateY(-50%);font-size:14px;pointer-events:none;}
+.inp-field .inp-ico-r{position:absolute;right:13px;top:50%;transform:translateY(-50%);font-size:14px;cursor:pointer;color:var(--stone);}
+
+/* phone prefix */
+.inp-phone{display:flex;gap:0;}
+.inp-prefix{font-family:var(--font-ui);font-size:14px;font-weight:600;color:var(--ink);background:var(--mist);border:1.5px solid var(--rule);border-right:none;border-radius:var(--r-md) 0 0 var(--r-md);padding:11px 14px;white-space:nowrap;}
+.inp-phone .inp{border-radius:0 var(--r-md) var(--r-md) 0;}
+
+/* amount */
+.inp-amt{font-family:var(--font-ui);font-size:48px;font-weight:800;color:var(--ink);background:transparent;border:none;border-bottom:2px solid var(--rule);border-radius:0;padding:8px 0;text-align:center;outline:none;width:100%;letter-spacing:-2px;transition:border-color var(--dur-sm) ease;}
+.inp-amt:focus{border-bottom-color:var(--orange);}
+
+/* search */
+.inp-search{font-family:var(--font-ui);font-size:14px;color:var(--ink);background:var(--mist);border:1.5px solid transparent;border-radius:var(--r-pill);padding:10px 16px 10px 40px;outline:none;transition:all var(--dur-sm) ease;width:100%;}
+.inp-search:focus{background:var(--white);border-color:var(--rule);box-shadow:var(--shadow-sm);}
+
+/* OTP */
+.otp-row{display:flex;gap:8px;}
+.otp-box{font-family:var(--font-ui);font-size:22px;font-weight:800;text-align:center;width:48px;height:56px;border:1.5px solid var(--rule);border-radius:var(--r-md);outline:none;transition:border-color var(--dur-sm) ease;background:var(--white);}
+.otp-box:focus{border-color:var(--orange);box-shadow:0 0 0 3px var(--orange-m);}
+.otp-box.filled{border-color:var(--ink);background:var(--mist);}
+
+/* textarea */
+.inp-ta{font-family:var(--font-ui);font-size:14px;color:var(--ink);background:var(--white);border:1.5px solid var(--rule);border-radius:var(--r-md);padding:12px 14px;outline:none;transition:border-color var(--dur-sm) ease;width:100%;resize:vertical;min-height:80px;}
+.inp-ta:focus{border-color:var(--ink);}
+
+/* ══════════════════════════════════════════════════
+   06 — COMPONENTS: BADGES & TAGS
+══════════════════════════════════════════════════ */
+.badge{display:inline-flex;align-items:center;gap:5px;font-size:10px;font-weight:700;letter-spacing:.4px;padding:4px 10px;border-radius:var(--r-pill);}
+.bd-dot{width:5px;height:5px;border-radius:50%;}
+.bd-green{background:var(--green-l);color:var(--green-deep);}
+.bd-orange{background:var(--orange-l);color:var(--orange);}
+.bd-violet{background:var(--violet-l);color:var(--violet);}
+.bd-ink{background:var(--ink);color:var(--white);}
+.bd-error{background:var(--error-l);color:var(--error);}
+.bd-stone{background:var(--mist);color:var(--stone);border:1px solid var(--rule);}
+.bd-warn{background:var(--warn-l);color:#8B5E00;}
+
+/* tx status pills */
+.status-pill{display:inline-flex;align-items:center;gap:5px;font-size:10px;font-weight:700;padding:3px 10px;border-radius:var(--r-pill);}
+.sp-done{background:var(--green-l);color:var(--green-deep);}
+.sp-pending{background:var(--warn-l);color:#8B5E00;}
+.sp-fail{background:var(--error-l);color:var(--error);}
+.sp-process{background:var(--violet-l);color:var(--violet);}
+
+/* ══════════════════════════════════════════════════
+   07 — COMPONENTS: CARDS
+══════════════════════════════════════════════════ */
+.card{background:var(--white);border:1px solid var(--rule);border-radius:var(--r-lg);padding:24px;}
+.card.mist{background:var(--mist);}
+.card.dark{background:var(--ink);border-color:rgba(255,255,255,.07);}
+.card.orange{background:var(--orange-l);border-color:rgba(255,107,0,.2);}
+.card.green{background:var(--green-l);border-color:rgba(31,138,112,.2);}
+.card.err{background:var(--error-l);border-color:rgba(229,51,51,.2);}
+.card.interactive{cursor:pointer;transition:transform var(--dur-sm) var(--ease-out),box-shadow var(--dur-sm) ease,border-color var(--dur-sm) ease;}
+.card.interactive:hover{transform:translateY(-2px);box-shadow:var(--shadow-md);border-color:rgba(13,13,13,.12);}
+
+/* wallet card */
+.wallet-card{background:var(--ink);border-radius:var(--r-xl);padding:28px 28px;position:relative;overflow:hidden;box-shadow:var(--shadow-xl);}
+.wc-mesh{position:absolute;inset:0;background:radial-gradient(ellipse at 80% -10%,rgba(255,107,0,.15) 0%,transparent 50%),radial-gradient(ellipse at 10% 110%,rgba(31,138,112,.08) 0%,transparent 50%);}
+.wc-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.018) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.018) 1px,transparent 1px);background-size:40px 40px;}
+.wc-top{position:relative;display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:20px;}
+.wc-lbl{font-size:9px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:rgba(255,255,255,.3);}
+.wc-hide{background:rgba(255,255,255,.08);border:none;color:rgba(255,255,255,.4);font-size:11px;padding:4px 10px;border-radius:var(--r-pill);cursor:pointer;font-family:var(--font-ui);}
+.wc-balance{position:relative;font-family:var(--font-ui);font-size:42px;font-weight:800;color:var(--white);letter-spacing:-2.5px;line-height:1;margin-bottom:4px;}
+.wc-balance span{color:var(--orange);}
+.wc-currency{position:relative;font-size:13px;color:rgba(255,255,255,.35);margin-bottom:22px;}
+.wc-btns{position:relative;display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;}
+.wc-btn{background:rgba(255,255,255,.07);border:none;border-radius:var(--r-md);padding:12px 6px;font-family:var(--font-ui);font-size:11px;font-weight:600;color:rgba(255,255,255,.65);cursor:pointer;text-align:center;transition:background var(--dur-sm) ease;}
+.wc-btn:hover{background:rgba(255,255,255,.13);}
+.wc-btn.primary{background:var(--orange);color:var(--white);}
+.wc-btn.primary:hover{background:var(--orange-hover);}
+
+/* info card */
+.info-card{border:1px solid var(--rule);border-radius:var(--r-lg);overflow:hidden;}
+.ic-head{background:var(--ink);padding:14px 20px;display:flex;align-items:center;justify-content:space-between;}
+.ic-title{font-size:12px;font-weight:600;color:var(--white);}
+.ic-sub{font-size:10px;color:rgba(255,255,255,.3);}
+.ic-body{padding:0 20px;}
+.ic-row{display:flex;align-items:center;justify-content:space-between;padding:12px 0;border-bottom:1px solid var(--rule);}
+.ic-row:last-child{border-bottom:none;}
+.ic-key{font-size:12px;color:var(--stone);}
+.ic-val{font-size:12px;font-weight:600;color:var(--ink);}
+.ic-val.green{color:var(--green-deep);}
+.ic-val.orange{color:var(--orange);}
+
+/* ══════════════════════════════════════════════════
+   08 — COMPONENTS: TRANSACTION ITEMS
+══════════════════════════════════════════════════ */
+.tx-list{border:1px solid var(--rule);border-radius:var(--r-lg);overflow:hidden;}
+.tx-list-head{background:var(--ink);padding:12px 18px;display:flex;align-items:center;justify-content:space-between;}
+.tx-list-title{font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,.5);}
+.tx-list-link{font-size:11px;color:var(--orange);cursor:pointer;}
+.tx-item{display:flex;align-items:center;gap:12px;padding:13px 18px;border-bottom:1px solid var(--rule);transition:background var(--dur-xs) ease;}
+.tx-item:last-child{border-bottom:none;}
+.tx-item:hover{background:var(--mist);}
+.tx-av{width:38px;height:38px;border-radius:var(--r-md);display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:800;flex-shrink:0;}
+.tx-info{flex:1;min-width:0;}
+.tx-name{font-size:13px;font-weight:600;color:var(--ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.tx-meta{font-size:11px;color:var(--stone);margin-top:1px;}
+.tx-right{text-align:right;flex-shrink:0;}
+.tx-amt{font-size:14px;font-weight:700;letter-spacing:-.3px;}
+.tx-amt.in{color:var(--green);}
+.tx-amt.out{color:var(--ink);}
+.tx-status{margin-top:2px;}
+
+/* skeleton loader */
+@keyframes shimmer{0%{background-position:-400px 0}100%{background-position:400px 0}}
+.skel{background:linear-gradient(90deg,var(--mist) 25%,var(--rule) 50%,var(--mist) 75%);background-size:800px 100%;animation:shimmer 1.4s ease-in-out infinite;}
+.skel-tx{display:flex;align-items:center;gap:12px;padding:13px 18px;border-bottom:1px solid var(--rule);}
+.skel-av{width:38px;height:38px;border-radius:var(--r-md);}
+.skel-line{height:10px;border-radius:4px;}
+
+/* ══════════════════════════════════════════════════
+   09 — COMPONENTS: NAVIGATION
+══════════════════════════════════════════════════ */
+.bottom-nav{background:var(--white);border-top:1px solid var(--rule);display:flex;align-items:center;padding:0 8px;border-radius:0 0 var(--r-lg) var(--r-lg);box-shadow:0 -4px 20px rgba(0,0,0,.04);}
+.bn-item{flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;padding:10px 8px;cursor:pointer;border-radius:var(--r-md);transition:all var(--dur-sm) ease;}
+.bn-item:hover{background:var(--mist);}
+.bn-icon{font-size:18px;color:var(--stone);transition:color var(--dur-sm) ease;}
+.bn-lbl{font-size:9px;font-weight:600;color:var(--stone);letter-spacing:.3px;transition:color var(--dur-sm) ease;}
+.bn-item.on .bn-icon{color:var(--orange);}
+.bn-item.on .bn-lbl{color:var(--orange);}
+.bn-fab{width:48px;height:48px;background:var(--orange);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:20px;cursor:pointer;box-shadow:0 4px 16px rgba(255,107,0,.35);color:var(--white);margin:-12px 0;flex-shrink:0;transition:all var(--dur-sm) var(--ease-out);}
+.bn-fab:hover{background:var(--orange-hover);transform:scale(1.05);}
+
+/* top bar */
+.top-bar{background:var(--ink);padding:52px 20px 18px;position:relative;overflow:hidden;}
+.tb-mesh{position:absolute;inset:0;background:radial-gradient(ellipse at 75% -10%,rgba(255,107,0,.12) 0%,transparent 55%);}
+.tb-greeting{position:relative;font-size:11px;color:rgba(255,255,255,.35);}
+.tb-name{position:relative;font-size:16px;font-weight:700;color:var(--white);letter-spacing:-.3px;}
+.tb-notif{position:relative;background:rgba(255,255,255,.08);border:none;border-radius:var(--r-md);padding:7px 8px;cursor:pointer;color:rgba(255,255,255,.6);font-size:16px;}
+
+/* ══════════════════════════════════════════════════
+   10 — COMPONENTS: MODALS & SHEETS
+══════════════════════════════════════════════════ */
+.modal-backdrop{background:rgba(13,13,13,.5);border-radius:var(--r-lg);padding:32px;display:flex;flex-direction:column;gap:16px;}
+.modal-box{background:var(--white);border-radius:var(--r-xl);overflow:hidden;box-shadow:var(--shadow-xl);}
+.modal-head{padding:20px 22px;border-bottom:1px solid var(--rule);display:flex;align-items:center;justify-content:space-between;}
+.modal-title{font-size:15px;font-weight:700;color:var(--ink);letter-spacing:-.2px;}
+.modal-close{background:var(--mist);border:none;border-radius:var(--r-sm);padding:6px 7px;cursor:pointer;font-size:14px;color:var(--stone);}
+.modal-body{padding:20px 22px;}
+.modal-foot{padding:16px 22px;border-top:1px solid var(--rule);display:flex;gap:8px;justify-content:flex-end;}
+
+/* bottom sheet */
+.bsheet{background:var(--white);border-radius:var(--r-xl) var(--r-xl) 0 0;padding:0 0 24px;}
+.bsheet-handle{width:36px;height:4px;border-radius:var(--r-pill);background:var(--rule);margin:12px auto 0;}
+.bsheet-head{padding:18px 22px 14px;border-bottom:1px solid var(--rule);}
+.bsheet-title{font-size:15px;font-weight:700;color:var(--ink);}
+.bsheet-body{padding:16px 22px;}
+
+/* ══════════════════════════════════════════════════
+   11 — COMPONENTS: FEEDBACK / TOASTS
+══════════════════════════════════════════════════ */
+.toast{display:flex;align-items:flex-start;gap:11px;padding:13px 16px;border-radius:var(--r-md);border:1px solid;margin-bottom:7px;}
+.toast-ico{font-size:15px;flex-shrink:0;margin-top:1px;}
+.toast-title{font-size:13px;font-weight:600;margin-bottom:2px;}
+.toast-body{font-size:12px;line-height:1.5;}
+.t-ok{background:var(--green-l);border-color:var(--green);}
+.t-ok .toast-title{color:var(--green-deep);}
+.t-ok .toast-body{color:var(--green);}
+.t-err{background:var(--error-l);border-color:var(--error);}
+.t-err .toast-title,.t-err .toast-body{color:var(--error);}
+.t-warn{background:var(--warn-l);border-color:var(--warn);}
+.t-warn .toast-title{color:#8B5E00;}
+.t-warn .toast-body{color:#A06800;}
+.t-info{background:var(--mist);border-color:var(--rule);}
+.t-info .toast-title{color:var(--ink);}
+.t-info .toast-body{color:var(--stone);}
+
+/* empty state */
+.empty{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:48px 24px;text-align:center;}
+.empty-ico{font-size:40px;margin-bottom:14px;opacity:.4;}
+.empty-title{font-size:15px;font-weight:700;color:var(--ink);margin-bottom:6px;}
+.empty-body{font-size:13px;color:var(--stone);max-width:260px;line-height:1.6;}
+
+/* ══════════════════════════════════════════════════
+   12 — COMPONENTS: AVATARS
+══════════════════════════════════════════════════ */
+.av{border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-weight:700;font-size:14px;flex-shrink:0;}
+.av-xs{width:28px;height:28px;font-size:10px;}
+.av-sm{width:36px;height:36px;font-size:12px;}
+.av-md{width:44px;height:44px;font-size:16px;}
+.av-lg{width:56px;height:56px;font-size:20px;}
+.av-xl{width:72px;height:72px;font-size:26px;}
+.av-g{background:var(--green-l);color:var(--green);}
+.av-o{background:var(--orange-l);color:var(--orange);}
+.av-v{background:var(--violet-l);color:var(--violet);}
+.av-k{background:var(--mist);color:var(--stone);}
+
+/* ══════════════════════════════════════════════════
+   13 — COMPONENTS: PROGRESS / STEPS
+══════════════════════════════════════════════════ */
+.step-bar{display:flex;align-items:center;gap:4px;}
+.step-seg{flex:1;height:3px;border-radius:2px;background:var(--rule);transition:background var(--dur-md) ease;}
+.step-seg.done{background:var(--orange);}
+.step-seg.active{background:var(--ink);}
+
+.step-dots{display:flex;align-items:center;gap:20px;}
+.step-dot-item{display:flex;align-items:center;gap:6px;}
+.sd-circle{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;border:2px solid var(--rule);color:var(--stone);transition:all var(--dur-md) ease;}
+.sd-circle.done{background:var(--green);border-color:var(--green);color:var(--white);}
+.sd-circle.active{background:var(--orange);border-color:var(--orange);color:var(--white);}
+.sd-label{font-size:11px;font-weight:500;color:var(--stone);}
+.sd-label.active{color:var(--ink);font-weight:700;}
+.sd-connector{width:32px;height:2px;background:var(--rule);}
+.sd-connector.done{background:var(--green);}
+
+/* circular progress */
+.circ-wrap{position:relative;display:inline-block;}
+.circ-svg{transform:rotate(-90deg);}
+.circ-label{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:var(--ink);}
+
+/* ══════════════════════════════════════════════════
+   14 — COMPONENTS: SELECTION & TOGGLES
+══════════════════════════════════════════════════ */
+/* checkbox */
+.chk-wrap{display:flex;align-items:center;gap:10px;cursor:pointer;}
+.chk-box{width:18px;height:18px;border:1.5px solid var(--rule);border-radius:4px;background:var(--white);display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all var(--dur-sm) ease;}
+.chk-box.on{background:var(--orange);border-color:var(--orange);}
+.chk-mark{font-size:10px;color:var(--white);display:none;}
+.chk-box.on .chk-mark{display:block;}
+.chk-lbl{font-size:13px;color:var(--ink);}
+
+/* radio */
+.rad-wrap{display:flex;align-items:center;gap:10px;cursor:pointer;}
+.rad-circ{width:18px;height:18px;border:1.5px solid var(--rule);border-radius:50%;background:var(--white);display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all var(--dur-sm) ease;}
+.rad-inner{width:8px;height:8px;border-radius:50%;background:var(--orange);transform:scale(0);transition:transform var(--dur-sm) var(--ease-spring);}
+.rad-wrap.on .rad-circ{border-color:var(--orange);}
+.rad-wrap.on .rad-inner{transform:scale(1);}
+
+/* toggle */
+.tog-track{width:44px;height:24px;border-radius:var(--r-pill);background:var(--rule);cursor:pointer;position:relative;transition:background var(--dur-md) ease;flex-shrink:0;}
+.tog-thumb{width:18px;height:18px;border-radius:50%;background:var(--white);position:absolute;top:3px;left:3px;transition:transform var(--dur-md) var(--ease-spring);box-shadow:var(--shadow-sm);}
+.tog-track.on{background:var(--orange);}
+.tog-track.on .tog-thumb{transform:translateX(20px);}
+
+/* payment method select */
+.pay-opt{display:flex;align-items:center;gap:12px;padding:14px 16px;border:1.5px solid var(--rule);border-radius:var(--r-md);cursor:pointer;transition:all var(--dur-sm) ease;background:var(--white);}
+.pay-opt.on{border-color:var(--orange);background:var(--orange-l);}
+.pay-ico{font-size:22px;width:36px;text-align:center;flex-shrink:0;}
+.pay-info{flex:1;}
+.pay-name{font-size:13px;font-weight:600;color:var(--ink);}
+.pay-desc{font-size:11px;color:var(--stone);}
+.pay-check{width:18px;height:18px;border-radius:50%;border:1.5px solid var(--rule);display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.pay-opt.on .pay-check{background:var(--orange);border-color:var(--orange);color:var(--white);font-size:9px;}
+
+/* ══════════════════════════════════════════════════
+   15 — COMPONENTS: AMOUNT NUMPAD
+══════════════════════════════════════════════════ */
+.numpad{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;}
+.np-key{background:var(--mist);border:none;border-radius:var(--r-md);font-family:var(--font-ui);font-size:20px;font-weight:600;color:var(--ink);padding:18px;cursor:pointer;transition:all var(--dur-xs) ease;text-align:center;}
+.np-key:hover{background:var(--rule);}
+.np-key:active{background:var(--ink);color:var(--white);transform:scale(.97);}
+.np-key.special{font-size:16px;background:transparent;}
+.np-key.cta{background:var(--orange);color:var(--white);font-size:16px;}
+.np-key.cta:hover{background:var(--orange-hover);}
+
+/* ══════════════════════════════════════════════════
+   16 — MOTION REFERENCE
+══════════════════════════════════════════════════ */
+.motion-card{border:1px solid var(--rule);border-radius:var(--r-lg);overflow:hidden;}
+.mc-demo{height:72px;display:flex;align-items:center;justify-content:center;font-size:26px;}
+.mc-body{padding:16px 18px;border-top:1px solid var(--rule);}
+.mc-name{font-size:12px;font-weight:700;color:var(--ink);margin-bottom:4px;}
+.mc-tok{font-family:'Courier New',monospace;font-size:10px;color:var(--orange);}
+.mc-desc{font-size:11px;color:var(--stone);margin-top:5px;line-height:1.5;}
+
+@keyframes btn-press{0%,100%{transform:scale(1)}50%{transform:scale(.96)}}
+@keyframes success-pop{0%{transform:scale(0) rotate(-10deg)}60%{transform:scale(1.15) rotate(3deg)}100%{transform:scale(1) rotate(0)}}
+@keyframes slide-in{0%{transform:translateY(10px);opacity:0}100%{transform:none;opacity:1}}
+@keyframes fade-in{0%{opacity:0}100%{opacity:1}}
+@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-4px)}75%{transform:translateX(4px)}}
+@keyframes pulse-ring{0%{transform:scale(1);opacity:.5}100%{transform:scale(1.4);opacity:0}}
+.demo-bounce:hover span{animation:btn-press 200ms var(--ease-spring);}
+.demo-pop span{animation:success-pop 400ms var(--ease-spring);}
+.demo-slide span{animation:slide-in 350ms var(--ease-out);}
+.demo-fade span{animation:fade-in 300ms ease;}
+.demo-shake span{animation:shake 300ms ease;}
+
+/* ══════════════════════════════════════════════════
+   17 — PHONE MOCKUP (FULL)
+══════════════════════════════════════════════════ */
+.phone{background:var(--ink);border-radius:40px;padding:5px;width:228px;margin:0 auto;box-shadow:0 40px 80px rgba(0,0,0,.35),0 0 0 1px rgba(255,255,255,.07);}
+.phone-scr{background:var(--white);border-radius:35px;overflow:hidden;min-height:420px;}
+
+/* ══════════════════════════════════════════════════
+   FOOTER
+══════════════════════════════════════════════════ */
+footer{background:var(--mist);border-top:1px solid var(--rule);padding:32px 80px;display:flex;justify-content:space-between;align-items:center;}
+.foot-logo{font-family:var(--font-ui);font-size:18px;font-weight:800;letter-spacing:-.5px;}
+.foot-logo b{color:var(--orange);}
+.foot-sub{font-size:11px;color:var(--stone);margin-top:3px;font-style:italic;font-family:var(--font-serif);}
+.foot-meta{font-size:10px;color:var(--stone);text-align:right;line-height:1.8;}
+</style>
+</head>
+<body>
+
+<!-- ═══ SIDEBAR ═══ -->
+<aside class="sb">
+  <div class="sb-top">
+    <div class="sb-logo">Pula<b>pay</b></div>
+    <div class="sb-tagline">Design System v1.0</div>
+  </div>
+  <nav class="sb-nav">
+    <div class="sb-g"><div class="sb-gt">Tokens</div>
+      <a class="sb-a" href="#cover"><span class="sb-dot"></span>Intro</a>
+      <a class="sb-a" href="#colors"><span class="sb-dot"></span>Couleurs</a>
+      <a class="sb-a" href="#typo"><span class="sb-dot"></span>Typographie</a>
+      <a class="sb-a" href="#spacing"><span class="sb-dot"></span>Espacement</a>
+      <a class="sb-a" href="#shadows"><span class="sb-dot"></span>Ombres & Radius</a>
+      <a class="sb-a" href="#motion-tok"><span class="sb-dot"></span>Motion Tokens</a>
+    </div>
+    <div class="sb-g"><div class="sb-gt">Composants</div>
+      <a class="sb-a" href="#buttons"><span class="sb-dot"></span>Buttons</a>
+      <a class="sb-a" href="#inputs"><span class="sb-dot"></span>Inputs & Forms</a>
+      <a class="sb-a" href="#badges"><span class="sb-dot"></span>Badges & Status</a>
+      <a class="sb-a" href="#cards"><span class="sb-dot"></span>Cards</a>
+      <a class="sb-a" href="#tx"><span class="sb-dot"></span>Transactions</a>
+      <a class="sb-a" href="#nav"><span class="sb-dot"></span>Navigation</a>
+      <a class="sb-a" href="#modals"><span class="sb-dot"></span>Modals & Sheets</a>
+      <a class="sb-a" href="#feedback"><span class="sb-dot"></span>Feedback</a>
+      <a class="sb-a" href="#avatars"><span class="sb-dot"></span>Avatars</a>
+      <a class="sb-a" href="#progress"><span class="sb-dot"></span>Progress</a>
+      <a class="sb-a" href="#selection"><span class="sb-dot"></span>Sélection</a>
+      <a class="sb-a" href="#numpad"><span class="sb-dot"></span>Numpad</a>
+    </div>
+    <div class="sb-g"><div class="sb-gt">Référence</div>
+      <a class="sb-a" href="#motion-ref"><span class="sb-dot"></span>Motion Reference</a>
+      <a class="sb-a" href="#impl"><span class="sb-dot"></span>Implémentation</a>
+    </div>
+  </nav>
+  <div class="sb-foot"><div class="sb-v">v1.0 · Next.js · Tailwind · 2026</div></div>
+</aside>
+
+<main>
+
+<!-- COVER -->
+<div class="cover" id="cover">
+  <div class="cov-grid"></div><div class="cov-glow1"></div><div class="cov-glow2"></div>
+  <div class="cov-pill"><div class="cov-dot"></div>Design System</div>
+  <div class="cov-h">Pulapay<br>Design <span>System</span></div>
+  <div class="cov-sub">Tokens · Composants · Rules d'assemblage.</div>
+  <div class="cov-meta">
+    <div class="cov-chip"><strong>Version</strong> 1.0</div>
+    <div class="cov-chip"><strong>Stack</strong> Next.js · Tailwind</div>
+    <div class="cov-chip"><strong>Fonts</strong> Product Sans + Times NR MT</div>
+    <div class="cov-chip"><strong>Total</strong> 40+ composants</div>
+  </div>
+</div>
+
+<!-- ══════════════════
+  TOKENS — COLORS
+══════════════════ -->
+<section class="sec" id="colors">
+  <div class="eyebrow reveal"><div class="ey-num">T.01</div><div class="ey-line"></div><div class="ey-lbl">Tokens — Couleurs</div></div>
+  <h2 class="sec-h reveal">Color <em>Tokens</em></h2>
+  <p class="sec-lead reveal">Hiérarchie stricte. Blanc domine (60%), Ink structure (30%), Orange signale (10%). Les couleurs fonctionnelles ne remplacent jamais cette triade.</p>
+
+  <!-- Primaires -->
+  <div class="swatch-row reveal">
+    <div class="sw">
+      <div class="sw-color" style="background:#FFFFFF;border:1px solid var(--rule);border-bottom:none;border-radius:var(--r-sm) var(--r-sm) 0 0;"></div>
+      <div class="sw-info"><div class="sw-name">White</div><div class="sw-hex">#FFFFFF</div><div class="sw-role">Fond principal · Surfaces</div></div>
+    </div>
+    <div class="sw">
+      <div class="sw-color" style="background:#0D0D0D;border-radius:var(--r-sm) var(--r-sm) 0 0;"></div>
+      <div class="sw-info"><div class="sw-name">Ink</div><div class="sw-hex">#0D0D0D</div><div class="sw-role">Texte · Fond dark · Sidebar</div></div>
+    </div>
+    <div class="sw">
+      <div class="sw-color" style="background:#FF6B00;border-radius:var(--r-sm) var(--r-sm) 0 0;"></div>
+      <div class="sw-info"><div class="sw-name">Orange</div><div class="sw-hex">#FF6B00</div><div class="sw-role">CTA uniquement · Accents</div></div>
+    </div>
+    <div class="sw">
+      <div class="sw-color" style="background:#E55E00;border-radius:var(--r-sm) var(--r-sm) 0 0;"></div>
+      <div class="sw-info"><div class="sw-name">Orange Hover</div><div class="sw-hex">#E55E00</div><div class="sw-role">État hover des CTA orange</div></div>
+    </div>
+    <div class="sw">
+      <div class="sw-color" style="background:#FFF0E6;border:1px solid #ffdcbd;border-bottom:none;border-radius:var(--r-sm) var(--r-sm) 0 0;"></div>
+      <div class="sw-info"><div class="sw-name">Orange Light</div><div class="sw-hex">#FFF0E6</div><div class="sw-role">Fond · Badges · Sélection active</div></div>
+    </div>
+  </div>
+  <div class="swatch-row reveal">
+    <div class="sw">
+      <div class="sw-color" style="background:#1F8A70;border-radius:var(--r-sm) var(--r-sm) 0 0;"></div>
+      <div class="sw-info"><div class="sw-name">Green</div><div class="sw-hex">#1F8A70</div><div class="sw-role">Succès · Confirmations · +montants</div></div>
+    </div>
+    <div class="sw">
+      <div class="sw-color" style="background:#166357;border-radius:var(--r-sm) var(--r-sm) 0 0;"></div>
+      <div class="sw-info"><div class="sw-name">Green Deep</div><div class="sw-hex">#166357</div><div class="sw-role">Texte sur fond vert clair</div></div>
+    </div>
+    <div class="sw">
+      <div class="sw-color" style="background:#E8F5F1;border:1px solid #C8EDE5;border-bottom:none;border-radius:var(--r-sm) var(--r-sm) 0 0;"></div>
+      <div class="sw-info"><div class="sw-name">Green Light</div><div class="sw-hex">#E8F5F1</div><div class="sw-role">Fond succès · Badges</div></div>
+    </div>
+    <div class="sw">
+      <div class="sw-color" style="background:#5B2EFF;border-radius:var(--r-sm) var(--r-sm) 0 0;"></div>
+      <div class="sw-info"><div class="sw-name">Violet</div><div class="sw-hex">#5B2EFF</div><div class="sw-role">Premium · Features futures</div></div>
+    </div>
+    <div class="sw">
+      <div class="sw-color" style="background:#EDEAFF;border:1px solid #C8C0FF;border-bottom:none;border-radius:var(--r-sm) var(--r-sm) 0 0;"></div>
+      <div class="sw-info"><div class="sw-name">Violet Light</div><div class="sw-hex">#EDEAFF</div><div class="sw-role">Fond · Badges violet</div></div>
+    </div>
+  </div>
+  <div class="swatch-row reveal">
+    <div class="sw">
+      <div class="sw-color" style="background:#F5F5F2;border:1px solid var(--rule);border-bottom:none;border-radius:var(--r-sm) var(--r-sm) 0 0;"></div>
+      <div class="sw-info"><div class="sw-name">Mist</div><div class="sw-hex">#F5F5F2</div><div class="sw-role">Fond alt · Hover · Skeletons</div></div>
+    </div>
+    <div class="sw">
+      <div class="sw-color" style="background:#E8E8E4;border:1px solid #ddd;border-bottom:none;border-radius:var(--r-sm) var(--r-sm) 0 0;"></div>
+      <div class="sw-info"><div class="sw-name">Rule</div><div class="sw-hex">#E8E8E4</div><div class="sw-role">Bordures · Séparateurs · Dividers</div></div>
+    </div>
+    <div class="sw">
+      <div class="sw-color" style="background:#6B6B6B;border-radius:var(--r-sm) var(--r-sm) 0 0;"></div>
+      <div class="sw-info"><div class="sw-name">Stone</div><div class="sw-hex">#6B6B6B</div><div class="sw-role">Texte secondaire · Labels</div></div>
+    </div>
+    <div class="sw">
+      <div class="sw-color" style="background:#E53333;border-radius:var(--r-sm) var(--r-sm) 0 0;"></div>
+      <div class="sw-info"><div class="sw-name">Error</div><div class="sw-hex">#E53333</div><div class="sw-role">Erreurs uniquement</div></div>
+    </div>
+    <div class="sw">
+      <div class="sw-color" style="background:#F5A623;border-radius:var(--r-sm) var(--r-sm) 0 0;"></div>
+      <div class="sw-info"><div class="sw-name">Warning</div><div class="sw-hex">#F5A623</div><div class="sw-role">Alertes · En attente</div></div>
+    </div>
+  </div>
+
+  <pre class="cb reveal mt24"><span class="cm">/* globals.css — Pulapay Color Tokens */</span>
+<span class="co">:root</span> {
+  <span class="cb2">--orange</span>:    <span class="cg">#FF6B00</span>;  <span class="cm">/* CTA uniquement */</span>
+  <span class="cb2">--orange-hover</span>:<span class="cg">#E55E00</span>; <span class="cm">/* Hover state */</span>
+  <span class="cb2">--orange-l</span>:  <span class="cg">#FFF0E6</span>;  <span class="cm">/* Backgrounds & badges */</span>
+  <span class="cb2">--orange-m</span>:  <span class="cg">rgba(255,107,0,.12)</span>; <span class="cm">/* Focus ring */</span>
+  <span class="cb2">--ink</span>:       <span class="cg">#0D0D0D</span>;  <span class="cm">/* Text & dark surfaces */</span>
+  <span class="cb2">--white</span>:     <span class="cg">#FFFFFF</span>;  <span class="cm">/* Base surface */</span>
+  <span class="cb2">--green</span>:     <span class="cg">#1F8A70</span>;  <span class="cm">/* Success & incoming */</span>
+  <span class="cb2">--green-deep</span>:<span class="cg">#166357</span>;  <span class="cm">/* Text on green-l */</span>
+  <span class="cb2">--green-l</span>:   <span class="cg">#E8F5F1</span>;  <span class="cm">/* Success backgrounds */</span>
+  <span class="cb2">--violet</span>:    <span class="cg">#5B2EFF</span>;  <span class="cm">/* Premium / future */</span>
+  <span class="cb2">--violet-l</span>:  <span class="cg">#EDEAFF</span>;  <span class="cm">/* Violet backgrounds */</span>
+  <span class="cb2">--mist</span>:      <span class="cg">#F5F5F2</span>;  <span class="cm">/* Alt backgrounds */</span>
+  <span class="cb2">--rule</span>:      <span class="cg">#E8E8E4</span>;  <span class="cm">/* Borders & dividers */</span>
+  <span class="cb2">--stone</span>:     <span class="cg">#6B6B6B</span>;  <span class="cm">/* Secondary text */</span>
+  <span class="cb2">--error</span>:     <span class="cg">#E53333</span>;  <span class="cm">/* Errors only */</span>
+  <span class="cb2">--error-l</span>:   <span class="cg">#FFF0F0</span>;  <span class="cm">/* Error backgrounds */</span>
+  <span class="cb2">--warn</span>:      <span class="cg">#F5A623</span>;  <span class="cm">/* Warnings */</span>
+  <span class="cb2">--warn-l</span>:    <span class="cg">#FFFBF0</span>;  <span class="cm">/* Warning backgrounds */</span>
+}</span></pre>
+</section>
+
+<!-- ══════════════════
+  TOKENS — TYPOGRAPHY
+══════════════════ -->
+<section class="sec alt" id="typo">
+  <div class="eyebrow reveal"><div class="ey-num">T.02</div><div class="ey-line"></div><div class="ey-lbl">Tokens — Typographie</div></div>
+  <h2 class="sec-h reveal">Type <em>Scale</em></h2>
+  <p class="sec-lead reveal">Product Sans pour tout ce qui est fonctionnel. Times New Roman MT pour les moments émotionnels. Aucune autre police.</p>
+
+  <div class="ts-scale reveal">
+    <div class="ts-row">
+      <div class="ts-spec"><div class="ts-role">Display</div><div class="ts-val">Product Sans 800<br>72–88px / ls -3px<br>lh 0.95</div></div>
+      <div class="ts-sample"><span style="font-family:var(--font-ui);font-size:60px;font-weight:800;letter-spacing:-3px;line-height:.95;display:block;">Un compte. <span style="color:var(--orange);">Tout.</span></span></div>
+      <div class="ts-use">Hero · Landing<br>Splash screens</div>
+    </div>
+    <div class="ts-row">
+      <div class="ts-spec"><div class="ts-role">Hero Serif</div><div class="ts-val">Times NR MT Italic<br>36–52px / ls -1px<br>lh 1.1</div></div>
+      <div class="ts-sample"><span style="font-family:var(--font-serif);font-style:italic;font-size:38px;letter-spacing:-1px;color:var(--green);display:block;">Finally… someone gets it.</span></div>
+      <div class="ts-use">Slogans<br>Onboarding moments</div>
+    </div>
+    <div class="ts-row">
+      <div class="ts-spec"><div class="ts-role">H1</div><div class="ts-val">Product Sans 700<br>32–44px / ls -1.5px<br>lh 1.05</div></div>
+      <div class="ts-sample"><span style="font-family:var(--font-ui);font-size:34px;font-weight:700;letter-spacing:-1.5px;display:block;">Envoie de l'argent.</span></div>
+      <div class="ts-use">Screen headers<br>Section titles</div>
+    </div>
+    <div class="ts-row">
+      <div class="ts-spec"><div class="ts-role">H2</div><div class="ts-val">Product Sans 700<br>22–28px / ls -0.5px<br>lh 1.2</div></div>
+      <div class="ts-sample"><span style="font-family:var(--font-ui);font-size:24px;font-weight:700;letter-spacing:-0.5px;display:block;">Ton solde Pulapay</span></div>
+      <div class="ts-use">Card titles<br>Modal headers</div>
+    </div>
+    <div class="ts-row">
+      <div class="ts-spec"><div class="ts-role">Amount</div><div class="ts-val">Product Sans 800<br>40–52px / ls -2px<br>tabular nums</div></div>
+      <div class="ts-sample"><span style="font-family:var(--font-ui);font-size:44px;font-weight:800;letter-spacing:-2px;display:block;">247 <span style="color:var(--stone);font-weight:400;font-size:22px;">500 FCFA</span></span></div>
+      <div class="ts-use">Balance display<br>Amount input</div>
+    </div>
+    <div class="ts-row">
+      <div class="ts-spec"><div class="ts-role">Body</div><div class="ts-val">Product Sans 400<br>14–16px / ls 0<br>lh 1.65</div></div>
+      <div class="ts-sample"><span style="font-family:var(--font-ui);font-size:15px;line-height:1.65;color:var(--stone);display:block;">Avec Pulapay, envoyer de l'argent c'est aussi simple qu'envoyer un message.</span></div>
+      <div class="ts-use">Paragraphes<br>Descriptions</div>
+    </div>
+    <div class="ts-row">
+      <div class="ts-spec"><div class="ts-role">Body Sm</div><div class="ts-val">Product Sans 400<br>12–13px / ls 0<br>lh 1.6</div></div>
+      <div class="ts-sample"><span style="font-family:var(--font-ui);font-size:13px;line-height:1.6;color:var(--stone);display:block;">Mis à jour à l'instant · Via Mobile Money MTN · ID : tx_9f3a2</span></div>
+      <div class="ts-use">Meta infos<br>Timestamps · Hints</div>
+    </div>
+    <div class="ts-row">
+      <div class="ts-spec"><div class="ts-role">Caption Serif</div><div class="ts-val">Times NR MT Italic<br>12–14px / ls 0.2px</div></div>
+      <div class="ts-sample"><span style="font-family:var(--font-serif);font-style:italic;font-size:13px;color:var(--stone);display:block;">"Ton argent, un seul endroit." — Pulapay</span></div>
+      <div class="ts-use">Citations · Notes<br>Taglines légères</div>
+    </div>
+    <div class="ts-row">
+      <div class="ts-spec"><div class="ts-role">Label UI</div><div class="ts-val">Product Sans 600–700<br>9–11px / ls 2px<br>UPPERCASE</div></div>
+      <div class="ts-sample"><span style="font-family:var(--font-ui);font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--stone);display:block;">Solde Pulapay · Mobile Money · Confirmé</span></div>
+      <div class="ts-use">Labels UI · Nav items<br>Eyebrows · Section tags</div>
+    </div>
+    <div class="ts-row">
+      <div class="ts-spec"><div class="ts-role">Code / Mono</div><div class="ts-val">Courier New<br>11–13px / ls 0</div></div>
+      <div class="ts-sample"><span style="font-family:'Courier New',monospace;font-size:12px;display:block;color:var(--orange);">TX#9F3A2C · +225 07 12 34 56 · 247500</span></div>
+      <div class="ts-use">IDs · Numéros<br>Tokens · Dev refs</div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════
+  TOKENS — SPACING
+══════════════════ -->
+<section class="sec" id="spacing">
+  <div class="eyebrow reveal"><div class="ey-num">T.03</div><div class="ey-line"></div><div class="ey-lbl">Tokens — Espacement</div></div>
+  <h2 class="sec-h reveal">Spacing <em>Scale</em></h2>
+  <p class="sec-lead reveal">Base 8px. Toutes les valeurs sont des multiples de 4px. Utiliser uniquement les tokens — pas de valeurs arbitraires.</p>
+
+  <div class="sp-strip reveal">
+    <div class="sp-i"><div class="sp-b skel" style="height:4px;"></div><div class="sp-tok">--s1</div><div class="sp-px">4px</div></div>
+    <div class="sp-i"><div class="sp-b skel" style="height:8px;"></div><div class="sp-tok">--s2</div><div class="sp-px">8px</div></div>
+    <div class="sp-i"><div class="sp-b skel" style="height:12px;"></div><div class="sp-tok">--s3</div><div class="sp-px">12px</div></div>
+    <div class="sp-i"><div class="sp-b skel" style="height:16px;"></div><div class="sp-tok">--s4</div><div class="sp-px">16px</div></div>
+    <div class="sp-i"><div class="sp-b skel" style="height:24px;"></div><div class="sp-tok">--s5</div><div class="sp-px">24px</div></div>
+    <div class="sp-i"><div class="sp-b skel" style="height:32px;"></div><div class="sp-tok">--s6</div><div class="sp-px">32px</div></div>
+    <div class="sp-i"><div class="sp-b skel" style="height:48px;"></div><div class="sp-tok">--s7</div><div class="sp-px">48px</div></div>
+    <div class="sp-i"><div class="sp-b skel" style="height:64px;"></div><div class="sp-tok">--s8</div><div class="sp-px">64px</div></div>
+    <div class="sp-i"><div class="sp-b skel" style="height:96px;"></div><div class="sp-tok">--s9</div><div class="sp-px">96px</div></div>
+  </div>
+
+  <table class="st mt24 reveal">
+    <thead><tr><th>Token</th><th>Valeur</th><th>Tailwind</th><th>Utilisation typique</th></tr></thead>
+    <tbody>
+      <tr><td><span class="tok">--s1</span></td><td>4px</td><td><span class="c-inline">p-1 · gap-1</span></td><td>Espacement micro, entre icône et texte</td></tr>
+      <tr><td><span class="tok">--s2</span></td><td>8px</td><td><span class="c-inline">p-2 · gap-2</span></td><td>Padding interne bouton xs, gap badges</td></tr>
+      <tr><td><span class="tok">--s3</span></td><td>12px</td><td><span class="c-inline">p-3 · gap-3</span></td><td>Padding input, gap liste items</td></tr>
+      <tr><td><span class="tok">--s4</span></td><td>16px</td><td><span class="c-inline">p-4 · gap-4</span></td><td>Padding card sm, margin section labels</td></tr>
+      <tr><td><span class="tok">--s5</span></td><td>24px</td><td><span class="c-inline">p-6 · gap-6</span></td><td>Padding card standard, gap composants</td></tr>
+      <tr><td><span class="tok">--s6</span></td><td>32px</td><td><span class="c-inline">p-8 · gap-8</span></td><td>Padding section mobile, margin H2</td></tr>
+      <tr><td><span class="tok">--s7</span></td><td>48px</td><td><span class="c-inline">p-12</span></td><td>Padding section desktop, margin H1</td></tr>
+      <tr><td><span class="tok">--s8</span></td><td>64px</td><td><span class="c-inline">p-16</span></td><td>Hero padding, grandes sections</td></tr>
+      <tr><td><span class="tok">--s9</span></td><td>96px</td><td><span class="c-inline">p-24</span></td><td>Sections landing page, espacement max</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- ══════════════════
+  TOKENS — SHADOWS & RADIUS
+══════════════════ -->
+<section class="sec alt" id="shadows">
+  <div class="eyebrow reveal"><div class="ey-num">T.04</div><div class="ey-line"></div><div class="ey-lbl">Tokens — Ombres & Radius</div></div>
+  <h2 class="sec-h reveal">Shadows & Border <em>Radius</em></h2>
+
+  <div class="g2 reveal" style="gap:24px;">
+    <div>
+      <div class="div"><div class="div-l"></div><div class="div-t">Border Radius</div><div class="div-l"></div></div>
+      <div class="rad-grid">
+        <div class="rad-i"><div class="rad-sq" style="border-radius:6px;"></div><div class="sp-tok" style="margin-top:6px;">--r-xs</div><div class="sp-px">6px · Tags</div></div>
+        <div class="rad-i"><div class="rad-sq" style="border-radius:8px;"></div><div class="sp-tok" style="margin-top:6px;">--r-sm</div><div class="sp-px">8px · Inputs</div></div>
+        <div class="rad-i"><div class="rad-sq" style="border-radius:12px;"></div><div class="sp-tok" style="margin-top:6px;">--r-md</div><div class="sp-px">12px · Cards sm</div></div>
+        <div class="rad-i"><div class="rad-sq" style="border-radius:16px;"></div><div class="sp-tok" style="margin-top:6px;">--r-lg</div><div class="sp-px">16px · Cards</div></div>
+        <div class="rad-i"><div class="rad-sq" style="border-radius:24px;"></div><div class="sp-tok" style="margin-top:6px;">--r-xl</div><div class="sp-px">24px · Wallet</div></div>
+        <div class="rad-i"><div class="rad-sq" style="border-radius:999px;width:56px;height:28px;"></div><div class="sp-tok" style="margin-top:6px;">--r-pill</div><div class="sp-px">999px · Btns</div></div>
+        <div class="rad-i"><div class="rad-sq" style="border-radius:40px;background:var(--ink);border:none;"></div><div class="sp-tok" style="margin-top:6px;">40px</div><div class="sp-px">Phone frame</div></div>
+      </div>
+    </div>
+    <div>
+      <div class="div"><div class="div-l"></div><div class="div-t">Shadows</div><div class="div-l"></div></div>
+      <div class="shad-grid">
+        <div class="shad-i"><div class="shad-sq" style="box-shadow:0 1px 3px rgba(0,0,0,0.06);"></div><div class="sp-tok" style="font-size:9px;text-align:center;margin-top:4px;">--shadow-xs</div></div>
+        <div class="shad-i"><div class="shad-sq" style="box-shadow:0 2px 8px rgba(0,0,0,0.07);"></div><div class="sp-tok" style="font-size:9px;text-align:center;margin-top:4px;">--shadow-sm</div></div>
+        <div class="shad-i"><div class="shad-sq" style="box-shadow:0 4px 16px rgba(0,0,0,0.09);"></div><div class="sp-tok" style="font-size:9px;text-align:center;margin-top:4px;">--shadow-md</div></div>
+        <div class="shad-i"><div class="shad-sq" style="box-shadow:0 12px 40px rgba(0,0,0,0.12);"></div><div class="sp-tok" style="font-size:9px;text-align:center;margin-top:4px;">--shadow-lg</div></div>
+        <div class="shad-i"><div class="shad-sq" style="box-shadow:0 24px 64px rgba(0,0,0,0.16);"></div><div class="sp-tok" style="font-size:9px;text-align:center;margin-top:4px;">--shadow-xl</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════
+  TOKENS — MOTION
+══════════════════ -->
+<section class="sec" id="motion-tok">
+  <div class="eyebrow reveal"><div class="ey-num">T.05</div><div class="ey-line"></div><div class="ey-lbl">Tokens — Motion</div></div>
+  <h2 class="sec-h reveal">Motion <em>Tokens</em></h2>
+  <p class="sec-lead reveal">Durées et courbes standardisées. Ne jamais écrire de valeurs de timing custom — utiliser uniquement ces tokens.</p>
+
+  <table class="st reveal">
+    <thead><tr><th>Token</th><th>Valeur</th><th>Utilisation</th></tr></thead>
+    <tbody>
+      <tr><td><span class="tok">--dur-xs</span></td><td>100ms</td><td>Tap feedback immédiat, focus rings</td></tr>
+      <tr><td><span class="tok">--dur-sm</span></td><td>150ms</td><td>Hover states, micro-interactions, boutons</td></tr>
+      <tr><td><span class="tok">--dur-md</span></td><td>250ms</td><td>Navigation, transitions de page, toggles</td></tr>
+      <tr><td><span class="tok">--dur-lg</span></td><td>400ms</td><td>Entrée d'écran, modals, grandes transitions</td></tr>
+      <tr><td><span class="tok">--ease-out</span></td><td>cubic-bezier(0.16, 1, 0.3, 1)</td><td>Éléments qui entrent. Mouvement naturel rapide.</td></tr>
+      <tr><td><span class="tok">--ease-spring</span></td><td>cubic-bezier(0.34, 1.56, 0.64, 1)</td><td>Confirmations de succès. Léger overshoot.</td></tr>
+      <tr><td>ease-in-out</td><td>Standard CSS</td><td>Toggles, loaders, états de transition équilibrés</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- ══════════════════
+  COMPONENTS — BUTTONS
+══════════════════ -->
+<section class="sec alt" id="buttons">
+  <div class="eyebrow reveal"><div class="ey-num">C.01</div><div class="ey-line"></div><div class="ey-lbl">Composants — Boutons</div></div>
+  <h2 class="sec-h reveal">Button <em>Library</em></h2>
+  <p class="sec-lead reveal">Un seul CTA orange par écran, maximum. Les autres boutons reculent. Le bouton désactivé indique clairement pourquoi — pas juste grisé.</p>
+
+  <div class="div reveal"><div class="div-l"></div><div class="div-t">Variantes principales</div><div class="div-l"></div></div>
+  <div class="card reveal" style="padding:28px;">
+    <div style="display:flex;flex-wrap:wrap;gap:10px;align-items:center;">
+      <button class="btn btn-primary">Envoyer →</button>
+      <button class="btn btn-ink">Créer un compte</button>
+      <button class="btn btn-green">✓ Confirmé</button>
+      <button class="btn btn-ghost">Annuler</button>
+      <button class="btn btn-danger">Supprimer</button>
+      <button class="btn btn-ghost-inv" style="background:var(--ink);">Action secondaire</button>
+    </div>
+  </div>
+
+  <div class="div reveal"><div class="div-l"></div><div class="div-t">Tailles</div><div class="div-l"></div></div>
+  <div class="card reveal" style="padding:28px;">
+    <div style="display:flex;flex-wrap:wrap;gap:10px;align-items:center;">
+      <button class="btn btn-primary btn-xs">XS</button>
+      <button class="btn btn-primary btn-sm">Small</button>
+      <button class="btn btn-primary">Default</button>
+      <button class="btn btn-primary btn-lg">Large</button>
+      <button class="btn btn-primary btn-xl">X-Large</button>
+    </div>
+  </div>
+
+  <div class="div reveal"><div class="div-l"></div><div class="div-t">États spéciaux</div><div class="div-l"></div></div>
+  <div class="card reveal" style="padding:28px;">
+    <div style="display:flex;flex-wrap:wrap;gap:10px;align-items:center;">
+      <button class="btn btn-primary" disabled>Solde insuffisant</button>
+      <button class="btn btn-primary btn-loading">Envoi en cours</button>
+      <button class="btn btn-icon btn-ink" title="Notifications">🔔</button>
+      <button class="btn btn-icon btn-ghost" title="Menu">⋯</button>
+      <button class="btn btn-icon btn-ghost sm">←</button>
+    </div>
+    <div style="display:flex;gap:10px;margin-top:12px;align-items:center;">
+      <div style="width:100%"><button class="btn btn-primary" style="width:100%;">CTA pleine largeur — mobile</button></div>
+    </div>
+  </div>
+
+  <div class="div reveal"><div class="div-l"></div><div class="div-t">Button Group</div><div class="div-l"></div></div>
+  <div class="card reveal" style="padding:28px;">
+    <div class="btn-group" style="display:inline-flex;">
+      <button class="btn-g on">Envoyer</button>
+      <button class="btn-g">Recevoir</button>
+      <button class="btn-g">Demander</button>
+    </div>
+  </div>
+
+  <pre class="cb reveal mt16"><span class="cm">// Tailwind — bouton primary (Pulapay CTA)</span>
+<span class="co">&lt;button</span> <span class="cb2">className</span>=<span class="cg">"bg-pula-orange text-white font-semibold text-sm
+  rounded-full px-7 py-3 transition-all duration-150
+  hover:bg-[#E55E00] hover:-translate-y-px
+  hover:shadow-[0_6px_20px_rgba(255,107,0,.28)]
+  disabled:opacity-40 disabled:cursor-not-allowed
+  disabled:translate-y-0 disabled:shadow-none"</span><span class="co">&gt;</span>
+  Envoyer →
+<span class="co">&lt;/button&gt;</span></pre>
+</section>
+
+<!-- ══════════════════
+  COMPONENTS — INPUTS
+══════════════════ -->
+<section class="sec" id="inputs">
+  <div class="eyebrow reveal"><div class="ey-num">C.02</div><div class="ey-line"></div><div class="ey-lbl">Composants — Inputs</div></div>
+  <h2 class="sec-h reveal">Input <em>Library</em></h2>
+  <p class="sec-lead reveal">Feedback visuel immédiat sur chaque état. Focus = border ink. Erreur = border rouge + fond rouge clair. Jamais de texte rouge sans fond rouge clair.</p>
+
+  <div class="g2 reveal" style="gap:24px;">
+    <div style="display:flex;flex-direction:column;gap:16px;">
+      <div class="inp-wrap">
+        <div class="inp-lbl">Numéro ou nom</div>
+        <div class="inp-field"><span class="inp-ico">🔍</span><input class="inp" placeholder="Koffi Asante · +225 07 XX XX XX"></div>
+        <div class="inp-hint">Recherche contacts Pulapay</div>
+      </div>
+      <div class="inp-wrap">
+        <div class="inp-lbl">État focus actif</div>
+        <input class="inp" style="border-color:var(--ink);box-shadow:0 0 0 3px rgba(13,13,13,.06);" value="Fatou Diallo">
+      </div>
+      <div class="inp-wrap">
+        <div class="inp-lbl">État succès</div>
+        <div class="inp-field"><input class="inp ok" value="Aminata Touré"><span class="inp-ico-r">✓</span></div>
+        <div class="inp-hint ok">✓ Utilisatrice Pulapay vérifiée</div>
+      </div>
+      <div class="inp-wrap">
+        <div class="inp-lbl">État erreur</div>
+        <div class="inp-field"><input class="inp err" value="0701234"><span class="inp-ico-r" style="color:var(--error);">✕</span></div>
+        <div class="inp-hint err">✗ Ce numéro n'est pas valide</div>
+      </div>
+      <div class="inp-wrap">
+        <div class="inp-lbl">Désactivé</div>
+        <input class="inp" disabled value="Non modifiable">
+      </div>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:16px;">
+      <div class="inp-wrap">
+        <div class="inp-lbl">Numéro avec préfixe pays</div>
+        <div class="inp-phone"><div class="inp-prefix">🇧🇯 +229</div><input class="inp" placeholder="67 00 00 00"></div>
+      </div>
+      <div class="inp-wrap">
+        <div class="inp-lbl">Recherche</div>
+        <div class="inp-field"><span class="inp-ico">🔍</span><input class="inp-search" placeholder="Chercher un contact…"></div>
+      </div>
+      <div class="inp-wrap">
+        <div class="inp-lbl">Note optionnelle</div>
+        <textarea class="inp-ta" placeholder="Pour quoi ? (optionnel)&#10;Ex: Loyer Janvier, Courses marché…"></textarea>
+        <div class="inp-hint">0/140 caractères</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="div reveal"><div class="div-l"></div><div class="div-t">Amount Input — écran d'envoi</div><div class="div-l"></div></div>
+  <div class="card reveal" style="padding:32px;text-align:center;">
+    <div style="font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--stone);margin-bottom:12px;">Montant à envoyer</div>
+    <input class="inp-amt" value="25 000" style="max-width:320px;">
+    <div style="font-size:12px;color:var(--stone);margin-top:8px;">FCFA · Solde disponible : <strong style="color:var(--ink);">247 500 FCFA</strong></div>
+  </div>
+
+  <div class="div reveal"><div class="div-l"></div><div class="div-t">OTP Input — vérification téléphone</div><div class="div-l"></div></div>
+  <div class="card reveal" style="padding:28px;display:flex;flex-direction:column;align-items:center;gap:16px;">
+    <div style="font-size:13px;color:var(--stone);">Code envoyé au <strong style="color:var(--ink);">+229 67 00 00 00</strong></div>
+    <div class="otp-row">
+      <input class="otp-box filled" value="3" maxlength="1">
+      <input class="otp-box filled" value="8" maxlength="1">
+      <input class="otp-box filled" value="4" maxlength="1">
+      <input class="otp-box" style="border-color:var(--orange);box-shadow:0 0 0 3px var(--orange-m);" maxlength="1" placeholder="·">
+      <input class="otp-box" maxlength="1" placeholder="·">
+      <input class="otp-box" maxlength="1" placeholder="·">
+    </div>
+    <div style="font-size:12px;color:var(--stone);">Renvoyer le code dans <span style="color:var(--orange);font-weight:600;">54s</span></div>
+  </div>
+</section>
+
+<!-- ══════════════════
+  COMPONENTS — BADGES
+══════════════════ -->
+<section class="sec alt" id="badges">
+  <div class="eyebrow reveal"><div class="ey-num">C.03</div><div class="ey-line"></div><div class="ey-lbl">Composants — Badges & Status</div></div>
+  <h2 class="sec-h reveal">Badges & <em>Status Pills</em></h2>
+
+  <div class="card reveal" style="padding:28px;">
+    <div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:16px;">
+      <span class="badge bd-green"><span class="bd-dot" style="background:var(--green);"></span>Confirmé</span>
+      <span class="badge bd-orange"><span class="bd-dot" style="background:var(--orange);"></span>En cours</span>
+      <span class="badge bd-error"><span class="bd-dot" style="background:var(--error);"></span>Échoué</span>
+      <span class="badge bd-warn"><span class="bd-dot" style="background:var(--warn);"></span>En attente</span>
+      <span class="badge bd-violet">Premium</span>
+      <span class="badge bd-ink">Mobile Money</span>
+      <span class="badge bd-stone">International</span>
+    </div>
+    <div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:16px;">
+      <span class="badge bd-green" style="font-size:12px;padding:6px 12px;">+25 000 FCFA reçu</span>
+      <span class="badge bd-orange" style="font-size:12px;padding:6px 12px;">−8 500 FCFA envoyé</span>
+    </div>
+    <div style="font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--stone);margin:16px 0 8px;">Transaction Status Pills</div>
+    <div style="display:flex;flex-wrap:wrap;gap:8px;">
+      <span class="status-pill sp-done">✓ Confirmé</span>
+      <span class="status-pill sp-pending">⏳ En attente</span>
+      <span class="status-pill sp-fail">✕ Échoué</span>
+      <span class="status-pill sp-process">↻ En cours</span>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════
+  COMPONENTS — CARDS
+══════════════════ -->
+<section class="sec" id="cards">
+  <div class="eyebrow reveal"><div class="ey-num">C.04</div><div class="ey-line"></div><div class="ey-lbl">Composants — Cards</div></div>
+  <h2 class="sec-h reveal">Card <em>System</em></h2>
+
+  <div class="div reveal"><div class="div-l"></div><div class="div-t">Wallet Card — composant principal</div><div class="div-l"></div></div>
+  <div class="reveal" style="max-width:360px;">
+    <div class="wallet-card">
+      <div class="wc-mesh"></div><div class="wc-grid"></div>
+      <div class="wc-top">
+        <div><div class="wc-lbl">Solde Pulapay</div></div>
+        <button class="wc-hide">●●●</button>
+      </div>
+      <div class="wc-balance">247 <span>500</span></div>
+      <div class="wc-currency">FCFA · Mis à jour à l'instant</div>
+      <div class="wc-btns">
+        <button class="wc-btn primary">↑ Envoyer</button>
+        <button class="wc-btn">↓ Recevoir</button>
+        <button class="wc-btn">⊞ Demander</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="div reveal"><div class="div-l"></div><div class="div-t">Variantes de surface</div><div class="div-l"></div></div>
+  <div class="g4 reveal">
+    <div class="card"><div style="font-size:9px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--stone);margin-bottom:8px;">Default</div><div style="font-size:13px;font-weight:600;">White · Border Rule</div></div>
+    <div class="card mist"><div style="font-size:9px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--stone);margin-bottom:8px;">Mist</div><div style="font-size:13px;font-weight:600;">Alt Surface</div></div>
+    <div class="card orange"><div style="font-size:9px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--orange);margin-bottom:8px;">Orange</div><div style="font-size:13px;font-weight:600;">Highlight · CTA</div></div>
+    <div class="card green"><div style="font-size:9px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--green);margin-bottom:8px;">Green</div><div style="font-size:13px;font-weight:600;">Succès · Confirme</div></div>
+  </div>
+
+  <div class="div reveal"><div class="div-l"></div><div class="div-t">Info Card — récapitulatif de transaction</div><div class="div-l"></div></div>
+  <div class="reveal" style="max-width:400px;">
+    <div class="info-card">
+      <div class="ic-head">
+        <div><div class="ic-title">Récapitulatif de l'envoi</div><div class="ic-sub">Étape 3 sur 5 · Vérification</div></div>
+      </div>
+      <div class="ic-body">
+        <div class="ic-row"><span class="ic-key">Destinataire</span><span class="ic-val">Koffi Asante</span></div>
+        <div class="ic-row"><span class="ic-key">Montant</span><span class="ic-val orange">25 000 FCFA</span></div>
+        <div class="ic-row"><span class="ic-key">Via</span><span class="ic-val">Mobile Money MTN</span></div>
+        <div class="ic-row"><span class="ic-key">Frais Pulapay</span><span class="ic-val">Inclus ✓</span></div>
+        <div class="ic-row"><span class="ic-key">Total débité</span><span class="ic-val green" style="font-size:15px;">25 000 FCFA</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="div reveal"><div class="div-l"></div><div class="div-t">Card interactive</div><div class="div-l"></div></div>
+  <div class="g3 reveal">
+    <div class="card interactive"><div style="font-size:22px;margin-bottom:10px;">📱</div><div style="font-size:13px;font-weight:600;margin-bottom:4px;">Mobile Money</div><div style="font-size:12px;color:var(--stone);">MTN · Moov · Celtiis</div></div>
+    <div class="card interactive" style="border-color:var(--orange);background:var(--orange-l);"><div style="font-size:22px;margin-bottom:10px;">⚡</div><div style="font-size:13px;font-weight:600;color:var(--orange);margin-bottom:4px;">Pulapay à Pulapay</div><div style="font-size:12px;color:var(--orange);">Instantané · Sans frais</div></div>
+    <div class="card interactive"><div style="font-size:22px;margin-bottom:10px;">🔗</div><div style="font-size:13px;font-weight:600;margin-bottom:4px;">Lien de paiement</div><div style="font-size:12px;color:var(--stone);">Partager facilement</div></div>
+  </div>
+</section>
+
+<!-- ══════════════════
+  COMPONENTS — TRANSACTIONS
+══════════════════ -->
+<section class="sec alt" id="tx">
+  <div class="eyebrow reveal"><div class="ey-num">C.05</div><div class="ey-line"></div><div class="ey-lbl">Composants — Transactions</div></div>
+  <h2 class="sec-h reveal">Transaction <em>Items</em></h2>
+
+  <div class="g2 reveal" style="gap:20px;">
+    <div class="tx-list">
+      <div class="tx-list-head"><span class="tx-list-title">Aujourd'hui</span><span class="tx-list-link">Voir tout →</span></div>
+      <div class="tx-item">
+        <div class="tx-av" style="background:var(--green-l);color:var(--green);">K</div>
+        <div class="tx-info"><div class="tx-name">Koffi Asante</div><div class="tx-meta">14:32 · Mobile Money MTN</div></div>
+        <div class="tx-right"><div class="tx-amt in">+25 000</div><div class="tx-status"><span class="status-pill sp-done">✓</span></div></div>
+      </div>
+      <div class="tx-item">
+        <div class="tx-av" style="background:var(--orange-l);color:var(--orange);">S</div>
+        <div class="tx-info"><div class="tx-name">Sandaga Dakar</div><div class="tx-meta">09:15 · Lien de paiement</div></div>
+        <div class="tx-right"><div class="tx-amt out">−8 500</div><div class="tx-status"><span class="status-pill sp-done">✓</span></div></div>
+      </div>
+      <div class="tx-item">
+        <div class="tx-av" style="background:var(--violet-l);color:var(--violet);">A</div>
+        <div class="tx-info"><div class="tx-name">Aissatou Diallo</div><div class="tx-meta">En cours · Traitement…</div></div>
+        <div class="tx-right"><div class="tx-amt out">−50 000</div><div class="tx-status"><span class="status-pill sp-process">↻</span></div></div>
+      </div>
+      <div class="tx-item">
+        <div class="tx-av" style="background:var(--error-l);color:var(--error);">!</div>
+        <div class="tx-info"><div class="tx-name">Orange Money</div><div class="tx-meta">Hier · Retrait échoué</div></div>
+        <div class="tx-right"><div class="tx-amt" style="color:var(--stone);">−20 000</div><div class="tx-status"><span class="status-pill sp-fail">✕</span></div></div>
+      </div>
+    </div>
+    <div>
+      <div style="font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--stone);margin-bottom:12px;">Skeleton Loader</div>
+      <div class="tx-list">
+        <div class="tx-list-head"><span class="tx-list-title">Chargement…</span></div>
+        <div class="skel-tx" style="border-bottom:1px solid var(--rule);">
+          <div class="skel skel-av"></div>
+          <div style="flex:1;display:flex;flex-direction:column;gap:6px;">
+            <div class="skel skel-line" style="width:55%;"></div>
+            <div class="skel skel-line" style="width:38%;height:8px;"></div>
+          </div>
+          <div class="skel skel-line" style="width:56px;"></div>
+        </div>
+        <div class="skel-tx" style="border-bottom:1px solid var(--rule);">
+          <div class="skel skel-av"></div>
+          <div style="flex:1;display:flex;flex-direction:column;gap:6px;">
+            <div class="skel skel-line" style="width:44%;"></div>
+            <div class="skel skel-line" style="width:60%;height:8px;"></div>
+          </div>
+          <div class="skel skel-line" style="width:48px;"></div>
+        </div>
+        <div class="skel-tx">
+          <div class="skel skel-av"></div>
+          <div style="flex:1;display:flex;flex-direction:column;gap:6px;">
+            <div class="skel skel-line" style="width:62%;"></div>
+            <div class="skel skel-line" style="width:30%;height:8px;"></div>
+          </div>
+          <div class="skel skel-line" style="width:52px;"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════
+  COMPONENTS — NAVIGATION
+══════════════════ -->
+<section class="sec" id="nav">
+  <div class="eyebrow reveal"><div class="ey-num">C.06</div><div class="ey-line"></div><div class="ey-lbl">Composants — Navigation</div></div>
+  <h2 class="sec-h reveal">Navigation <em>Patterns</em></h2>
+
+  <div class="div reveal"><div class="div-l"></div><div class="div-t">Top Bar — header screen</div><div class="div-l"></div></div>
+  <div class="reveal" style="max-width:360px;border-radius:var(--r-lg);overflow:hidden;box-shadow:var(--shadow-lg);">
+    <div class="top-bar">
+      <div class="tb-mesh"></div>
+      <div style="position:relative;display:flex;align-items:flex-start;justify-content:space-between;">
+        <div><div class="tb-greeting">Bonjour 👋</div><div class="tb-name">Aminata Touré</div></div>
+        <button class="tb-notif">🔔</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="div reveal"><div class="div-l"></div><div class="div-t">Bottom Navigation Bar — mobile</div><div class="div-l"></div></div>
+  <div class="reveal" style="max-width:360px;border:1px solid var(--rule);border-radius:var(--r-lg);overflow:hidden;">
+    <div class="bottom-nav">
+      <div class="bn-item on"><div class="bn-icon">⌂</div><div class="bn-lbl">Accueil</div></div>
+      <div class="bn-item"><div class="bn-icon">↑↓</div><div class="bn-lbl">Activité</div></div>
+      <div class="bn-fab">↑</div>
+      <div class="bn-item"><div class="bn-icon">⊞</div><div class="bn-lbl">Demander</div></div>
+      <div class="bn-item"><div class="bn-icon">◎</div><div class="bn-lbl">Profil</div></div>
+    </div>
+  </div>
+
+  <pre class="cb reveal mt16"><span class="cm">/* Bottom Nav rules */</span>
+<span class="cm">// 4 items max (+ FAB central optionnel)</span>
+<span class="cm">// Order: Accueil | Activité | [FAB Send] | Demander | Profil</span>
+<span class="cm">// Active state: pula-orange sur icon + label</span>
+<span class="cm">// Inactive: stone (#6B6B6B) pour les deux</span>
+<span class="cm">// Tap target minimum: 44×44px par item</span>
+<span class="cm">// Safe area: padding-bottom dynamique (iOS/Android notch)</span></pre>
+</section>
+
+<!-- ══════════════════
+  COMPONENTS — MODALS & SHEETS
+══════════════════ -->
+<section class="sec alt" id="modals">
+  <div class="eyebrow reveal"><div class="ey-num">C.07</div><div class="ey-line"></div><div class="ey-lbl">Composants — Modals & Sheets</div></div>
+  <h2 class="sec-h reveal">Modal & Bottom <em>Sheet</em></h2>
+
+  <div class="g2 reveal" style="gap:20px;align-items:start;">
+    <div>
+      <div style="font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--stone);margin-bottom:12px;">Modal desktop / confirmation</div>
+      <div class="modal-box" style="box-shadow:var(--shadow-lg);">
+        <div class="modal-head">
+          <div class="modal-title">Confirmer l'envoi</div>
+          <button class="modal-close">✕</button>
+        </div>
+        <div class="modal-body">
+          <div style="text-align:center;padding:8px 0 16px;">
+            <div class="av av-lg av-g" style="margin:0 auto 12px;">K</div>
+            <div style="font-size:15px;font-weight:700;">Koffi Asante</div>
+            <div style="font-size:32px;font-weight:800;letter-spacing:-1.5px;margin:8px 0 2px;color:var(--orange);">25 000 FCFA</div>
+            <div style="font-size:12px;color:var(--stone);">Via Mobile Money MTN · 0 frais</div>
+          </div>
+        </div>
+        <div class="modal-foot">
+          <button class="btn btn-ghost btn-sm">Annuler</button>
+          <button class="btn btn-primary btn-sm">Confirmer l'envoi</button>
+        </div>
+      </div>
+    </div>
+    <div>
+      <div style="font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--stone);margin-bottom:12px;">Bottom Sheet mobile</div>
+      <div style="border:1px solid var(--rule);border-radius:var(--r-xl);overflow:hidden;box-shadow:var(--shadow-lg);">
+        <div class="bsheet">
+          <div class="bsheet-handle"></div>
+          <div class="bsheet-head"><div class="bsheet-title">Choisir le destinataire</div></div>
+          <div class="bsheet-body">
+            <div class="inp-field" style="margin-bottom:12px;"><span class="inp-ico">🔍</span><input class="inp-search" placeholder="Chercher un contact…" style="width:100%;"></div>
+            <div style="font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--stone);margin-bottom:8px;">Récents</div>
+            <div class="tx-item" style="padding:10px 0;"><div class="av av-sm av-g">K</div><div class="tx-info"><div class="tx-name">Koffi Asante</div><div class="tx-meta">+229 67 12 34 56</div></div></div>
+            <div class="tx-item" style="padding:10px 0;"><div class="av av-sm av-o">F</div><div class="tx-info"><div class="tx-name">Fatou Diallo</div><div class="tx-meta">Pulapay · @fatou</div></div></div>
+            <div class="tx-item" style="padding:10px 0;border-bottom:none;"><div class="av av-sm av-v">A</div><div class="tx-info"><div class="tx-name">Aissatou Touré</div><div class="tx-meta">+225 07 98 76 54</div></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════
+  COMPONENTS — FEEDBACK
+══════════════════ -->
+<section class="sec" id="feedback">
+  <div class="eyebrow reveal"><div class="ey-num">C.08</div><div class="ey-line"></div><div class="ey-lbl">Composants — Feedback</div></div>
+  <h2 class="sec-h reveal">Toasts & <em>Empty States</em></h2>
+
+  <div class="g2 reveal" style="gap:20px;align-items:start;">
+    <div>
+      <div class="toast t-ok"><div class="toast-ico">✓</div><div><div class="toast-title">Argent envoyé !</div><div class="toast-body">25 000 FCFA envoyés à Koffi Asante · il y a 2 sec</div></div></div>
+      <div class="toast t-info"><div class="toast-ico">💰</div><div><div class="toast-title">Argent reçu !</div><div class="toast-body">+112 000 FCFA de Fatou Diallo via Mobile Money</div></div></div>
+      <div class="toast t-warn"><div class="toast-ico">⏳</div><div><div class="toast-title">Transaction en attente</div><div class="toast-body">Traitement en cours, peut prendre quelques minutes.</div></div></div>
+      <div class="toast t-err"><div class="toast-ico">⚠</div><div><div class="toast-title">Quelque chose s'est mal passé.</div><div class="toast-body">Réessaie dans quelques secondes. Si le problème persiste, contacte-nous.</div></div></div>
+    </div>
+    <div>
+      <div style="border:1px solid var(--rule);border-radius:var(--r-lg);overflow:hidden;">
+        <div class="empty">
+          <div class="empty-ico">💸</div>
+          <div class="empty-title">Aucune transaction encore</div>
+          <div class="empty-body">Envoie ton premier paiement pour commencer. C'est aussi simple qu'un message.</div>
+          <button class="btn btn-primary btn-sm" style="margin-top:16px;">Envoyer de l'argent</button>
+        </div>
+      </div>
+      <div style="border:1px solid var(--rule);border-radius:var(--r-lg);overflow:hidden;margin-top:12px;">
+        <div class="empty" style="padding:32px 24px;">
+          <div class="empty-ico">🔍</div>
+          <div class="empty-title">Aucun résultat</div>
+          <div class="empty-body">Essaie un autre nom ou un numéro de téléphone.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════
+  COMPONENTS — AVATARS
+══════════════════ -->
+<section class="sec alt" id="avatars">
+  <div class="eyebrow reveal"><div class="ey-num">C.09</div><div class="ey-line"></div><div class="ey-lbl">Composants — Avatars</div></div>
+  <h2 class="sec-h reveal">Avatar <em>System</em></h2>
+
+  <div class="card reveal" style="padding:28px;">
+    <div style="display:flex;flex-wrap:wrap;gap:16px;align-items:center;margin-bottom:20px;">
+      <div class="av av-xs av-g">K</div>
+      <div class="av av-sm av-o">F</div>
+      <div class="av av-md av-v">A</div>
+      <div class="av av-lg av-g">M</div>
+      <div class="av av-xl av-o" style="border-radius:var(--r-lg);">S</div>
+    </div>
+    <div style="font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--stone);margin-bottom:10px;">Couleurs avatar selon initiale</div>
+    <div style="display:flex;flex-wrap:wrap;gap:8px;">
+      <div class="av av-md av-g">A</div>
+      <div class="av av-md av-o">B</div>
+      <div class="av av-md av-v">C</div>
+      <div class="av av-md av-k">D</div>
+      <div class="av av-md av-g">E</div>
+      <div class="av av-md av-o">F</div>
+      <div class="av av-md" style="background:var(--ink);color:var(--white);">G</div>
+    </div>
+    <div style="margin-top:16px;font-size:12px;color:var(--stone);font-style:italic;">Règle : Assigner une couleur au hash de l'initiale ou de l'ID utilisateur pour la cohérence. Jamais de couleur assignée manuellement.</div>
+  </div>
+</section>
+
+<!-- ══════════════════
+  COMPONENTS — PROGRESS
+══════════════════ -->
+<section class="sec" id="progress">
+  <div class="eyebrow reveal"><div class="ey-num">C.10</div><div class="ey-line"></div><div class="ey-lbl">Composants — Progress</div></div>
+  <h2 class="sec-h reveal">Progress & <em>Steps</em></h2>
+
+  <div class="card reveal" style="padding:28px;display:flex;flex-direction:column;gap:24px;">
+    <div>
+      <div style="font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--stone);margin-bottom:10px;">Step Bar — onboarding (5 étapes, étape 3 active)</div>
+      <div class="step-bar">
+        <div class="step-seg done"></div>
+        <div class="step-seg done"></div>
+        <div class="step-seg active"></div>
+        <div class="step-seg"></div>
+        <div class="step-seg"></div>
+      </div>
+      <div style="font-size:11px;color:var(--stone);margin-top:6px;">Étape 3 sur 5 · Création du wallet</div>
+    </div>
+
+    <div>
+      <div style="font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--stone);margin-bottom:14px;">Step Dots — flow d'envoi</div>
+      <div class="step-dots">
+        <div class="step-dot-item">
+          <div class="sd-circle done">✓</div>
+          <div class="sd-label">Destinataire</div>
+        </div>
+        <div class="sd-connector done"></div>
+        <div class="step-dot-item">
+          <div class="sd-circle done">✓</div>
+          <div class="sd-label">Montant</div>
+        </div>
+        <div class="sd-connector done"></div>
+        <div class="step-dot-item">
+          <div class="sd-circle active">3</div>
+          <div class="sd-label active">Vérifier</div>
+        </div>
+        <div class="sd-connector"></div>
+        <div class="step-dot-item">
+          <div class="sd-circle">4</div>
+          <div class="sd-label">Confirmer</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════
+  COMPONENTS — SELECTION
+══════════════════ -->
+<section class="sec alt" id="selection">
+  <div class="eyebrow reveal"><div class="ey-num">C.11</div><div class="ey-line"></div><div class="ey-lbl">Composants — Sélection</div></div>
+  <h2 class="sec-h reveal">Selection <em>Controls</em></h2>
+
+  <div class="g2 reveal" style="gap:20px;">
+    <div class="card" style="padding:24px;display:flex;flex-direction:column;gap:16px;">
+      <div style="font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--stone);">Checkbox</div>
+      <div class="chk-wrap"><div class="chk-box on"><span class="chk-mark">✓</span></div><div class="chk-lbl">J'accepte les conditions d'utilisation</div></div>
+      <div class="chk-wrap"><div class="chk-box"></div><div class="chk-lbl">Recevoir les notifications marketing</div></div>
+      <div style="font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--stone);margin-top:8px;">Radio</div>
+      <div class="rad-wrap on"><div class="rad-circ"><div class="rad-inner"></div></div><div class="chk-lbl">Mobile Money MTN</div></div>
+      <div class="rad-wrap"><div class="rad-circ"><div class="rad-inner"></div></div><div class="chk-lbl">Mobile Money Moov</div></div>
+      <div style="font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--stone);margin-top:8px;">Toggle</div>
+      <div style="display:flex;align-items:center;gap:12px;">
+        <div class="tog-track on"><div class="tog-thumb"></div></div>
+        <div style="font-size:13px;color:var(--ink);">Notifications activées</div>
+      </div>
+      <div style="display:flex;align-items:center;gap:12px;">
+        <div class="tog-track"><div class="tog-thumb"></div></div>
+        <div style="font-size:13px;color:var(--stone);">Masquer le solde</div>
+      </div>
+    </div>
+
+    <div style="display:flex;flex-direction:column;gap:8px;">
+      <div style="font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--stone);margin-bottom:4px;">Payment Method Selector</div>
+      <div class="pay-opt on">
+        <div class="pay-ico">📱</div>
+        <div class="pay-info"><div class="pay-name">Mobile Money MTN</div><div class="pay-desc">Numéro lié · 0 frais</div></div>
+        <div class="pay-check">✓</div>
+      </div>
+      <div class="pay-opt">
+        <div class="pay-ico">🔄</div>
+        <div class="pay-info"><div class="pay-name">Pulapay à Pulapay</div><div class="pay-desc">Instantané · Gratuit</div></div>
+        <div class="pay-check"></div>
+      </div>
+      <div class="pay-opt">
+        <div class="pay-ico">🔗</div>
+        <div class="pay-info"><div class="pay-name">Lien de paiement</div><div class="pay-desc">Partager facilement</div></div>
+        <div class="pay-check"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════
+  COMPONENTS — NUMPAD
+══════════════════ -->
+<section class="sec" id="numpad">
+  <div class="eyebrow reveal"><div class="ey-num">C.12</div><div class="ey-line"></div><div class="ey-lbl">Composants — Numpad</div></div>
+  <h2 class="sec-h reveal">Amount <em>Numpad</em></h2>
+  <p class="sec-lead reveal">Clavier personnalisé pour les montants — évite le clavier système qui brise l'UX. Native touch feel, pas de délai.</p>
+
+  <div class="reveal" style="max-width:300px;">
+    <div style="text-align:center;padding:20px 0 16px;">
+      <div style="font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--stone);">Montant</div>
+      <div style="font-family:var(--font-ui);font-size:52px;font-weight:800;letter-spacing:-3px;color:var(--ink);border-bottom:2px solid var(--orange);padding-bottom:8px;margin:6px 0;">25 000</div>
+      <div style="font-size:12px;color:var(--stone);">FCFA · Solde : 247 500 FCFA</div>
+    </div>
+    <div class="numpad">
+      <button class="np-key">1</button>
+      <button class="np-key">2</button>
+      <button class="np-key">3</button>
+      <button class="np-key">4</button>
+      <button class="np-key">5</button>
+      <button class="np-key">6</button>
+      <button class="np-key">7</button>
+      <button class="np-key">8</button>
+      <button class="np-key">9</button>
+      <button class="np-key special">.</button>
+      <button class="np-key">0</button>
+      <button class="np-key special">⌫</button>
+    </div>
+    <button class="btn btn-primary" style="width:100%;margin-top:10px;font-size:16px;padding:15px;">Continuer →</button>
+  </div>
+</section>
+
+<!-- ══════════════════
+  MOTION REFERENCE
+══════════════════ -->
+<section class="sec alt" id="motion-ref">
+  <div class="eyebrow reveal"><div class="ey-num">R.01</div><div class="ey-line"></div><div class="ey-lbl">Référence — Motion</div></div>
+  <h2 class="sec-h reveal">Motion <em>Reference</em></h2>
+  <p class="sec-lead reveal">Chaque animation a une raison fonctionnelle. Jamais pour décorer. Toujours respecter <span class="c-inline">prefers-reduced-motion</span>.</p>
+
+  <div class="g3 reveal">
+    <div class="motion-card">
+      <div class="mc-demo demo-bounce" style="background:var(--orange-l);cursor:pointer;"><span>⚡</span></div>
+      <div class="mc-body"><div class="mc-name">Tap Feedback</div><div class="mc-tok">dur-xs: 100ms · ease-out</div><div class="mc-desc">Scale 0.96 au press. Retour immédiat au tap. Hover sur desktop uniquement.</div></div>
+    </div>
+    <div class="motion-card">
+      <div class="mc-demo demo-pop" style="background:var(--green-l);"><span>✓</span></div>
+      <div class="mc-body"><div class="mc-name">Success Confirm</div><div class="mc-tok">dur-lg: 400ms · ease-spring</div><div class="mc-desc">Scale 0→1 avec léger overshoot. Célèbre sans excès. Une seule fois.</div></div>
+    </div>
+    <div class="motion-card">
+      <div class="mc-demo demo-slide" style="background:var(--mist);"><span>→</span></div>
+      <div class="mc-body"><div class="mc-name">Screen Transition</div><div class="mc-tok">dur-md: 250ms · ease-out</div><div class="mc-desc">Slide horizontal. Avant = droite. Retour = gauche. Direction logique.</div></div>
+    </div>
+    <div class="motion-card">
+      <div class="mc-demo" style="background:var(--mist);">
+        <div class="skel skel-line" style="width:80px;height:14px;border-radius:7px;"></div>
+      </div>
+      <div class="mc-body"><div class="mc-name">Skeleton Pulse</div><div class="mc-tok">1.4s · ease-in-out · infinite</div><div class="mc-desc">Shimmer doux sur le solde et les transactions en chargement. Jamais de spinner seul sur le solde.</div></div>
+    </div>
+    <div class="motion-card">
+      <div class="mc-demo demo-fade" style="background:var(--mist);"><span>↑</span></div>
+      <div class="mc-body"><div class="mc-name">Page Entry Reveal</div><div class="mc-tok">dur-lg: 400ms · stagger 50ms</div><div class="mc-desc">Éléments slide-up + fade-in en cascade. Un seul moment orchestré par écran à l'entrée.</div></div>
+    </div>
+    <div class="motion-card" style="border-top:2px solid var(--error);">
+      <div class="mc-demo demo-shake" style="background:var(--error-l);"><span>⚠</span></div>
+      <div class="mc-body"><div class="mc-name">Error Shake</div><div class="mc-tok">300ms · ease · une fois</div><div class="mc-desc">Shake horizontal ±4px sur OTP faux ou solde insuffisant. Signal physique sans surprise.</div></div>
+    </div>
+  </div>
+
+  <pre class="cb reveal mt24"><span class="cm">/* Framer Motion — patterns Pulapay */</span>
+
+<span class="cm">// 1. Entry animation (stagger children)</span>
+<span class="co">const</span> container = { hidden: {}, show: { transition: { staggerChildren: <span class="cg">0.05</span> } } }
+<span class="co">const</span> item = { hidden: { y: <span class="cg">14</span>, opacity: <span class="cg">0</span> }, show: { y: <span class="cg">0</span>, opacity: <span class="cg">1</span>, transition: { duration: <span class="cg">0.4</span>, ease: [<span class="cg">0.16,1,0.3,1</span>] } } }
+
+<span class="cm">// 2. Success pop</span>
+<span class="co">const</span> successAnim = { scale: [<span class="cg">0, 1.15, 1</span>], rotate: [<span class="cg">-10, 3, 0</span>], transition: { duration: <span class="cg">0.4</span>, ease: [<span class="cg">0.34,1.56,0.64,1</span>] } }
+
+<span class="cm">// 3. Always respect reduced motion</span>
+<span class="co">const</span> { prefersReducedMotion } = useReducedMotion()
+<span class="co">const</span> animation = prefersReducedMotion ? {} : successAnim</pre>
+</section>
+
+<!-- ══════════════════
+  IMPLEMENTATION
+══════════════════ -->
+<section class="sec dark" id="impl">
+  <div class="eyebrow reveal"><div class="ey-num">R.02</div><div class="ey-line"></div><div class="ey-lbl light">Référence — Implémentation</div></div>
+  <h2 class="sec-h lt reveal">Implementation <em>Rules</em></h2>
+  <p class="sec-lead lt reveal">Règles non-négociables pour implémenter le Design System Pulapay correctement.</p>
+
+  <table class="st reveal" style="margin-bottom:32px;">
+    <thead><tr><th>Règle</th><th>Détail</th><th>Raison</th></tr></thead>
+    <tbody>
+      <tr><td style="font-weight:700;color:var(--orange);">Un CTA orange max</td><td>Un seul <span class="c-inline lt">btn-primary</span> visible par écran</td><td>Hiérarchie d'action claire, pas de confusion</td></tr>
+      <tr><td style="font-weight:700;">Touch target 44px</td><td>Tout élément interactif : min 44×44px</td><td>Accessibilité mobile · iOS HIG · Android guidelines</td></tr>
+      <tr><td style="font-weight:700;">Montants formatés</td><td><span class="c-inline lt">247 500 FCFA</span> — toujours avec séparateur</td><td>Lisibilité · Évite les erreurs sur les gros montants</td></tr>
+      <tr><td style="font-weight:700;">États de chargement</td><td>Skeleton sur solde · Jamais spinner seul</td><td>Réduit l'anxiété · Preserves layout</td></tr>
+      <tr><td style="font-weight:700;">Idempotency UI</td><td>Désactiver boutons après 1er clic de confirmation</td><td>Prévenir les doubles envois</td></tr>
+      <tr><td style="font-weight:700;">Erreurs humaines</td><td>Message en français, sans code technique</td><td>Confiance utilisateur · "Réessaie" pas "Error 503"</td></tr>
+      <tr><td style="font-weight:700;">Tokens only</td><td>Utiliser uniquement les CSS vars / tokens Tailwind</td><td>Cohérence · Facilite les futurs changements</td></tr>
+      <tr><td style="font-weight:700;">prefers-reduced-motion</td><td>Toutes les animations vérifiées</td><td>Accessibilité · Certains pays ont connexions lentes</td></tr>
+      <tr><td style="font-weight:700;">Safe areas</td><td>Padding dynamique iOS / Android notch</td><td>Bottom nav pas coupé sur iPhone 15+</td></tr>
+      <tr><td style="font-weight:700;">i18n ready</td><td>Aucune string hardcodée · tout en <span class="c-inline lt">t()</span></td><td>FR + EN + Fon dès le départ</td></tr>
+    </tbody>
+  </table>
+
+  <pre class="cb reveal"><span class="cm">/* tailwind.config.js — config complète Pulapay */</span>
+<span class="co">module</span>.exports = {
+  theme: { extend: {
+    colors: {
+      <span class="co">'pula-orange'</span>: <span class="cg">'#FF6B00'</span>, <span class="co">'pula-orange-hover'</span>: <span class="cg">'#E55E00'</span>,
+      <span class="co">'pula-ink'</span>:    <span class="cg">'#0D0D0D'</span>, <span class="co">'pula-white'</span>:  <span class="cg">'#FFFFFF'</span>,
+      <span class="co">'pula-green'</span>:  <span class="cg">'#1F8A70'</span>, <span class="co">'pula-green-l'</span>:<span class="cg">'#E8F5F1'</span>,
+      <span class="co">'pula-violet'</span>: <span class="cg">'#5B2EFF'</span>, <span class="co">'pula-violet-l'</span>:<span class="cg">'#EDEAFF'</span>,
+      <span class="co">'pula-mist'</span>:   <span class="cg">'#F5F5F2'</span>, <span class="co">'pula-rule'</span>:   <span class="cg">'#E8E8E4'</span>,
+      <span class="co">'pula-stone'</span>:  <span class="cg">'#6B6B6B'</span>, <span class="co">'pula-error'</span>:  <span class="cg">'#E53333'</span>,
+    },
+    fontFamily: {
+      <span class="co">'product'</span>: [<span class="cg">'Product Sans'</span>, <span class="cg">'Google Sans'</span>, <span class="cg">'Helvetica'</span>, <span class="cg">'Arial'</span>, <span class="cg">'sans-serif'</span>],
+      <span class="co">'serif-pula'</span>: [<span class="cg">'Times New Roman MT'</span>, <span class="cg">'Times New Roman'</span>, <span class="cg">'serif'</span>],
+    },
+    borderRadius: {
+      <span class="co">'pula-xs'</span>:<span class="cg">'6px'</span>, <span class="co">'pula-sm'</span>:<span class="cg">'8px'</span>, <span class="co">'pula-md'</span>:<span class="cg">'12px'</span>,
+      <span class="co">'pula-lg'</span>:<span class="cg">'16px'</span>, <span class="co">'pula-xl'</span>:<span class="cg">'24px'</span>,
+    },
+    transitionTimingFunction: {
+      <span class="co">'pula-out'</span>:    <span class="cg">'cubic-bezier(0.16, 1, 0.3, 1)'</span>,
+      <span class="co">'pula-spring'</span>: <span class="cg">'cubic-bezier(0.34, 1.56, 0.64, 1)'</span>,
+    },
+  }}
+}</pre>
+</section>
+
+<footer>
+  <div>
+    <div class="foot-logo">Pula<b>pay</b></div>
+    <div class="foot-sub">"Finally… someone gets it."</div>
+  </div>
+  <div class="foot-meta">Design System v1.0 · 40+ composants<br>Next.js · React · TypeScript · Tailwind<br>2026 · Bénin · Afrique de l'Ouest</div>
+</footer>
+
+</main>
+
+<script>
+// Reveal on scroll
+const io = new IntersectionObserver(entries => {
+  entries.forEach((e,i) => { if(e.isIntersecting) setTimeout(()=>e.target.classList.add('on'), i*40); });
+}, {threshold:0.07});
+document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+setTimeout(()=>{ document.querySelectorAll('.reveal').forEach(el=>{ if(el.getBoundingClientRect().top < window.innerHeight) el.classList.add('on'); }); }, 80);
+
+// Active nav
+const secs = document.querySelectorAll('[id]');
+const links = document.querySelectorAll('.sb-a');
+const navIo = new IntersectionObserver(entries=>{
+  entries.forEach(e=>{ if(e.isIntersecting) links.forEach(l=>l.classList.toggle('on', l.getAttribute('href')==='#'+e.target.id)); });
+},{threshold:0.3});
+secs.forEach(s=>navIo.observe(s));
+
+// Simple interactivity demos
+document.querySelectorAll('.tog-track').forEach(t=>{
+  t.addEventListener('click',()=>t.classList.toggle('on'));
+});
+document.querySelectorAll('.rad-wrap').forEach(r=>{
+  r.addEventListener('click',()=>{
+    document.querySelectorAll('.rad-wrap').forEach(x=>x.classList.remove('on'));
+    r.classList.add('on');
+  });
+});
+document.querySelectorAll('.pay-opt').forEach(p=>{
+  p.addEventListener('click',()=>{
+    document.querySelectorAll('.pay-opt').forEach(x=>x.classList.remove('on'));
+    p.classList.add('on');
+    p.querySelector('.pay-check').textContent='✓';
+    document.querySelectorAll('.pay-opt:not(.on) .pay-check').forEach(c=>c.textContent='');
+  });
+});
+document.querySelectorAll('.btn-g').forEach(b=>{
+  b.addEventListener('click',()=>{
+    b.closest('.btn-group').querySelectorAll('.btn-g').forEach(x=>x.classList.remove('on'));
+    b.classList.add('on');
+  });
+});
+// Numpad demo
+const display = document.querySelector('.numpad')?.closest('section')?.querySelector('[style*="52px"]');
+let val = '25 000';
+document.querySelectorAll('.np-key').forEach(k=>{
+  k.addEventListener('click',()=>{
+    const t = k.textContent.trim();
+    if(!display) return;
+    if(t==='⌫') { val = val.slice(0,-1)||'0'; }
+    else if(t==='.') { if(!val.includes('.')) val+='.'; }
+    else { if(val==='0') val=t; else val+=t; }
+    display.textContent = val;
+  });
+});
+</script>
+</body>
+</html>

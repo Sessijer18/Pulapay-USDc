@@ -1,0 +1,1971 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pulapay — Design Context & Design System</title>
+<style>
+/* ══════════════════════════════════════════
+   FONTS
+   Product Sans (principal) + Times New Roman MT (accent)
+══════════════════════════════════════════ */
+@font-face {
+  font-family: 'Product Sans';
+  src: local('Product Sans'), local('ProductSans');
+  font-weight: 100 900; font-style: normal;
+}
+@font-face {
+  font-family: 'Product Sans';
+  src: local('Product Sans Italic'), local('ProductSans-Italic');
+  font-weight: 100 900; font-style: italic;
+}
+
+/* ══════════════════════════════════════════
+   DESIGN TOKENS
+══════════════════════════════════════════ */
+:root {
+  /* Colors */
+  --ink:        #0D0D0D;
+  --white:      #FFFFFF;
+  --orange:     #FF6B00;
+  --orange-l:   #FFF0E6;
+  --orange-mid: #FF8533;
+  --green:      #1F8A70;
+  --green-l:    #E8F5F1;
+  --green-deep: #166357;
+  --violet:     #5B2EFF;
+  --violet-l:   #EDEAFF;
+  --mist:       #F5F5F2;
+  --rule:       #E8E8E4;
+  --stone:      #6B6B6B;
+  --sand:       #F0EBE1;
+  --error:      #E53333;
+  --error-l:    #FFF0F0;
+  --warning:    #F5A623;
+  --warning-l:  #FFFBF0;
+
+  /* Typography */
+  --font-ui:    'Product Sans', 'Google Sans', Helvetica, Arial, sans-serif;
+  --font-serif: 'Times New Roman MT', 'Times New Roman', Times, serif;
+
+  /* Spacing scale (8px base) */
+  --s1: 4px;
+  --s2: 8px;
+  --s3: 12px;
+  --s4: 16px;
+  --s5: 24px;
+  --s6: 32px;
+  --s7: 48px;
+  --s8: 64px;
+  --s9: 96px;
+
+  /* Border radius */
+  --r-xs: 6px;
+  --r-sm: 8px;
+  --r-md: 12px;
+  --r-lg: 16px;
+  --r-xl: 24px;
+  --r-pill: 999px;
+
+  /* Shadows */
+  --shadow-sm: 0 1px 4px rgba(0,0,0,0.06);
+  --shadow-md: 0 4px 16px rgba(0,0,0,0.08);
+  --shadow-lg: 0 12px 40px rgba(0,0,0,0.12);
+
+  /* Motion */
+  --ease-out:   cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-spring:cubic-bezier(0.34, 1.56, 0.64, 1);
+  --dur-fast:   150ms;
+  --dur-mid:    250ms;
+  --dur-slow:   400ms;
+}
+
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior: smooth; font-size: 16px; }
+
+body {
+  font-family: var(--font-ui);
+  background: var(--white);
+  color: var(--ink);
+  overflow-x: hidden;
+}
+
+/* ── GRAIN ── */
+body::after {
+  content:''; position:fixed; inset:0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.025'/%3E%3C/svg%3E");
+  pointer-events:none; z-index:9000;
+}
+
+/* ══════════════════════════════════════════
+   SIDEBAR
+══════════════════════════════════════════ */
+.sidebar {
+  position: fixed; left:0; top:0; bottom:0; width:256px;
+  background: var(--ink);
+  display: flex; flex-direction: column;
+  z-index: 500;
+  border-right: 1px solid rgba(255,255,255,0.05);
+  overflow-y: auto;
+}
+
+.sb-brand {
+  padding: 28px 24px 24px;
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+  flex-shrink: 0;
+}
+.sb-wordmark {
+  font-family: var(--font-ui);
+  font-weight: 800; font-size: 20px;
+  color: var(--white); letter-spacing: -0.5px;
+}
+.sb-wordmark span { color: var(--orange); }
+.sb-doc-title {
+  font-size: 9px; font-weight: 600;
+  letter-spacing: 2px; text-transform: uppercase;
+  color: rgba(255,255,255,0.22); margin-top: 6px;
+}
+
+.nav { padding: 16px 0; flex: 1; }
+.nav-group { margin-bottom: 4px; }
+.nav-group-title {
+  padding: 12px 24px 4px;
+  font-size: 9px; font-weight: 700;
+  letter-spacing: 2.5px; text-transform: uppercase;
+  color: rgba(255,255,255,0.18);
+}
+.nav-link {
+  display: flex; align-items: center; gap: 10px;
+  padding: 8px 24px;
+  font-size: 12px; font-weight: 500;
+  color: rgba(255,255,255,0.38);
+  text-decoration: none;
+  border-left: 2px solid transparent;
+  transition: all var(--dur-fast) ease;
+}
+.nav-link:hover { color: rgba(255,255,255,0.72); background: rgba(255,255,255,0.03); }
+.nav-link.active { color: var(--white); border-left-color: var(--orange); background: rgba(255,255,255,0.05); }
+.nav-dot { width: 5px; height: 5px; border-radius: 50%; background: currentColor; opacity: 0.5; flex-shrink: 0; }
+
+.sb-footer {
+  padding: 16px 24px 24px;
+  border-top: 1px solid rgba(255,255,255,0.06);
+  flex-shrink: 0;
+}
+.sb-version { font-size: 10px; color: rgba(255,255,255,0.18); font-weight: 300; }
+
+/* ══════════════════════════════════════════
+   MAIN
+══════════════════════════════════════════ */
+main { margin-left: 256px; }
+
+/* ══════════════════════════════════════════
+   COVER
+══════════════════════════════════════════ */
+.cover {
+  min-height: 100vh;
+  background: var(--ink);
+  display: flex; flex-direction: column; justify-content: flex-end;
+  padding: 80px 88px;
+  position: relative; overflow: hidden;
+}
+.cover-grid {
+  position: absolute; inset: 0;
+  background-image:
+    linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px);
+  background-size: 64px 64px;
+}
+.cover-glow {
+  position: absolute; top: -120px; right: -80px;
+  width: 700px; height: 700px;
+  background: radial-gradient(circle, rgba(255,107,0,0.1) 0%, transparent 65%);
+  pointer-events: none;
+}
+.cover-glow2 {
+  position: absolute; bottom: -60px; left: 20%;
+  width: 500px; height: 400px;
+  background: radial-gradient(circle, rgba(31,138,112,0.07) 0%, transparent 65%);
+  pointer-events: none;
+}
+.cover-badge {
+  position: relative;
+  display: inline-flex; align-items: center; gap: 8px;
+  background: rgba(255,107,0,0.1); border: 1px solid rgba(255,107,0,0.2);
+  color: var(--orange); font-size: 10px; font-weight: 700;
+  letter-spacing: 2px; text-transform: uppercase;
+  padding: 6px 14px; border-radius: var(--r-pill);
+  margin-bottom: 36px; width: fit-content;
+}
+.cover-badge-dot { width:5px;height:5px;border-radius:50%;background:var(--orange);animation:blink 2s infinite; }
+@keyframes blink{0%,100%{opacity:1}50%{opacity:0.3}}
+
+.cover-h1 {
+  position: relative;
+  font-family: var(--font-ui);
+  font-size: clamp(48px, 6vw, 80px);
+  font-weight: 800; color: var(--white);
+  line-height: 0.98; letter-spacing: -2.5px;
+  margin-bottom: 10px;
+}
+.cover-h1 span { color: var(--orange); }
+
+.cover-sub {
+  position: relative;
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: clamp(18px, 2.5vw, 28px);
+  color: rgba(255,255,255,0.3);
+  margin-bottom: 56px; letter-spacing: -0.5px;
+}
+
+.cover-meta {
+  position: relative;
+  display: flex; gap: 24px; align-items: center; flex-wrap: wrap;
+}
+.cover-chip {
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.08);
+  padding: 6px 14px; border-radius: var(--r-pill);
+  font-size: 11px; font-weight: 500;
+  color: rgba(255,255,255,0.4); letter-spacing: 0.3px;
+}
+.cover-chip strong { color: rgba(255,255,255,0.7); font-weight: 600; }
+
+/* ══════════════════════════════════════════
+   SECTION LAYOUT
+══════════════════════════════════════════ */
+.section { padding: 80px 88px; border-bottom: 1px solid var(--rule); }
+.section.alt { background: var(--mist); }
+.section.dark { background: var(--ink); }
+
+.section-eyebrow {
+  display: flex; align-items: center; gap: 12px; margin-bottom: 44px;
+}
+.eyebrow-num {
+  font-size: 10px; font-weight: 800; letter-spacing: 3px;
+  text-transform: uppercase; color: var(--orange);
+}
+.eyebrow-line { flex: 1; max-width: 32px; height: 1px; background: var(--orange); opacity: 0.4; }
+.eyebrow-label {
+  font-size: 10px; font-weight: 600; letter-spacing: 2px;
+  text-transform: uppercase; color: var(--stone);
+}
+.eyebrow-label.light { color: rgba(255,255,255,0.3); }
+
+.section-title {
+  font-family: var(--font-ui);
+  font-size: clamp(32px, 4vw, 48px);
+  font-weight: 800; color: var(--ink);
+  line-height: 1.02; letter-spacing: -1.5px;
+  margin-bottom: 12px;
+}
+.section-title em {
+  font-family: var(--font-serif);
+  font-style: italic; font-weight: 400;
+  color: var(--green); letter-spacing: -1px;
+}
+.section-title.light { color: var(--white); }
+.section-title.light em { color: var(--orange); }
+
+.section-lead {
+  font-size: 15px; font-weight: 400; color: var(--stone);
+  line-height: 1.7; max-width: 580px; margin-bottom: 52px;
+}
+.section-lead.light { color: rgba(255,255,255,0.45); }
+
+/* ── helpers ── */
+.grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; }
+.grid-4 { display: grid; grid-template-columns: repeat(4,1fr); gap: 16px; }
+.mt-8  { margin-top: 8px; }
+.mt-16 { margin-top: 16px; }
+.mt-24 { margin-top: 24px; }
+.mt-32 { margin-top: 32px; }
+.mt-48 { margin-top: 48px; }
+.mt-64 { margin-top: 64px; }
+
+/* ── reveal ── */
+.reveal { opacity: 0; transform: translateY(16px); transition: opacity 0.5s var(--ease-out), transform 0.5s var(--ease-out); }
+.reveal.visible { opacity: 1; transform: none; }
+
+/* ══════════════════════════════════════════
+   CARD BASE
+══════════════════════════════════════════ */
+.card {
+  background: var(--white);
+  border: 1px solid var(--rule);
+  border-radius: var(--r-lg);
+  padding: 28px;
+}
+.card.dark-card { background: rgba(255,255,255,0.04); border-color: rgba(255,255,255,0.08); }
+.card.mist-card { background: var(--mist); border-color: var(--rule); }
+.card-label {
+  font-size: 10px; font-weight: 700; letter-spacing: 2px;
+  text-transform: uppercase; color: var(--stone); margin-bottom: 12px;
+}
+.card-label.orange { color: var(--orange); }
+.card-label.green { color: var(--green); }
+.card-label.light { color: rgba(255,255,255,0.3); }
+.card-title { font-size: 16px; font-weight: 700; color: var(--ink); margin-bottom: 8px; letter-spacing: -0.3px; }
+.card-title.light { color: var(--white); }
+.card-body { font-size: 13px; font-weight: 400; color: var(--stone); line-height: 1.65; }
+.card-body.light { color: rgba(255,255,255,0.4); }
+
+/* code chips */
+.code { font-family: 'Courier New', monospace; font-size: 12px; background: var(--mist); padding: 2px 7px; border-radius: 4px; color: var(--ink); }
+.code.dark { background: rgba(255,255,255,0.08); color: rgba(255,255,255,0.75); }
+pre.code-block {
+  font-family: 'Courier New', monospace; font-size: 12px;
+  background: #0D0D0D; color: #e8e8e8;
+  padding: 20px 24px; border-radius: var(--r-md);
+  line-height: 1.7; overflow-x: auto;
+  border: 1px solid rgba(255,255,255,0.06);
+  margin-top: 12px;
+}
+.c-orange { color: #FF8533; }
+.c-green  { color: #4EC9A4; }
+.c-blue   { color: #79B8FF; }
+.c-gray   { color: #6B7280; }
+.c-white  { color: #e8e8e8; }
+
+/* ── divider ── */
+.ornament {
+  display: flex; align-items: center; gap: 16px; margin: 48px 0 40px;
+}
+.ornament-line { flex: 1; height: 1px; background: var(--rule); }
+.ornament-text {
+  font-family: var(--font-serif); font-style: italic;
+  font-size: 12px; color: var(--stone);
+}
+
+/* ══════════════════════════════════════════
+   01 — DESIGN CONTEXT
+══════════════════════════════════════════ */
+.context-pillars {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 2px;
+  background: var(--rule);
+  border-radius: var(--r-xl);
+  overflow: hidden;
+  margin-bottom: 48px;
+}
+.cp-cell {
+  background: var(--white);
+  padding: 40px 32px;
+}
+.cp-cell.featured { background: var(--ink); }
+.cp-icon { font-size: 24px; margin-bottom: 16px; }
+.cp-num {
+  font-size: 10px; font-weight: 800; letter-spacing: 3px;
+  text-transform: uppercase; color: var(--orange); margin-bottom: 10px;
+}
+.cp-title { font-size: 17px; font-weight: 700; color: var(--ink); letter-spacing: -0.3px; margin-bottom: 8px; }
+.cp-title.light { color: var(--white); }
+.cp-body { font-size: 13px; color: var(--stone); line-height: 1.65; }
+.cp-body.light { color: rgba(255,255,255,0.4); }
+
+.context-rule {
+  background: var(--ink);
+  border-radius: var(--r-xl);
+  padding: 48px 56px;
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 48px; align-items: center;
+  position: relative; overflow: hidden;
+}
+.cr-glow {
+  position: absolute; top: -40%; right: -10%;
+  width: 400px; height: 400px;
+  background: radial-gradient(circle, rgba(255,107,0,0.1) 0%, transparent 70%);
+  pointer-events: none;
+}
+.cr-label { font-size: 10px; font-weight: 700; letter-spacing: 2.5px; text-transform: uppercase; color: rgba(255,255,255,0.25); margin-bottom: 16px; }
+.cr-quote {
+  font-family: var(--font-serif);
+  font-style: italic; font-size: 28px;
+  color: rgba(255,255,255,0.85); line-height: 1.3;
+  letter-spacing: -0.5px;
+}
+.cr-quote strong { color: var(--orange); font-style: normal; font-family: var(--font-ui); font-weight: 800; }
+.cr-list { list-style: none; display: flex; flex-direction: column; gap: 12px; }
+.cr-list-item {
+  display: flex; align-items: flex-start; gap: 12px;
+  padding: 16px 20px;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.07);
+  border-radius: var(--r-md);
+}
+.cr-li-icon { font-size: 16px; flex-shrink: 0; margin-top: 1px; }
+.cr-li-text { font-size: 13px; color: rgba(255,255,255,0.55); line-height: 1.5; }
+.cr-li-text strong { color: rgba(255,255,255,0.85); font-weight: 600; }
+
+/* ══════════════════════════════════════════
+   02 — COLOR SYSTEM
+══════════════════════════════════════════ */
+.color-hero {
+  display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 2px;
+  background: var(--rule); border-radius: var(--r-xl); overflow: hidden;
+  margin-bottom: 32px;
+}
+.ch-cell { position: relative; }
+.ch-swatch { height: 160px; display: flex; align-items: flex-end; padding: 20px; }
+.ch-name {
+  font-family: var(--font-ui);
+  font-size: 14px; font-weight: 700; letter-spacing: -0.3px;
+}
+.ch-info {
+  background: var(--white); border-top: 1px solid var(--rule);
+  padding: 16px 20px;
+}
+.ch-hex { font-family: 'Courier New', monospace; font-size: 12px; font-weight: 600; color: var(--ink); }
+.ch-role { font-size: 11px; color: var(--stone); margin-top: 4px; font-style: italic; }
+.ch-tag {
+  display: inline-block; margin-top: 8px;
+  font-size: 9px; font-weight: 700; letter-spacing: 1.5px;
+  text-transform: uppercase; padding: 3px 8px;
+  border-radius: var(--r-xs);
+}
+
+.color-secondary { display: grid; grid-template-columns: repeat(7, 1fr); gap: 10px; }
+.cs-item { border-radius: var(--r-md); overflow: hidden; }
+.cs-swatch { height: 56px; }
+.cs-info { background: var(--white); border: 1px solid var(--rule); border-top: none; padding: 10px 12px; border-radius: 0 0 var(--r-md) var(--r-md); }
+.cs-name { font-size: 10px; font-weight: 600; color: var(--ink); }
+.cs-hex { font-family: 'Courier New', monospace; font-size: 9px; color: var(--stone); margin-top: 2px; }
+
+/* color usage table */
+.usage-table { width: 100%; border-collapse: collapse; border-radius: var(--r-md); overflow: hidden; border: 1px solid var(--rule); }
+.usage-table th {
+  background: var(--ink); color: rgba(255,255,255,0.6);
+  font-size: 10px; font-weight: 700; letter-spacing: 2px;
+  text-transform: uppercase; padding: 12px 20px; text-align: left;
+}
+.usage-table td { padding: 14px 20px; border-bottom: 1px solid var(--rule); font-size: 13px; color: var(--ink); }
+.usage-table tr:last-child td { border-bottom: none; }
+.usage-table tr:nth-child(even) td { background: var(--mist); }
+.color-dot { display: inline-block; width: 10px; height: 10px; border-radius: 50%; margin-right: 8px; vertical-align: middle; }
+.never-tag { font-size: 10px; font-weight: 700; color: var(--error); background: var(--error-l); padding: 2px 8px; border-radius: 4px; }
+
+/* ══════════════════════════════════════════
+   03 — TYPOGRAPHY SYSTEM
+══════════════════════════════════════════ */
+.type-scale {
+  border: 1px solid var(--rule); border-radius: var(--r-lg); overflow: hidden;
+  margin-bottom: 32px;
+}
+.ts-row {
+  display: grid; grid-template-columns: 180px 1fr 160px;
+  align-items: center; gap: 32px;
+  border-bottom: 1px solid var(--rule);
+  background: var(--white); transition: background var(--dur-fast) ease;
+}
+.ts-row:last-child { border-bottom: none; }
+.ts-row:hover { background: var(--mist); }
+.ts-meta { padding: 24px 24px; border-right: 1px solid var(--rule); }
+.ts-role { font-size: 9px; font-weight: 800; letter-spacing: 2.5px; text-transform: uppercase; color: var(--orange); margin-bottom: 5px; }
+.ts-spec { font-size: 11px; color: var(--stone); font-weight: 400; line-height: 1.6; font-family: 'Courier New', monospace; }
+.ts-sample { padding: 24px 0; line-height: 1.05; }
+.ts-use { padding: 24px 24px; font-size: 11px; color: var(--stone); text-align: right; font-style: italic; line-height: 1.5; border-left: 1px solid var(--rule); }
+
+.font-duo { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.fd-card { border: 1px solid var(--rule); border-radius: var(--r-lg); overflow: hidden; }
+.fd-head { background: var(--ink); padding: 20px 24px; }
+.fd-name { font-size: 13px; font-weight: 700; color: var(--white); }
+.fd-role { font-size: 9px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; color: rgba(255,255,255,0.3); margin-top: 4px; }
+.fd-body { padding: 28px 24px; }
+.fd-alpha {
+  font-size: 22px; font-weight: 700; letter-spacing: -0.3px;
+  line-height: 1.4; color: var(--ink); word-break: break-all; margin-bottom: 20px;
+}
+.fd-weights { display: flex; flex-direction: column; gap: 8px; }
+.fd-w-row { display: flex; align-items: baseline; gap: 16px; }
+.fd-w-label { font-size: 10px; color: var(--stone); font-weight: 400; font-family: 'Courier New', monospace; min-width: 96px; }
+
+/* ══════════════════════════════════════════
+   04 — SPACING & LAYOUT
+══════════════════════════════════════════ */
+.spacing-visual {
+  display: flex; align-items: flex-end; gap: 24px;
+  padding: 40px; background: var(--mist); border: 1px solid var(--rule);
+  border-radius: var(--r-lg); margin-bottom: 32px; flex-wrap: wrap;
+}
+.sp-item { display: flex; flex-direction: column; align-items: center; gap: 10px; }
+.sp-block { width: 28px; background: var(--ink); border-radius: 3px; }
+.sp-val { font-family: 'Courier New', monospace; font-size: 11px; font-weight: 700; color: var(--orange); }
+.sp-px { font-size: 10px; color: var(--stone); }
+
+.grid-visual {
+  border: 1px solid var(--rule); border-radius: var(--r-lg);
+  overflow: hidden; margin-bottom: 32px;
+}
+.gv-header {
+  background: var(--ink); padding: 14px 24px;
+  font-size: 10px; font-weight: 700; letter-spacing: 2px;
+  text-transform: uppercase; color: rgba(255,255,255,0.4);
+}
+.gv-body { padding: 24px; }
+.gv-row { display: flex; gap: 4px; margin-bottom: 4px; }
+.gv-col {
+  flex: 1; height: 36px; border-radius: var(--r-xs);
+  background: rgba(255,107,0,0.08); border: 1px solid rgba(255,107,0,0.15);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 9px; font-weight: 700; color: var(--orange);
+}
+.gv-col.full { background: rgba(31,138,112,0.08); border-color: rgba(31,138,112,0.2); color: var(--green); }
+
+/* ══════════════════════════════════════════
+   05 — COMPONENT LIBRARY
+══════════════════════════════════════════ */
+.comp-section-label {
+  font-size: 10px; font-weight: 700; letter-spacing: 2.5px;
+  text-transform: uppercase; color: var(--stone);
+  padding: 10px 0; border-bottom: 1px solid var(--rule);
+  margin-bottom: 20px; margin-top: 40px;
+  display: flex; align-items: center; justify-content: space-between;
+}
+.comp-section-label:first-of-type { margin-top: 0; }
+.comp-tag {
+  font-size: 9px; font-weight: 600; letter-spacing: 1px; text-transform: uppercase;
+  padding: 3px 8px; border-radius: var(--r-xs); background: var(--mist); color: var(--stone);
+}
+
+/* ─ Buttons ─ */
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+  font-family: var(--font-ui); font-weight: 600; font-size: 14px;
+  border: none; border-radius: var(--r-pill); cursor: pointer;
+  padding: 13px 28px; transition: all var(--dur-fast) var(--ease-out);
+  letter-spacing: 0.1px; text-decoration: none; white-space: nowrap;
+}
+.btn-primary   { background: var(--orange); color: var(--white); }
+.btn-primary:hover { background: var(--orange-mid); transform: translateY(-1px); box-shadow: 0 4px 16px rgba(255,107,0,0.3); }
+.btn-secondary { background: var(--ink); color: var(--white); }
+.btn-secondary:hover { background: #1a1a1a; transform: translateY(-1px); }
+.btn-ghost     { background: transparent; color: var(--ink); border: 1.5px solid var(--rule); }
+.btn-ghost:hover { border-color: var(--ink); }
+.btn-green     { background: var(--green); color: var(--white); }
+.btn-green:hover { background: var(--green-deep); transform: translateY(-1px); }
+.btn-danger    { background: var(--error-l); color: var(--error); }
+.btn-sm        { font-size: 12px; padding: 9px 18px; }
+.btn-lg        { font-size: 16px; padding: 16px 36px; }
+.btn-icon      { padding: 13px 13px; }
+.btn:disabled  { opacity: 0.4; cursor: not-allowed; transform: none !important; }
+
+/* ─ Inputs ─ */
+.input-group { display: flex; flex-direction: column; gap: 6px; }
+.input-label { font-size: 12px; font-weight: 600; color: var(--ink); letter-spacing: 0.2px; }
+.input-field {
+  font-family: var(--font-ui); font-size: 14px; font-weight: 400;
+  color: var(--ink); background: var(--white);
+  border: 1.5px solid var(--rule); border-radius: var(--r-md);
+  padding: 12px 16px; outline: none;
+  transition: border-color var(--dur-fast) ease;
+}
+.input-field:focus, .input-field.active { border-color: var(--ink); }
+.input-field.error { border-color: var(--error); background: var(--error-l); }
+.input-field.success { border-color: var(--green); }
+.input-hint { font-size: 11px; color: var(--stone); margin-top: 4px; }
+.input-hint.error { color: var(--error); }
+.input-amount {
+  font-family: var(--font-ui); font-size: 40px; font-weight: 800;
+  color: var(--ink); background: transparent;
+  border: none; border-bottom: 2px solid var(--rule);
+  border-radius: 0; padding: 8px 0; text-align: center;
+  outline: none; width: 100%; letter-spacing: -1.5px;
+  transition: border-color var(--dur-fast) ease;
+}
+.input-amount:focus { border-bottom-color: var(--orange); }
+
+/* ─ Badges & Tags ─ */
+.badge {
+  display: inline-flex; align-items: center; gap: 5px;
+  font-size: 10px; font-weight: 700; letter-spacing: 0.5px;
+  padding: 4px 10px; border-radius: var(--r-pill);
+}
+.badge-dot { width: 5px; height: 5px; border-radius: 50%; }
+.badge-orange { background: var(--orange-l); color: var(--orange); }
+.badge-green  { background: var(--green-l); color: var(--green-deep); }
+.badge-violet { background: var(--violet-l); color: var(--violet); }
+.badge-ink    { background: var(--ink); color: var(--white); }
+.badge-error  { background: var(--error-l); color: var(--error); }
+.badge-stone  { background: var(--mist); color: var(--stone); }
+
+/* ─ Wallet Card ─ */
+.wallet-card {
+  background: var(--ink);
+  border-radius: var(--r-xl); padding: 32px;
+  position: relative; overflow: hidden;
+  box-shadow: var(--shadow-lg);
+}
+.wc-glow {
+  position: absolute; top: -40%; right: -20%;
+  width: 300px; height: 300px;
+  background: radial-gradient(circle, rgba(255,107,0,0.15) 0%, transparent 65%);
+  pointer-events: none;
+}
+.wc-label { font-size: 10px; font-weight: 500; color: rgba(255,255,255,0.35); letter-spacing: 1px; text-transform: uppercase; position: relative; }
+.wc-balance {
+  font-family: var(--font-ui);
+  font-size: 44px; font-weight: 800; color: var(--white);
+  letter-spacing: -2px; line-height: 1; margin: 8px 0 4px;
+  position: relative;
+}
+.wc-balance span { color: var(--orange); }
+.wc-currency { font-size: 14px; font-weight: 400; color: rgba(255,255,255,0.4); position: relative; }
+.wc-actions { display: flex; gap: 8px; margin-top: 24px; position: relative; }
+.wca-btn {
+  flex: 1; background: rgba(255,255,255,0.08); border: none;
+  border-radius: var(--r-md); padding: 14px 8px;
+  font-family: var(--font-ui); font-size: 12px; font-weight: 600;
+  color: rgba(255,255,255,0.75); cursor: pointer;
+  text-align: center; transition: background var(--dur-fast) ease;
+}
+.wca-btn:hover { background: rgba(255,255,255,0.13); }
+.wca-btn.primary { background: var(--orange); color: var(--white); }
+.wca-btn.primary:hover { background: var(--orange-mid); }
+
+/* ─ Transaction item ─ */
+.tx-item {
+  display: flex; align-items: center; gap: 14px;
+  padding: 14px 0; border-bottom: 1px solid var(--rule);
+}
+.tx-item:last-child { border-bottom: none; }
+.tx-avatar {
+  width: 40px; height: 40px; border-radius: var(--r-md);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 16px; flex-shrink: 0; font-weight: 700;
+}
+.tx-info { flex: 1; }
+.tx-name { font-size: 13px; font-weight: 600; color: var(--ink); letter-spacing: -0.2px; }
+.tx-meta { font-size: 11px; color: var(--stone); margin-top: 2px; }
+.tx-amount { font-size: 14px; font-weight: 700; letter-spacing: -0.3px; }
+.tx-in  { color: var(--green); }
+.tx-out { color: var(--ink); }
+
+/* ─ Notification toasts ─ */
+.toast {
+  display: flex; align-items: flex-start; gap: 12px;
+  padding: 14px 18px; border-radius: var(--r-md);
+  border: 1px solid; margin-bottom: 8px;
+}
+.toast-icon { font-size: 16px; flex-shrink: 0; margin-top: 1px; }
+.toast-title { font-size: 13px; font-weight: 600; margin-bottom: 2px; }
+.toast-body { font-size: 12px; line-height: 1.5; }
+.toast-success { background: var(--green-l); border-color: var(--green); }
+.toast-success .toast-title { color: var(--green-deep); }
+.toast-success .toast-body { color: var(--green); }
+.toast-warning { background: var(--warning-l); border-color: var(--warning); }
+.toast-warning .toast-title { color: #8B5E00; }
+.toast-warning .toast-body { color: #A06800; }
+.toast-error { background: var(--error-l); border-color: var(--error); }
+.toast-error .toast-title { color: var(--error); }
+.toast-error .toast-body { color: #B02626; }
+.toast-info { background: var(--mist); border-color: var(--rule); }
+.toast-info .toast-title { color: var(--ink); }
+.toast-info .toast-body { color: var(--stone); }
+
+/* ─ Phone mockup ─ */
+.phone-frame {
+  background: var(--ink); border-radius: 40px;
+  padding: 4px; width: 240px;
+  box-shadow: 0 40px 80px rgba(0,0,0,0.3), 0 0 0 1px rgba(255,255,255,0.06);
+  margin: 0 auto;
+}
+.phone-screen { background: var(--white); border-radius: 36px; overflow: hidden; min-height: 400px; }
+.phone-top { background: var(--ink); padding: 40px 20px 24px; position: relative; overflow: hidden; }
+.phone-top::before {
+  content: ''; position: absolute; inset: 0;
+  background: radial-gradient(ellipse at 75% -20%, rgba(255,107,0,0.18) 0%, transparent 55%),
+              radial-gradient(ellipse at 10% 100%, rgba(31,138,112,0.08) 0%, transparent 50%);
+}
+.phone-greeting { font-size: 10px; color: rgba(255,255,255,0.35); position: relative; z-index:1; }
+.phone-name { font-size: 14px; font-weight: 600; color: var(--white); position: relative; z-index:1; margin-bottom: 20px; }
+.phone-balance-label { font-size: 9px; color: rgba(255,255,255,0.3); letter-spacing: 1px; text-transform: uppercase; position: relative; z-index:1; }
+.phone-balance {
+  font-family: var(--font-ui); font-size: 34px; font-weight: 800;
+  color: var(--white); letter-spacing: -2px; position: relative; z-index:1;
+}
+.phone-balance span { color: var(--orange); }
+.phone-body { padding: 16px; }
+.phone-actions { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 6px; margin-bottom: 16px; }
+.phone-action {
+  background: var(--mist); border-radius: var(--r-md); padding: 12px 6px;
+  display: flex; flex-direction: column; align-items: center; gap: 5px;
+}
+.phone-action:first-child { background: var(--orange); }
+.phone-action-icon { font-size: 16px; }
+.phone-action-label { font-size: 9px; font-weight: 600; color: var(--ink); }
+.phone-action:first-child .phone-action-label { color: var(--white); }
+.phone-tx-section { }
+.phone-tx-label { font-size: 9px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: var(--stone); margin-bottom: 8px; }
+.phone-tx { display: flex; align-items: center; gap: 8px; padding: 7px 0; border-bottom: 1px solid var(--rule); }
+.phone-tx:last-child { border-bottom: none; }
+.phone-tx-av { width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 700; flex-shrink: 0; }
+.phone-tx-info { flex: 1; }
+.phone-tx-name { font-size: 11px; font-weight: 500; }
+.phone-tx-date { font-size: 9px; color: var(--stone); }
+.phone-tx-amount { font-size: 11px; font-weight: 700; }
+
+/* ══════════════════════════════════════════
+   06 — MOTION
+══════════════════════════════════════════ */
+.motion-token-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+.mt-card {
+  border: 1px solid var(--rule); border-radius: var(--r-lg); overflow: hidden;
+  cursor: pointer;
+}
+.mtc-demo {
+  height: 80px; background: var(--mist);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 28px; position: relative; overflow: hidden;
+}
+.mtc-body { padding: 20px; }
+.mtc-name { font-size: 13px; font-weight: 700; color: var(--ink); margin-bottom: 6px; }
+.mtc-token { font-family: 'Courier New', monospace; font-size: 11px; color: var(--orange); }
+.mtc-desc { font-size: 12px; color: var(--stone); margin-top: 6px; line-height: 1.5; }
+
+/* Demo animations */
+@keyframes demo-bounce {
+  0%   { transform: scale(1); }
+  50%  { transform: scale(1.15); }
+  100% { transform: scale(1); }
+}
+@keyframes demo-pulse {
+  0%,100% { opacity: 1; }
+  50%      { opacity: 0.4; }
+}
+@keyframes demo-slide {
+  0%   { transform: translateX(-8px); opacity: 0; }
+  100% { transform: translateX(0); opacity: 1; }
+}
+.anim-bounce:hover > * { animation: demo-bounce 300ms var(--ease-spring); }
+.anim-pulse .pulse-el { animation: demo-pulse 1.5s ease-in-out infinite; }
+.anim-slide:hover > * { animation: demo-slide 250ms var(--ease-out); }
+
+/* ══════════════════════════════════════════
+   07 — SCREEN FLOWS
+══════════════════════════════════════════ */
+.flow-map {
+  display: flex; gap: 2px; align-items: stretch;
+  background: var(--rule); border-radius: var(--r-xl); overflow: hidden;
+  margin-bottom: 32px;
+}
+.flow-step {
+  flex: 1; background: var(--white); padding: 28px 24px;
+  position: relative;
+}
+.flow-step.featured { background: var(--ink); }
+.flow-step-num {
+  font-size: 10px; font-weight: 800; letter-spacing: 2px;
+  text-transform: uppercase; color: var(--orange); margin-bottom: 8px;
+}
+.flow-step-title { font-size: 14px; font-weight: 700; color: var(--ink); margin-bottom: 8px; letter-spacing: -0.2px; }
+.flow-step-title.light { color: var(--white); }
+.flow-step-items { list-style: none; display: flex; flex-direction: column; gap: 5px; }
+.flow-step-items li { font-size: 12px; color: var(--stone); display: flex; align-items: flex-start; gap: 6px; }
+.flow-step-items.light li { color: rgba(255,255,255,0.45); }
+.flow-step-items li::before { content: "→"; color: var(--orange); font-size: 10px; flex-shrink: 0; margin-top: 2px; }
+.flow-arrow {
+  width: 24px; flex-shrink: 0; display: flex; align-items: center; justify-content: center;
+  background: var(--rule); font-size: 14px; color: var(--stone);
+}
+
+/* ══════════════════════════════════════════
+   08 — PATTERNS & TEXTURES
+══════════════════════════════════════════ */
+.pattern-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+.pattern-card {
+  border-radius: var(--r-lg); overflow: hidden;
+  min-height: 160px; position: relative;
+  border: 1px solid var(--rule);
+}
+.pattern-inner {
+  position: absolute; inset: 0;
+  display: flex; flex-direction: column;
+  justify-content: flex-end; padding: 20px;
+}
+.pattern-name { font-size: 11px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; }
+.pattern-desc { font-size: 11px; margin-top: 3px; }
+
+/* ══════════════════════════════════════════
+   09 — DO / DON'T
+══════════════════════════════════════════ */
+.verdict-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0; border: 1px solid var(--rule); border-radius: var(--r-lg); overflow: hidden; }
+.verdict-col { padding: 32px; }
+.verdict-col:first-child { border-right: 1px solid var(--rule); }
+.verdict-head {
+  font-size: 10px; font-weight: 800; letter-spacing: 2.5px;
+  text-transform: uppercase; padding: 6px 12px; border-radius: var(--r-xs);
+  display: inline-block; margin-bottom: 20px;
+}
+.vh-do   { background: var(--green-l); color: var(--green-deep); }
+.vh-dont { background: var(--error-l); color: var(--error); }
+.verdict-item {
+  display: flex; gap: 10px; align-items: flex-start;
+  font-size: 13px; color: var(--stone); line-height: 1.55; margin-bottom: 12px;
+}
+.vi-mark { font-size: 14px; flex-shrink: 0; }
+
+/* ══════════════════════════════════════════
+   10 — IMPLEMENTATION GUIDE
+══════════════════════════════════════════ */
+.impl-table { width: 100%; border-collapse: collapse; border-radius: var(--r-md); overflow: hidden; border: 1px solid var(--rule); }
+.impl-table th { background: var(--ink); color: rgba(255,255,255,0.6); font-size: 10px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; padding: 12px 20px; text-align: left; }
+.impl-table td { padding: 13px 20px; border-bottom: 1px solid var(--rule); font-size: 13px; color: var(--ink); vertical-align: top; }
+.impl-table tr:last-child td { border-bottom: none; }
+.impl-table tr:nth-child(even) td { background: var(--mist); }
+
+/* ══════════════════════════════════════════
+   FOOTER
+══════════════════════════════════════════ */
+footer {
+  background: var(--mist); border-top: 1px solid var(--rule);
+  padding: 36px 88px;
+  display: flex; align-items: center; justify-content: space-between;
+}
+.foot-brand { font-family: var(--font-ui); font-size: 18px; font-weight: 800; color: var(--ink); letter-spacing: -0.5px; }
+.foot-brand span { color: var(--orange); }
+.foot-meta { font-size: 11px; color: var(--stone); text-align: right; line-height: 1.8; font-weight: 300; }
+</style>
+</head>
+<body>
+
+<!-- ═══ SIDEBAR ═══ -->
+<aside class="sidebar">
+  <div class="sb-brand">
+    <div class="sb-wordmark">Pula<span>pay</span></div>
+    <div class="sb-doc-title">Design Context & System</div>
+  </div>
+  <nav class="nav">
+    <div class="nav-group">
+      <div class="nav-group-title">Contexte</div>
+      <a class="nav-link active" href="#cover"><span class="nav-dot"></span>Vue d'ensemble</a>
+      <a class="nav-link" href="#context"><span class="nav-dot"></span>Design Context</a>
+    </div>
+    <div class="nav-group">
+      <div class="nav-group-title">Fondations</div>
+      <a class="nav-link" href="#colors"><span class="nav-dot"></span>Couleurs</a>
+      <a class="nav-link" href="#typography"><span class="nav-dot"></span>Typographie</a>
+      <a class="nav-link" href="#spacing"><span class="nav-dot"></span>Espacement & Grille</a>
+    </div>
+    <div class="nav-group">
+      <div class="nav-group-title">Composants</div>
+      <a class="nav-link" href="#components"><span class="nav-dot"></span>Bibliothèque UI</a>
+      <a class="nav-link" href="#motion"><span class="nav-dot"></span>Motion</a>
+      <a class="nav-link" href="#patterns"><span class="nav-dot"></span>Patterns visuels</a>
+    </div>
+    <div class="nav-group">
+      <div class="nav-group-title">Application</div>
+      <a class="nav-link" href="#flows"><span class="nav-dot"></span>Flows & Écrans</a>
+      <a class="nav-link" href="#verdicts"><span class="nav-dot"></span>Do / Don't</a>
+      <a class="nav-link" href="#implementation"><span class="nav-dot"></span>Guide d'implémentation</a>
+    </div>
+  </nav>
+  <div class="sb-footer">
+    <div class="sb-version">Design System v1.0 · Next.js + Tailwind · 2026</div>
+  </div>
+</aside>
+
+<main>
+
+<!-- ══════════════════════════════════════
+   COVER
+══════════════════════════════════════════ -->
+<div class="cover" id="cover">
+  <div class="cover-grid"></div>
+  <div class="cover-glow"></div>
+  <div class="cover-glow2"></div>
+
+  <div class="cover-badge">
+    <div class="cover-badge-dot"></div>
+    Document de référence Frontend
+  </div>
+
+  <div class="cover-h1">Design Context<br><span>&</span> Design System</div>
+  <div class="cover-sub">La source de vérité pour builder<br>le frontend Pulapay.</div>
+
+  <div class="cover-meta">
+    <div class="cover-chip"><strong>Stack</strong> Next.js · React · TypeScript · Tailwind</div>
+    <div class="cover-chip"><strong>Polices</strong> Product Sans + Times New Roman MT</div>
+    <div class="cover-chip"><strong>Version</strong> 1.0 · Mars 2026</div>
+    <div class="cover-chip"><strong>Territoire</strong> Afrique de l'Ouest</div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════
+   01 — DESIGN CONTEXT
+══════════════════════════════════════════ -->
+<section class="section" id="context">
+  <div class="section-eyebrow reveal">
+    <div class="eyebrow-num">01</div>
+    <div class="eyebrow-line"></div>
+    <div class="eyebrow-label">Design Context</div>
+  </div>
+
+  <h2 class="section-title reveal">Pourquoi Pulapay<br><em>doit être différent.</em></h2>
+  <p class="section-lead reveal">
+    Le design de Pulapay n'est pas un exercice stylistique. Il répond à un problème réel :
+    l'infrastructure financière africaine est fragmentée, l'UX des apps existantes est construite
+    pour l'Occident. Pulapay doit donner l'impression que <em>quelqu'un a enfin compris</em>.
+  </p>
+
+  <div class="context-pillars reveal">
+    <div class="cp-cell featured">
+      <div class="cp-icon">◎</div>
+      <div class="cp-num">Principe 01</div>
+      <div class="cp-title light">Radical Simplicity</div>
+      <div class="cp-body light">L'utilisateur comprend le produit en moins de 5 secondes. Jamais de concept à apprendre. Jamais de question sans réponse visible. Chaque écran a <strong style="color:rgba(255,255,255,0.75)">une seule action principale.</strong></div>
+    </div>
+    <div class="cp-cell">
+      <div class="cp-icon">⊟</div>
+      <div class="cp-num">Principe 02</div>
+      <div class="cp-title">One Balance System</div>
+      <div class="cp-body">L'utilisateur voit toujours un seul solde. Peu importe le rail utilisé en backend (Mobile Money, USDC, carte). La complexité est <strong>invisible</strong>. Jamais de "choisir un réseau".</div>
+    </div>
+    <div class="cp-cell">
+      <div class="cp-icon">◷</div>
+      <div class="cp-num">Principe 03</div>
+      <div class="cp-title">Invisible Infrastructure</div>
+      <div class="cp-body">Mobile Money, stablecoins, blockchain, rails de paiement — ce sont nos problèmes, pas ceux de l'utilisateur. L'UI ne doit <strong>jamais exposer</strong> ces termes au grand public.</div>
+    </div>
+  </div>
+
+  <div class="context-rule reveal">
+    <div class="cr-glow"></div>
+    <div>
+      <div class="cr-label">Philosophie centrale</div>
+      <div class="cr-quote">
+        "Envoyer de l'argent doit être aussi simple<br>
+        qu'<strong>envoyer un message.</strong>"
+      </div>
+      <div style="margin-top:20px;font-size:13px;color:rgba(255,255,255,0.35);font-style:italic;font-family:var(--font-serif);">
+        — Si l'utilisateur réfléchit, on a échoué.
+      </div>
+    </div>
+    <ul class="cr-list">
+      <li class="cr-list-item">
+        <span class="cr-li-icon">🎯</span>
+        <span class="cr-li-text"><strong>Audience cible :</strong> Africains 18–35 ans, digital-native, entrepreneurs, freelances, créateurs. Ils utilisent Mobile Money quotidiennement et veulent quelque chose qui <em>fonctionne simplement</em>.</span>
+      </li>
+      <li class="cr-list-item">
+        <span class="cr-li-icon">📱</span>
+        <span class="cr-li-text"><strong>Mobile-first absolu :</strong> Le frontend est d'abord pensé pour smartphone. Chaque composant est designé pour une main, un pouce, une connexion parfois lente.</span>
+      </li>
+      <li class="cr-list-item">
+        <span class="cr-li-icon">🤝</span>
+        <span class="cr-li-text"><strong>Confiance visuelle :</strong> L'argent est émotionnel. Le design doit transmettre soulagement, clarté, et contrôle — jamais l'urgence ni la peur.</span>
+      </li>
+      <li class="cr-list-item">
+        <span class="cr-li-icon">✦</span>
+        <span class="cr-li-text"><strong>Références UX :</strong> Cash App (boldness + simplicité), Revolut (modernité), Apple Wallet (confiance par la retenue). Pas une banque avec meilleure UI.</span>
+      </li>
+    </ul>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════
+   02 — COLOR SYSTEM
+══════════════════════════════════════════ -->
+<section class="section alt" id="colors">
+  <div class="section-eyebrow reveal">
+    <div class="eyebrow-num">02</div>
+    <div class="eyebrow-line"></div>
+    <div class="eyebrow-label">Système de Couleurs</div>
+  </div>
+  <h2 class="section-title reveal">Couleurs <em>primaires.</em></h2>
+  <p class="section-lead reveal">Blanc, Noir, Orange — dans cet ordre de dominance. Chaque couleur a un rôle strict. Aucune improvisation chromatique n'est tolérée.</p>
+
+  <div class="color-hero reveal">
+    <div class="ch-cell">
+      <div class="ch-swatch" style="background:#FFFFFF;border-bottom:1px solid var(--rule);">
+        <div class="ch-name" style="color:rgba(0,0,0,0.4);font-size:18px;font-weight:800;">White</div>
+      </div>
+      <div class="ch-info">
+        <div class="ch-hex">#FFFFFF</div>
+        <div class="ch-role">Fond principal, surfaces, cartes. Couleur du silence et de la clarté.</div>
+        <span class="ch-tag" style="background:var(--green-l);color:var(--green-deep);">DOMINANT — 60%</span>
+      </div>
+    </div>
+    <div class="ch-cell">
+      <div class="ch-swatch" style="background:#0D0D0D;">
+        <div class="ch-name" style="color:rgba(255,255,255,0.5);font-size:18px;font-weight:800;">Ink</div>
+      </div>
+      <div class="ch-info">
+        <div class="ch-hex">#0D0D0D</div>
+        <div class="ch-role">Texte principal, fonds sombres, sidebar, header dark.</div>
+        <span class="ch-tag" style="background:rgba(13,13,13,0.08);color:var(--ink);">SECONDAIRE — 30%</span>
+      </div>
+    </div>
+    <div class="ch-cell">
+      <div class="ch-swatch" style="background:#FF6B00;">
+        <div class="ch-name" style="color:rgba(255,255,255,0.8);font-size:18px;font-weight:800;">Orange</div>
+      </div>
+      <div class="ch-info">
+        <div class="ch-hex">#FF6B00</div>
+        <div class="ch-role">CTA uniquement. Accents. Logo. Signal d'action. Jamais pour décorer.</div>
+        <span class="ch-tag" style="background:var(--orange-l);color:var(--orange);">ACCENT — 10%</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="ornament reveal">
+    <div class="ornament-line"></div>
+    <div class="ornament-text">Couleurs fonctionnelles</div>
+    <div class="ornament-line"></div>
+  </div>
+
+  <div class="color-secondary reveal">
+    <div class="cs-item">
+      <div class="cs-swatch" style="background:#1F8A70;border-radius:var(--r-md) var(--r-md) 0 0;"></div>
+      <div class="cs-info"><div class="cs-name">Vert Forêt</div><div class="cs-hex">#1F8A70</div></div>
+    </div>
+    <div class="cs-item">
+      <div class="cs-swatch" style="background:#E8F5F1;border-radius:var(--r-md) var(--r-md) 0 0;border:1px solid #C8EDE5;border-bottom:none;"></div>
+      <div class="cs-info"><div class="cs-name">Vert Clair</div><div class="cs-hex">#E8F5F1</div></div>
+    </div>
+    <div class="cs-item">
+      <div class="cs-swatch" style="background:#F5F5F2;border-radius:var(--r-md) var(--r-md) 0 0;border:1px solid var(--rule);border-bottom:none;"></div>
+      <div class="cs-info"><div class="cs-name">Mist</div><div class="cs-hex">#F5F5F2</div></div>
+    </div>
+    <div class="cs-item">
+      <div class="cs-swatch" style="background:#FFF0E6;border-radius:var(--r-md) var(--r-md) 0 0;border:1px solid #FFDCBD;border-bottom:none;"></div>
+      <div class="cs-info"><div class="cs-name">Orange Clair</div><div class="cs-hex">#FFF0E6</div></div>
+    </div>
+    <div class="cs-item">
+      <div class="cs-swatch" style="background:#5B2EFF;border-radius:var(--r-md) var(--r-md) 0 0;"></div>
+      <div class="cs-info"><div class="cs-name">Violet</div><div class="cs-hex">#5B2EFF</div></div>
+    </div>
+    <div class="cs-item">
+      <div class="cs-swatch" style="background:#E53333;border-radius:var(--r-md) var(--r-md) 0 0;"></div>
+      <div class="cs-info"><div class="cs-name">Error</div><div class="cs-hex">#E53333</div></div>
+    </div>
+    <div class="cs-item">
+      <div class="cs-swatch" style="background:#6B6B6B;border-radius:var(--r-md) var(--r-md) 0 0;"></div>
+      <div class="cs-info"><div class="cs-name">Stone</div><div class="cs-hex">#6B6B6B</div></div>
+    </div>
+  </div>
+
+  <div class="mt-32 reveal">
+    <table class="usage-table">
+      <thead>
+        <tr>
+          <th>Couleur</th>
+          <th>Rôle</th>
+          <th>Utiliser pour</th>
+          <th>Ne jamais utiliser pour</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><span class="color-dot" style="background:#FF6B00;"></span>Orange <span class="code">#FF6B00</span></td>
+          <td>Action / Signal</td>
+          <td>CTA principal, logo accent, highlight critique</td>
+          <td><span class="never-tag">✗ Décoration</span> <span class="never-tag">✗ Texte corps</span></td>
+        </tr>
+        <tr>
+          <td><span class="color-dot" style="background:#0D0D0D;"></span>Ink <span class="code">#0D0D0D</span></td>
+          <td>Dominance / Structure</td>
+          <td>Texte, fond dark, sidebar, header</td>
+          <td><span class="never-tag">✗ Boutons secondaires</span></td>
+        </tr>
+        <tr>
+          <td><span class="color-dot" style="background:#FFFFFF;border:1px solid #eee;"></span>White <span class="code">#FFFFFF</span></td>
+          <td>Base / Espace</td>
+          <td>Fond principal, cartes, surfaces</td>
+          <td><span class="never-tag">✗ Texte sur fond clair</span></td>
+        </tr>
+        <tr>
+          <td><span class="color-dot" style="background:#1F8A70;"></span>Vert <span class="code">#1F8A70</span></td>
+          <td>Succès / Confiance</td>
+          <td>Confirmation, montants entrants, succès</td>
+          <td><span class="never-tag">✗ CTA principal</span> <span class="never-tag">✗ Erreurs</span></td>
+        </tr>
+        <tr>
+          <td><span class="color-dot" style="background:#E53333;"></span>Error <span class="code">#E53333</span></td>
+          <td>Erreur / Alerte</td>
+          <td>Messages d'erreur, états échoués</td>
+          <td><span class="never-tag">✗ Hors contexte d'erreur</span></td>
+        </tr>
+        <tr>
+          <td><span class="color-dot" style="background:#5B2EFF;"></span>Violet <span class="code">#5B2EFF</span></td>
+          <td>Accent secondaire</td>
+          <td>Features premium, futurs produits</td>
+          <td><span class="never-tag">✗ Remplacer l'orange</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Tailwind tokens -->
+  <div class="ornament reveal">
+    <div class="ornament-line"></div>
+    <div class="ornament-text">Tokens Tailwind / CSS Variables</div>
+    <div class="ornament-line"></div>
+  </div>
+
+  <pre class="code-block reveal"><span class="c-gray">// tailwind.config.js — Pulapay design tokens</span>
+<span class="c-blue">module</span>.<span class="c-blue">exports</span> = {
+  theme: {
+    extend: {
+      colors: {
+        <span class="c-orange">'pula-orange'</span>: <span class="c-green">'#FF6B00'</span>,
+        <span class="c-orange">'pula-ink'</span>:    <span class="c-green">'#0D0D0D'</span>,
+        <span class="c-orange">'pula-green'</span>:  <span class="c-green">'#1F8A70'</span>,
+        <span class="c-orange">'pula-mist'</span>:   <span class="c-green">'#F5F5F2'</span>,
+        <span class="c-orange">'pula-rule'</span>:   <span class="c-green">'#E8E8E4'</span>,
+        <span class="c-orange">'pula-stone'</span>:  <span class="c-green">'#6B6B6B'</span>,
+        <span class="c-orange">'pula-violet'</span>: <span class="c-green">'#5B2EFF'</span>,
+        <span class="c-orange">'pula-error'</span>:  <span class="c-green">'#E53333'</span>,
+      },
+      fontFamily: {
+        <span class="c-orange">'product'</span>: [<span class="c-green">'Product Sans'</span>, <span class="c-green">'Google Sans'</span>, <span class="c-green">'Helvetica'</span>, <span class="c-green">'Arial'</span>, <span class="c-green">'sans-serif'</span>],
+        <span class="c-orange">'times'</span>:   [<span class="c-green">'Times New Roman MT'</span>, <span class="c-green">'Times New Roman'</span>, <span class="c-green">'serif'</span>],
+      },
+    }
+  }
+}</pre>
+</section>
+
+<!-- ══════════════════════════════════════
+   03 — TYPOGRAPHY
+══════════════════════════════════════════ -->
+<section class="section" id="typography">
+  <div class="section-eyebrow reveal">
+    <div class="eyebrow-num">03</div>
+    <div class="eyebrow-line"></div>
+    <div class="eyebrow-label">Typographie</div>
+  </div>
+  <h2 class="section-title reveal">Deux polices.<br><em>Un seul caractère.</em></h2>
+  <p class="section-lead reveal">Product Sans pour tout ce qui est interface, action, information. Times New Roman MT pour les moments émotionnels, les citations, les slogans. La tension entre les deux crée l'identité Pulapay.</p>
+
+  <div class="font-duo reveal">
+    <div class="fd-card">
+      <div class="fd-head">
+        <div class="fd-name">Product Sans</div>
+        <div class="fd-role">Police principale · UI · Actions · Titres</div>
+      </div>
+      <div class="fd-body">
+        <div class="fd-alpha" style="font-family:var(--font-ui);font-weight:800;">
+          ABCDEFGHIJKLM<br>NOPQRSTUVWXYZ<br>abcdefghijklmn<br>opqrstuvwxyz<br>0123456789 .,!?
+        </div>
+        <div class="fd-weights">
+          <div class="fd-w-row"><span class="fd-w-label">Light 300</span><span style="font-family:var(--font-ui);font-weight:300;font-size:16px;">Ton argent. Un seul compte.</span></div>
+          <div class="fd-w-row"><span class="fd-w-label">Regular 400</span><span style="font-family:var(--font-ui);font-weight:400;font-size:16px;">Ton argent. Un seul compte.</span></div>
+          <div class="fd-w-row"><span class="fd-w-label">Medium 500</span><span style="font-family:var(--font-ui);font-weight:500;font-size:16px;">Ton argent. Un seul compte.</span></div>
+          <div class="fd-w-row"><span class="fd-w-label">SemiBold 600</span><span style="font-family:var(--font-ui);font-weight:600;font-size:16px;">Ton argent. Un seul compte.</span></div>
+          <div class="fd-w-row"><span class="fd-w-label">Bold 700</span><span style="font-family:var(--font-ui);font-weight:700;font-size:16px;">Ton argent. Un seul compte.</span></div>
+          <div class="fd-w-row"><span class="fd-w-label">ExtraBold 800</span><span style="font-family:var(--font-ui);font-weight:800;font-size:16px;">Ton argent. Un seul compte.</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="fd-card">
+      <div class="fd-head">
+        <div class="fd-name">Times New Roman MT</div>
+        <div class="fd-role">Police accent · Émotions · Citations · Slogans</div>
+      </div>
+      <div class="fd-body">
+        <div class="fd-alpha" style="font-family:var(--font-serif);font-style:italic;font-weight:400;font-size:22px;">
+          ABCDEFGHIJKLM<br>NOPQRSTUVWXYZ<br><em>abcdefghijklmn<br>opqrstuvwxyz</em><br>0123456789 .,!?
+        </div>
+        <div class="fd-weights">
+          <div class="fd-w-row"><span class="fd-w-label">Regular</span><span style="font-family:var(--font-serif);font-size:16px;">Ton argent. Un seul compte.</span></div>
+          <div class="fd-w-row"><span class="fd-w-label">Italic</span><span style="font-family:var(--font-serif);font-style:italic;font-size:16px;">Ton argent. Un seul compte.</span></div>
+          <div class="fd-w-row"><span class="fd-w-label">Bold</span><span style="font-family:var(--font-serif);font-weight:700;font-size:16px;">Ton argent. Un seul compte.</span></div>
+          <div class="fd-w-row"><span class="fd-w-label">Bold Italic</span><span style="font-family:var(--font-serif);font-weight:700;font-style:italic;font-size:16px;">Ton argent. Un seul compte.</span></div>
+          <div class="fd-w-row" style="margin-top:8px;"><span class="fd-w-label">Usage type</span><span style="font-family:var(--font-serif);font-style:italic;font-size:13px;color:var(--stone);">Citations · Slogans · Moments émotionnels</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="ornament reveal">
+    <div class="ornament-line"></div>
+    <div class="ornament-text">Échelle typographique complète</div>
+    <div class="ornament-line"></div>
+  </div>
+
+  <div class="type-scale reveal">
+    <div class="ts-row">
+      <div class="ts-meta"><div class="ts-role">Display</div><div class="ts-spec">Product Sans 800<br>72–88px<br>ls: -3px<br>lh: 0.95</div></div>
+      <div class="ts-sample"><span style="font-family:var(--font-ui);font-size:64px;font-weight:800;letter-spacing:-3px;line-height:0.95;display:block;">Un compte.<br><span style="color:var(--orange);">Tout.</span></span></div>
+      <div class="ts-use">Hero screen<br>Landing page<br>Splash screen</div>
+    </div>
+    <div class="ts-row">
+      <div class="ts-meta"><div class="ts-role">Headline Serif</div><div class="ts-spec">Times NR MT Italic<br>36–52px<br>ls: -1px<br>lh: 1.1</div></div>
+      <div class="ts-sample"><span style="font-family:var(--font-serif);font-style:italic;font-size:40px;letter-spacing:-1px;line-height:1.1;color:var(--green);display:block;">Finally… someone gets it.</span></div>
+      <div class="ts-use">Slogans<br>Onboarding<br>Moments forts</div>
+    </div>
+    <div class="ts-row">
+      <div class="ts-meta"><div class="ts-role">H1</div><div class="ts-spec">Product Sans 700<br>32–44px<br>ls: -1.5px<br>lh: 1.05</div></div>
+      <div class="ts-sample"><span style="font-family:var(--font-ui);font-size:36px;font-weight:700;letter-spacing:-1.5px;line-height:1.05;display:block;">Envoie comme<br>un message.</span></div>
+      <div class="ts-use">Section titles<br>Screen headers</div>
+    </div>
+    <div class="ts-row">
+      <div class="ts-meta"><div class="ts-role">H2</div><div class="ts-spec">Product Sans 700<br>22–28px<br>ls: -0.5px<br>lh: 1.2</div></div>
+      <div class="ts-sample"><span style="font-family:var(--font-ui);font-size:24px;font-weight:700;letter-spacing:-0.5px;display:block;">Ton solde Pulapay</span></div>
+      <div class="ts-use">Card headers<br>Modal titles</div>
+    </div>
+    <div class="ts-row">
+      <div class="ts-meta"><div class="ts-role">Solde / Montant</div><div class="ts-spec">Product Sans 800<br>40–52px<br>ls: -2px<br>Mono-style</div></div>
+      <div class="ts-sample"><span style="font-family:var(--font-ui);font-size:44px;font-weight:800;letter-spacing:-2px;display:block;">247 <span style="color:var(--stone);font-weight:400;font-size:24px;">500 FCFA</span></span></div>
+      <div class="ts-use">Balance display<br>Amount input<br>Transaction</div>
+    </div>
+    <div class="ts-row">
+      <div class="ts-meta"><div class="ts-role">Corps</div><div class="ts-spec">Product Sans 400<br>14–16px<br>ls: 0<br>lh: 1.65</div></div>
+      <div class="ts-sample"><span style="font-family:var(--font-ui);font-size:15px;font-weight:400;line-height:1.65;color:var(--stone);max-width:400px;display:block;">Envoyer de l'argent ici, c'est compliqué. Tu dois demander le réseau. Ça ne devrait pas être comme ça.</span></div>
+      <div class="ts-use">Paragraphes<br>Descriptions<br>Onboarding copy</div>
+    </div>
+    <div class="ts-row">
+      <div class="ts-meta"><div class="ts-role">Caption Serif</div><div class="ts-spec">Times NR MT Italic<br>13–14px<br>ls: +0.2px</div></div>
+      <div class="ts-sample"><span style="font-family:var(--font-serif);font-style:italic;font-size:14px;color:var(--stone);display:block;">"Pulapay = envoyer de l'argent comme envoyer un message."</span></div>
+      <div class="ts-use">Citations<br>Notes légères<br>Taglines</div>
+    </div>
+    <div class="ts-row">
+      <div class="ts-meta"><div class="ts-role">Label UI</div><div class="ts-spec">Product Sans 600<br>10–11px<br>ls: +2px<br>UPPERCASE</div></div>
+      <div class="ts-sample"><span style="font-family:var(--font-ui);font-size:11px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--stone);display:block;">Solde Pulapay · Mobile Money · Confirmé</span></div>
+      <div class="ts-use">UI labels<br>Nav items<br>Tags / badges</div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════
+   04 — SPACING & LAYOUT
+══════════════════════════════════════════ -->
+<section class="section alt" id="spacing">
+  <div class="section-eyebrow reveal">
+    <div class="eyebrow-num">04</div>
+    <div class="eyebrow-line"></div>
+    <div class="eyebrow-label">Espacement & Grille</div>
+  </div>
+  <h2 class="section-title reveal">Système d'<em>espacement.</em></h2>
+  <p class="section-lead reveal">Base 8px. Multiplicateurs stricts. Chaque espace dans l'interface est un multiple de 4px minimum, 8px pour les layouts principaux.</p>
+
+  <div class="spacing-visual reveal">
+    <div class="sp-item"><div class="sp-block" style="height:4px;"></div><div class="sp-val">--s1</div><div class="sp-px">4px</div></div>
+    <div class="sp-item"><div class="sp-block" style="height:8px;"></div><div class="sp-val">--s2</div><div class="sp-px">8px</div></div>
+    <div class="sp-item"><div class="sp-block" style="height:12px;"></div><div class="sp-val">--s3</div><div class="sp-px">12px</div></div>
+    <div class="sp-item"><div class="sp-block" style="height:16px;"></div><div class="sp-val">--s4</div><div class="sp-px">16px</div></div>
+    <div class="sp-item"><div class="sp-block" style="height:24px;"></div><div class="sp-val">--s5</div><div class="sp-px">24px</div></div>
+    <div class="sp-item"><div class="sp-block" style="height:32px;"></div><div class="sp-val">--s6</div><div class="sp-px">32px</div></div>
+    <div class="sp-item"><div class="sp-block" style="height:48px;"></div><div class="sp-val">--s7</div><div class="sp-px">48px</div></div>
+    <div class="sp-item"><div class="sp-block" style="height:64px;"></div><div class="sp-val">--s8</div><div class="sp-px">64px</div></div>
+    <div class="sp-item"><div class="sp-block" style="height:96px;"></div><div class="sp-val">--s9</div><div class="sp-px">96px</div></div>
+  </div>
+
+  <div class="grid-visual reveal">
+    <div class="gv-header">Grille mobile — 4 colonnes · 16px gutter · 20px margin</div>
+    <div class="gv-body">
+      <div class="gv-row">
+        <div class="gv-col full" style="height:48px;">Full width — Wallet Card, CTA Principal</div>
+      </div>
+      <div class="gv-row">
+        <div class="gv-col">col-2</div>
+        <div class="gv-col">col-2</div>
+      </div>
+      <div class="gv-row">
+        <div class="gv-col">col</div>
+        <div class="gv-col">col</div>
+        <div class="gv-col">col</div>
+      </div>
+      <div class="gv-row">
+        <div class="gv-col">col</div>
+        <div class="gv-col">col</div>
+        <div class="gv-col">col</div>
+        <div class="gv-col">col</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="ornament reveal">
+    <div class="ornament-line"></div>
+    <div class="ornament-text">Border Radius System</div>
+    <div class="ornament-line"></div>
+  </div>
+
+  <div class="grid-4 reveal" style="gap:12px;">
+    <div style="background:var(--mist);border:1px solid var(--rule);border-radius:var(--r-xs);padding:20px;text-align:center;">
+      <div class="code">--r-xs</div><div style="font-size:11px;color:var(--stone);margin-top:6px;">6px · Tags, chips</div>
+    </div>
+    <div style="background:var(--mist);border:1px solid var(--rule);border-radius:var(--r-sm);padding:20px;text-align:center;">
+      <div class="code">--r-sm</div><div style="font-size:11px;color:var(--stone);margin-top:6px;">8px · Inputs, toasts</div>
+    </div>
+    <div style="background:var(--mist);border:1px solid var(--rule);border-radius:var(--r-md);padding:20px;text-align:center;">
+      <div class="code">--r-md</div><div style="font-size:11px;color:var(--stone);margin-top:6px;">12px · Cards légères</div>
+    </div>
+    <div style="background:var(--mist);border:1px solid var(--rule);border-radius:var(--r-lg);padding:20px;text-align:center;">
+      <div class="code">--r-lg</div><div style="font-size:11px;color:var(--stone);margin-top:6px;">16px · Cards standard</div>
+    </div>
+    <div style="background:var(--mist);border:1px solid var(--rule);border-radius:var(--r-xl);padding:20px;text-align:center;">
+      <div class="code">--r-xl</div><div style="font-size:11px;color:var(--stone);margin-top:6px;">24px · Cards majeures</div>
+    </div>
+    <div style="background:var(--mist);border:1px solid var(--rule);border-radius:var(--r-pill);padding:20px;text-align:center;">
+      <div class="code">--r-pill</div><div style="font-size:11px;color:var(--stone);margin-top:6px;">999px · Boutons, badges</div>
+    </div>
+    <div style="background:var(--ink);border-radius:40px;padding:20px;text-align:center;">
+      <div class="code dark">40px</div><div style="font-size:11px;color:rgba(255,255,255,0.35);margin-top:6px;">Phone frame</div>
+    </div>
+    <div style="background:var(--mist);border:1px solid var(--rule);border-radius:0;padding:20px;text-align:center;">
+      <div class="code">0px</div><div style="font-size:11px;color:var(--stone);margin-top:6px;">Amount input border</div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════
+   05 — COMPONENT LIBRARY
+══════════════════════════════════════════ -->
+<section class="section" id="components">
+  <div class="section-eyebrow reveal">
+    <div class="eyebrow-num">05</div>
+    <div class="eyebrow-line"></div>
+    <div class="eyebrow-label">Bibliothèque de Composants</div>
+  </div>
+  <h2 class="section-title reveal">L'interface <em>Pulapay.</em></h2>
+  <p class="section-lead reveal">Chaque composant suit un contrat strict : une seule action principale par vue, feedback immédiat, états clairs. Cash App meets African fintech.</p>
+
+  <!-- BUTTONS -->
+  <div class="comp-section-label reveal">Boutons <span class="comp-tag">Interactions</span></div>
+  <div class="card reveal" style="padding:32px;">
+    <div style="display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-bottom:16px;">
+      <button class="btn btn-primary">Envoyer →</button>
+      <button class="btn btn-primary btn-lg">Confirmer l'envoi</button>
+      <button class="btn btn-secondary">Créer mon compte</button>
+      <button class="btn btn-green">✓ Confirmé</button>
+      <button class="btn btn-ghost">Annuler</button>
+      <button class="btn btn-danger">Supprimer</button>
+    </div>
+    <div style="display:flex;flex-wrap:wrap;gap:10px;align-items:center;">
+      <button class="btn btn-primary btn-sm">Envoyer</button>
+      <button class="btn btn-ghost btn-sm">Voir tout</button>
+      <button class="btn btn-primary" disabled>Solde insuffisant</button>
+    </div>
+    <pre class="code-block" style="margin-top:20px;"><span class="c-gray">// Tailwind classes</span>
+<span class="c-orange">btn-primary</span>   → <span class="c-green">bg-pula-orange text-white rounded-full px-7 py-3 font-semibold hover:bg-orange-500</span>
+<span class="c-orange">btn-secondary</span> → <span class="c-green">bg-pula-ink text-white rounded-full px-7 py-3 font-semibold</span>
+<span class="c-orange">btn-ghost</span>     → <span class="c-green">border border-pula-rule text-pula-ink rounded-full px-7 py-3 font-semibold</span></pre>
+  </div>
+
+  <!-- INPUTS -->
+  <div class="comp-section-label reveal">Champs de saisie <span class="comp-tag">Forms</span></div>
+  <div class="grid-2 reveal" style="gap:24px;">
+    <div class="card" style="padding:28px;display:flex;flex-direction:column;gap:14px;">
+      <div class="input-group">
+        <div class="input-label">Numéro ou nom</div>
+        <input class="input-field active" type="text" placeholder="Koffi Asante · +225 07 XX XX XX">
+        <div class="input-hint">Recherche parmi tes contacts Pulapay</div>
+      </div>
+      <div class="input-group">
+        <div class="input-label">Champ erreur</div>
+        <input class="input-field error" type="text" value="numéro invalide">
+        <div class="input-hint error">✗ Ce numéro n'est pas enregistré</div>
+      </div>
+      <div class="input-group">
+        <div class="input-label">Champ succès</div>
+        <input class="input-field success" type="text" value="Fatou Diallo">
+      </div>
+    </div>
+    <div class="card" style="padding:28px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;">
+      <div style="font-size:11px;font-weight:600;color:var(--stone);letter-spacing:1.5px;text-transform:uppercase;margin-bottom:4px;">Montant à envoyer</div>
+      <input class="input-amount" type="text" placeholder="0" value="25 000">
+      <div style="font-size:13px;color:var(--stone);">FCFA · Solde : 247 500 FCFA</div>
+    </div>
+  </div>
+
+  <!-- WALLET CARD -->
+  <div class="comp-section-label reveal">Wallet Card <span class="comp-tag">Composant principal</span></div>
+  <div class="grid-2 reveal" style="gap:24px;align-items:start;">
+    <div>
+      <div class="wallet-card">
+        <div class="wc-glow"></div>
+        <div class="wc-label">Solde Pulapay</div>
+        <div class="wc-balance">247 <span>500</span></div>
+        <div class="wc-currency">FCFA · Mis à jour à l'instant</div>
+        <div class="wc-actions">
+          <button class="wca-btn primary">↑ Envoyer</button>
+          <button class="wca-btn">↓ Recevoir</button>
+          <button class="wca-btn">⊞ Plus</button>
+        </div>
+      </div>
+    </div>
+    <div class="card" style="padding:0;overflow:hidden;">
+      <div style="padding:16px 20px;border-bottom:1px solid var(--rule);">
+        <div style="font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--stone);">Dernières transactions</div>
+      </div>
+      <div style="padding:0 20px;">
+        <div class="tx-item">
+          <div class="tx-avatar" style="background:var(--green-l);color:var(--green);font-size:13px;">K</div>
+          <div class="tx-info"><div class="tx-name">Koffi Asante</div><div class="tx-meta">Aujourd'hui 14:32 · Mobile Money</div></div>
+          <div class="tx-amount tx-in">+25 000</div>
+        </div>
+        <div class="tx-item">
+          <div class="tx-avatar" style="background:var(--orange-l);color:var(--orange);font-size:13px;">M</div>
+          <div class="tx-info"><div class="tx-name">Marché Sandaga</div><div class="tx-meta">Hier 09:15 · Lien de paiement</div></div>
+          <div class="tx-amount tx-out">−8 500</div>
+        </div>
+        <div class="tx-item">
+          <div class="tx-avatar" style="background:var(--violet-l);color:var(--violet);font-size:13px;">A</div>
+          <div class="tx-info"><div class="tx-name">Aissatou Diallo</div><div class="tx-meta">Lundi 16:48 · Pulapay</div></div>
+          <div class="tx-amount tx-in">+112 000</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- BADGES -->
+  <div class="comp-section-label reveal">Badges & État <span class="comp-tag">Status</span></div>
+  <div class="card reveal" style="padding:28px;">
+    <div style="display:flex;flex-wrap:wrap;gap:8px;">
+      <span class="badge badge-green"><span class="badge-dot" style="background:var(--green);"></span>Confirmé</span>
+      <span class="badge badge-orange"><span class="badge-dot" style="background:var(--orange);"></span>En cours</span>
+      <span class="badge badge-error"><span class="badge-dot" style="background:var(--error);"></span>Échoué</span>
+      <span class="badge badge-violet">Premium</span>
+      <span class="badge badge-ink">Mobile Money</span>
+      <span class="badge badge-stone">International</span>
+      <span class="badge" style="background:var(--green-l);color:var(--green-deep);">+25 000 FCFA reçu</span>
+      <span class="badge" style="background:var(--orange-l);color:var(--orange);">−8 500 FCFA envoyé</span>
+    </div>
+  </div>
+
+  <!-- NOTIFICATIONS -->
+  <div class="comp-section-label reveal">Notifications / Toasts <span class="comp-tag">Feedback</span></div>
+  <div class="card reveal" style="padding:28px;">
+    <div class="toast toast-success">
+      <div class="toast-icon">✓</div>
+      <div><div class="toast-title">Argent envoyé !</div><div class="toast-body">25 000 FCFA envoyés à Koffi Asante · il y a 2 secondes</div></div>
+    </div>
+    <div class="toast toast-info">
+      <div class="toast-icon">💰</div>
+      <div><div class="toast-title">Argent reçu !</div><div class="toast-body">+50 000 FCFA de Fatou Diallo via Mobile Money</div></div>
+    </div>
+    <div class="toast toast-warning">
+      <div class="toast-icon">⏳</div>
+      <div><div class="toast-title">Transaction en attente</div><div class="toast-body">Le traitement peut prendre quelques minutes.</div></div>
+    </div>
+    <div class="toast toast-error">
+      <div class="toast-icon">⚠</div>
+      <div><div class="toast-title">Quelque chose s'est mal passé.</div><div class="toast-body">Réessaie dans quelques secondes. Si le problème persiste, contacte-nous.</div></div>
+    </div>
+  </div>
+
+  <!-- PHONE MOCKUP -->
+  <div class="comp-section-label reveal">App UI — Phone Mockup <span class="comp-tag">Référence visuelle</span></div>
+  <div class="reveal" style="padding:40px;background:var(--mist);border:1px solid var(--rule);border-radius:var(--r-xl);">
+    <div class="phone-frame">
+      <div class="phone-screen">
+        <div class="phone-top">
+          <div class="phone-greeting">Bonjour 👋</div>
+          <div class="phone-name">Aminata Touré</div>
+          <div class="phone-balance-label">Solde Pulapay</div>
+          <div class="phone-balance">247 <span>500</span> F</div>
+        </div>
+        <div class="phone-body">
+          <div class="phone-actions">
+            <div class="phone-action"><div class="phone-action-icon">↑</div><div class="phone-action-label">Envoyer</div></div>
+            <div class="phone-action"><div class="phone-action-icon">↓</div><div class="phone-action-label">Recevoir</div></div>
+            <div class="phone-action"><div class="phone-action-icon">⊞</div><div class="phone-action-label">Demander</div></div>
+          </div>
+          <div class="phone-tx-section">
+            <div class="phone-tx-label">Récent</div>
+            <div class="phone-tx">
+              <div class="phone-tx-av" style="background:var(--green-l);color:var(--green);">K</div>
+              <div class="phone-tx-info"><div class="phone-tx-name">Koffi Asante</div><div class="phone-tx-date">Auj. · Mobile Money</div></div>
+              <div class="phone-tx-amount" style="color:var(--green);">+25 000</div>
+            </div>
+            <div class="phone-tx">
+              <div class="phone-tx-av" style="background:var(--orange-l);color:var(--orange);">M</div>
+              <div class="phone-tx-info"><div class="phone-tx-name">Sandaga</div><div class="phone-tx-date">Hier · Lien</div></div>
+              <div class="phone-tx-amount" style="color:var(--ink);">−8 500</div>
+            </div>
+            <div class="phone-tx">
+              <div class="phone-tx-av" style="background:var(--violet-l);color:var(--violet);">A</div>
+              <div class="phone-tx-info"><div class="phone-tx-name">Aissatou</div><div class="phone-tx-date">Lundi · Pulapay</div></div>
+              <div class="phone-tx-amount" style="color:var(--green);">+112 000</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════
+   06 — MOTION
+══════════════════════════════════════════ -->
+<section class="section alt" id="motion">
+  <div class="section-eyebrow reveal">
+    <div class="eyebrow-num">06</div>
+    <div class="eyebrow-line"></div>
+    <div class="eyebrow-label">Motion Design</div>
+  </div>
+  <h2 class="section-title reveal">Le mouvement <em>avec intention.</em></h2>
+  <p class="section-lead reveal">Chaque animation a une raison fonctionnelle. Elle guide, confirme, rassure. Jamais pour décorer. L'argent demande du sérieux — pas des confettis.</p>
+
+  <div class="motion-token-grid reveal">
+    <div class="mt-card">
+      <div class="mtc-demo anim-bounce" style="background:var(--orange-l);"><span style="font-size:32px;">⚡</span></div>
+      <div class="mtc-body">
+        <div class="mtc-name">Micro-feedback</div>
+        <div class="mtc-token">dur: 150ms · ease-out</div>
+        <div class="mtc-desc">Hover, press, tap. Confirmation immédiate que l'action a été enregistrée.</div>
+      </div>
+    </div>
+    <div class="mt-card">
+      <div class="mtc-demo" style="background:var(--green-l);">
+        <span class="pulse-el anim-pulse" style="display:block;font-size:32px;">✓</span>
+      </div>
+      <div class="mtc-body">
+        <div class="mtc-name">Succès Transaction</div>
+        <div class="mtc-token">dur: 300ms · spring(0.34,1.56,0.64,1)</div>
+        <div class="mtc-desc">Rebond léger sur la confirmation. Célèbre sans surjouer.</div>
+      </div>
+    </div>
+    <div class="mt-card">
+      <div class="mtc-demo anim-slide" style="background:var(--mist);">
+        <span style="font-size:32px;">→</span>
+      </div>
+      <div class="mtc-body">
+        <div class="mtc-name">Navigation</div>
+        <div class="mtc-token">dur: 250ms · ease-in-out</div>
+        <div class="mtc-desc">Slide horizontal. Envoi = droite. Retour = gauche. Logique directionnelle.</div>
+      </div>
+    </div>
+    <div class="mt-card">
+      <div class="mtc-demo" style="background:var(--mist);">
+        <span class="pulse-el" style="display:inline-block;width:60px;height:12px;background:var(--rule);border-radius:6px;animation:demo-pulse 1.5s ease-in-out infinite;"></span>
+      </div>
+      <div class="mtc-body">
+        <div class="mtc-name">Loading Skeleton</div>
+        <div class="mtc-token">dur: 1.5s · ease-in-out · loop</div>
+        <div class="mtc-desc">Pulsation douce pendant le chargement du solde. Jamais de spinner agressif.</div>
+      </div>
+    </div>
+    <div class="mt-card">
+      <div class="mtc-demo" style="background:var(--mist);">
+        <span style="font-size:28px;">↑</span>
+      </div>
+      <div class="mtc-body">
+        <div class="mtc-name">Page Load Reveal</div>
+        <div class="mtc-token">dur: 400ms · stagger: 60ms</div>
+        <div class="mtc-desc">Éléments qui apparaissent du bas vers le haut en cascade. Un seul moment orchestré par écran.</div>
+      </div>
+    </div>
+    <div class="mt-card" style="border-top:2px solid var(--error);">
+      <div class="mtc-demo" style="background:var(--error-l);">
+        <span style="font-size:32px;">✗</span>
+      </div>
+      <div class="mtc-body">
+        <div class="mtc-name">À ne jamais faire</div>
+        <div class="mtc-token">No: flash · bounce excessif · spin · parallax · confetti</div>
+        <div class="mtc-desc">L'argent = sérieux. Pas d'effets spectaculaires. prefers-reduced-motion toujours respecté.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════
+   07 — PATTERNS VISUELS
+══════════════════════════════════════════ -->
+<section class="section" id="patterns">
+  <div class="section-eyebrow reveal">
+    <div class="eyebrow-num">07</div>
+    <div class="eyebrow-line"></div>
+    <div class="eyebrow-label">Patterns & Textures</div>
+  </div>
+  <h2 class="section-title reveal">Signatures <em>visuelles.</em></h2>
+  <p class="section-lead reveal">Trois signatures graphiques pour créer l'atmosphère Pulapay sans excès. À utiliser avec parcimonie — le blanc est la couleur principale.</p>
+
+  <div class="pattern-grid reveal">
+    <div class="pattern-card" style="background:var(--white);">
+      <div style="position:absolute;inset:0;background-image:radial-gradient(circle, var(--ink) 1px, transparent 1px);background-size:18px 18px;opacity:0.06;border-radius:var(--r-lg);"></div>
+      <div class="pattern-inner">
+        <div class="pattern-name" style="color:var(--ink);">Micro-dots</div>
+        <div class="pattern-desc" style="color:var(--stone);">Points noirs · opacity 0.06 · 18px grid</div>
+      </div>
+    </div>
+    <div class="pattern-card" style="background:var(--ink);">
+      <div style="position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);background-size:60px 60px;border-radius:var(--r-lg);"></div>
+      <div style="position:absolute;top:-40%;right:-20%;width:300px;height:300px;background:radial-gradient(circle,rgba(255,107,0,0.12) 0%,transparent 65%);pointer-events:none;"></div>
+      <div class="pattern-inner">
+        <div class="pattern-name" style="color:var(--white);">Dark Grid + Orange Glow</div>
+        <div class="pattern-desc" style="color:rgba(255,255,255,0.4);">Grille subtile · radial orange · Hero sections</div>
+      </div>
+    </div>
+    <div class="pattern-card" style="background:var(--ink);">
+      <div style="position:absolute;inset:0;background:radial-gradient(ellipse at 75% 20%, rgba(255,107,0,0.15) 0%, transparent 55%),radial-gradient(ellipse at 15% 100%, rgba(31,138,112,0.08) 0%, transparent 50%);border-radius:var(--r-lg);"></div>
+      <div class="pattern-inner">
+        <div class="pattern-name" style="color:var(--white);">Gradient Mesh</div>
+        <div class="pattern-desc" style="color:rgba(255,255,255,0.4);">Orange + Vert · Wallet card background</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════
+   08 — SCREEN FLOWS
+══════════════════════════════════════════ -->
+<section class="section alt" id="flows">
+  <div class="section-eyebrow reveal">
+    <div class="eyebrow-num">08</div>
+    <div class="eyebrow-line"></div>
+    <div class="eyebrow-label">Flows & Écrans</div>
+  </div>
+  <h2 class="section-title reveal">Les 7 flows <em>essentiels.</em></h2>
+  <p class="section-lead reveal">Chaque flow est une mission utilisateur. Chaque étape a une action principale visible. Jamais plus de 5 étapes pour compléter une action.</p>
+
+  <!-- Onboarding -->
+  <div style="font-size:10px;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:var(--orange);margin-bottom:12px;" class="reveal">Flow 1 — Onboarding</div>
+  <div class="flow-map reveal">
+    <div class="flow-step featured">
+      <div class="flow-step-num">Étape 1</div>
+      <div class="flow-step-title light">Welcome</div>
+      <ul class="flow-step-items light">
+        <li>"Finally… someone gets it."</li>
+        <li>CTA : Create Account</li>
+        <li>Link : Login</li>
+      </ul>
+    </div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-step">
+      <div class="flow-step-num">Étape 2</div>
+      <div class="flow-step-title">Téléphone</div>
+      <ul class="flow-step-items">
+        <li>Saisie numéro</li>
+        <li>Envoi OTP SMS</li>
+        <li>Vérification code</li>
+      </ul>
+    </div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-step">
+      <div class="flow-step-num">Étape 3</div>
+      <div class="flow-step-title">Identité</div>
+      <ul class="flow-step-items">
+        <li>Prénom + Nom</li>
+        <li>Email (optionnel)</li>
+      </ul>
+    </div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-step">
+      <div class="flow-step-num">Étape 4</div>
+      <div class="flow-step-title">Wallet</div>
+      <ul class="flow-step-items">
+        <li>Création auto</li>
+        <li>Ledger account init</li>
+        <li>Loading state</li>
+      </ul>
+    </div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-step" style="background:var(--green-l);border-right:2px solid var(--green);">
+      <div class="flow-step-num">Étape 5</div>
+      <div class="flow-step-title">Succès 🎉</div>
+      <ul class="flow-step-items">
+        <li>"Ton compte est prêt."</li>
+        <li>CTA : Aller au dashboard</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Send Money -->
+  <div style="font-size:10px;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:var(--orange);margin:32px 0 12px;" class="reveal">Flow 2 — Envoyer de l'argent</div>
+  <div class="flow-map reveal">
+    <div class="flow-step featured">
+      <div class="flow-step-num">Étape 1</div>
+      <div class="flow-step-title light">Destinataire</div>
+      <ul class="flow-step-items light">
+        <li>User Pulapay</li>
+        <li>Mobile Money</li>
+        <li>Contact téléphone</li>
+      </ul>
+    </div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-step">
+      <div class="flow-step-num">Étape 2</div>
+      <div class="flow-step-title">Montant</div>
+      <ul class="flow-step-items">
+        <li>Input amount large</li>
+        <li>Solde visible</li>
+        <li>Validation inline</li>
+      </ul>
+    </div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-step">
+      <div class="flow-step-num">Étape 3</div>
+      <div class="flow-step-title">Confirmation</div>
+      <ul class="flow-step-items">
+        <li>Résumé : qui, combien</li>
+        <li>Frais visibles</li>
+        <li>CTA : Confirmer</li>
+      </ul>
+    </div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-step">
+      <div class="flow-step-num">Étape 4</div>
+      <div class="flow-step-title">Traitement</div>
+      <ul class="flow-step-items">
+        <li>Skeleton / loader</li>
+        <li>Message rassurant</li>
+        <li>Timeout handling</li>
+      </ul>
+    </div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-step" style="background:var(--green-l);border-right:2px solid var(--green);">
+      <div class="flow-step-num">Étape 5</div>
+      <div class="flow-step-title">Envoyé ✓</div>
+      <ul class="flow-step-items">
+        <li>Montant confirmé</li>
+        <li>Destinataire</li>
+        <li>ID transaction</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Other flows summary -->
+  <div class="ornament reveal">
+    <div class="ornament-line"></div>
+    <div class="ornament-text">Autres flows essentiels</div>
+    <div class="ornament-line"></div>
+  </div>
+
+  <div class="grid-3 reveal" style="gap:16px;">
+    <div class="card">
+      <div class="card-label orange">Flow 3</div>
+      <div class="card-title">Recevoir de l'argent</div>
+      <div class="card-body">QR Code personnel · Lien de paiement <span class="code">pulapay.com/pay/slug</span> · Partage via WhatsApp/SMS · Notification push automatique</div>
+    </div>
+    <div class="card">
+      <div class="card-label orange">Flow 4</div>
+      <div class="card-title">Demander un paiement</div>
+      <div class="card-body">Saisie montant + note optionnelle → Génération lien/QR → Share sheet native → Tracking statut paiement</div>
+    </div>
+    <div class="card">
+      <div class="card-label orange">Flow 5</div>
+      <div class="card-title">Cash Out (Retrait)</div>
+      <div class="card-body">Sélection méthode : Mobile Money ou wallet externe → Saisie montant → Confirmation avec frais → Traitement → Succès</div>
+    </div>
+    <div class="card">
+      <div class="card-label orange">Flow 6</div>
+      <div class="card-title">Historique transactions</div>
+      <div class="card-body">Liste infinie chronologique · Filtre par type/date · Détail par transaction : ID, timestamp, source, destination, statut</div>
+    </div>
+    <div class="card">
+      <div class="card-label orange">Flow 7</div>
+      <div class="card-title">Gestion du compte</div>
+      <div class="card-body">Profil · Sécurité · Recovery options · Devices · Notifications · KYC status</div>
+    </div>
+    <div class="card mist-card">
+      <div class="card-label">Gestion d'erreurs</div>
+      <div class="card-title">Chaque flow → états d'erreur</div>
+      <div class="card-body">Solde insuffisant · Erreur réseau · Paiement échoué · Timeout. Messages : clairs, humains, rassurants. Jamais de code d'erreur technique visible.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════
+   09 — DO / DON'T
+══════════════════════════════════════════ -->
+<section class="section" id="verdicts">
+  <div class="section-eyebrow reveal">
+    <div class="eyebrow-num">09</div>
+    <div class="eyebrow-line"></div>
+    <div class="eyebrow-label">Do / Don't</div>
+  </div>
+  <h2 class="section-title reveal">Ce que Pulapay <em>est et n'est pas.</em></h2>
+  <p class="section-lead reveal">Règles non-négociables pour chaque décision design. Si tu hésites, relis la phrase : "Si ça ressemble à une fintech qui essaie d'être cool, ce n'est pas Pulapay."</p>
+
+  <div class="verdict-grid reveal">
+    <div class="verdict-col">
+      <div class="verdict-head vh-do">✓ Pulapay fait ça</div>
+      <div class="verdict-item"><div class="vi-mark">✓</div>Un seul solde visible, toujours en FCFA (ou devise locale)</div>
+      <div class="verdict-item"><div class="vi-mark">✓</div>Une seule action principale par écran, hiérarchie visuelle claire</div>
+      <div class="verdict-item"><div class="vi-mark">✓</div>Messages d'erreur en langage humain, rassurants</div>
+      <div class="verdict-item"><div class="vi-mark">✓</div>Feedback immédiat sur chaque action (150ms max)</div>
+      <div class="verdict-item"><div class="vi-mark">✓</div>Texte court, phrases directes, sans jargon</div>
+      <div class="verdict-item"><div class="vi-mark">✓</div>Orange uniquement pour les CTA et accents critiques</div>
+      <div class="verdict-item"><div class="vi-mark">✓</div>Vert uniquement pour les confirmations et entrées d'argent</div>
+      <div class="verdict-item"><div class="vi-mark">✓</div>Loading states rassurants (skeleton, pas spinner)</div>
+      <div class="verdict-item"><div class="vi-mark">✓</div>Product Sans pour l'UI, Times NR MT pour l'émotion</div>
+      <div class="verdict-item"><div class="vi-mark">✓</div>Mobile-first, touch-friendly (tap target minimum 44×44px)</div>
+    </div>
+    <div class="verdict-col">
+      <div class="verdict-head vh-dont">✗ Pulapay ne fait jamais ça</div>
+      <div class="verdict-item"><div class="vi-mark">✗</div>Afficher "blockchain", "USDC", "stablecoin" à l'utilisateur</div>
+      <div class="verdict-item"><div class="vi-mark">✗</div>Demander à l'utilisateur de choisir un réseau de paiement</div>
+      <div class="verdict-item"><div class="vi-mark">✗</div>Codes d'erreur techniques visibles (ex: "Error 4029")</div>
+      <div class="verdict-item"><div class="vi-mark">✗</div>Plus de 5 étapes pour compléter une action</div>
+      <div class="verdict-item"><div class="vi-mark">✗</div>Gradients violets sur fond blanc (fintech générique)</div>
+      <div class="verdict-item"><div class="vi-mark">✗</div>Animations non-fonctionnelles, confettis, effets spectaculaires</div>
+      <div class="verdict-item"><div class="vi-mark">✗</div>Plusieurs soldes ou balances visibles simultanément</div>
+      <div class="verdict-item"><div class="vi-mark">✗</div>CTA agressifs ("Télécharge MAINTENANT !!!")</div>
+      <div class="verdict-item"><div class="vi-mark">✗</div>Texte trop petit (min 13px pour le corps, 11px pour les labels)</div>
+      <div class="verdict-item"><div class="vi-mark">✗</div>Formulaires longs sans progression visible ni feedback</div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════
+   10 — IMPLEMENTATION GUIDE
+══════════════════════════════════════════ -->
+<section class="section dark" id="implementation">
+  <div class="section-eyebrow reveal">
+    <div class="eyebrow-num">10</div>
+    <div class="eyebrow-line"></div>
+    <div class="eyebrow-label light">Guide d'Implémentation</div>
+  </div>
+  <h2 class="section-title light reveal">Stack & <em>Architecture</em><br>Frontend.</h2>
+  <p class="section-lead light reveal">Next.js · React · TypeScript · TailwindCSS. Tout ce qu'il faut pour builder Pulapay rapidement et proprement.</p>
+
+  <div class="grid-2 reveal" style="gap:16px;margin-bottom:32px;">
+    <div class="card dark-card">
+      <div class="card-label light">Stack Technique</div>
+      <div style="display:flex;flex-direction:column;gap:10px;margin-top:4px;">
+        <div style="display:flex;justify-content:space-between;align-items:center;padding:10px 14px;background:rgba(255,255,255,0.04);border-radius:var(--r-sm);">
+          <span style="font-size:13px;font-weight:600;color:var(--white);">Framework</span>
+          <span class="code dark">Next.js 14 (App Router)</span>
+        </div>
+        <div style="display:flex;justify-content:space-between;align-items:center;padding:10px 14px;background:rgba(255,255,255,0.04);border-radius:var(--r-sm);">
+          <span style="font-size:13px;font-weight:600;color:var(--white);">UI Library</span>
+          <span class="code dark">React 18</span>
+        </div>
+        <div style="display:flex;justify-content:space-between;align-items:center;padding:10px 14px;background:rgba(255,255,255,0.04);border-radius:var(--r-sm);">
+          <span style="font-size:13px;font-weight:600;color:var(--white);">Language</span>
+          <span class="code dark">TypeScript strict</span>
+        </div>
+        <div style="display:flex;justify-content:space-between;align-items:center;padding:10px 14px;background:rgba(255,255,255,0.04);border-radius:var(--r-sm);">
+          <span style="font-size:13px;font-weight:600;color:var(--white);">Styling</span>
+          <span class="code dark">TailwindCSS + CSS vars</span>
+        </div>
+        <div style="display:flex;justify-content:space-between;align-items:center;padding:10px 14px;background:rgba(255,255,255,0.04);border-radius:var(--r-sm);">
+          <span style="font-size:13px;font-weight:600;color:var(--white);">Animation</span>
+          <span class="code dark">Framer Motion</span>
+        </div>
+        <div style="display:flex;justify-content:space-between;align-items:center;padding:10px 14px;background:rgba(255,255,255,0.04);border-radius:var(--r-sm);">
+          <span style="font-size:13px;font-weight:600;color:var(--white);">State</span>
+          <span class="code dark">Zustand + React Query</span>
+        </div>
+      </div>
+    </div>
+    <div class="card dark-card">
+      <div class="card-label light">Structure de Dossiers</div>
+      <pre class="code-block" style="background:rgba(255,255,255,0.04);border-color:rgba(255,255,255,0.06);font-size:11px;margin-top:4px;"><span class="c-orange">src/</span>
+<span class="c-blue">├── app/</span>              <span class="c-gray">← Next.js App Router</span>
+<span class="c-blue">│   ├── (auth)/</span>       <span class="c-gray">← onboarding, login</span>
+<span class="c-blue">│   ├── dashboard/</span>    <span class="c-gray">← home, balance</span>
+<span class="c-blue">│   ├── send/</span>         <span class="c-gray">← send flow</span>
+<span class="c-blue">│   ├── receive/</span>      <span class="c-gray">← receive flow</span>
+<span class="c-blue">│   └── history/</span>      <span class="c-gray">← transactions</span>
+<span class="c-orange">├── components/</span>
+<span class="c-blue">│   ├── ui/</span>           <span class="c-gray">← Button, Input, Badge...</span>
+<span class="c-blue">│   ├── wallet/</span>       <span class="c-gray">← WalletCard, Balance</span>
+<span class="c-blue">│   ├── transaction/</span>  <span class="c-gray">← TxItem, TxList</span>
+<span class="c-blue">│   └── layout/</span>       <span class="c-gray">← BottomNav, Header</span>
+<span class="c-orange">├── lib/</span>              <span class="c-gray">← utils, api, hooks</span>
+<span class="c-orange">└── styles/</span>
+<span class="c-blue">    └── globals.css</span>   <span class="c-gray">← design tokens CSS vars</span></pre>
+    </div>
+  </div>
+
+  <div class="reveal">
+    <pre class="code-block"><span class="c-gray">/* globals.css — Pulapay Design Tokens */</span>
+<span class="c-orange">:root</span> {
+  <span class="c-gray">/* Colors */</span>
+  <span class="c-blue">--pula-orange</span>:    <span class="c-green">#FF6B00</span>;
+  <span class="c-blue">--pula-ink</span>:       <span class="c-green">#0D0D0D</span>;
+  <span class="c-blue">--pula-white</span>:     <span class="c-green">#FFFFFF</span>;
+  <span class="c-blue">--pula-green</span>:     <span class="c-green">#1F8A70</span>;
+  <span class="c-blue">--pula-green-l</span>:   <span class="c-green">#E8F5F1</span>;
+  <span class="c-blue">--pula-violet</span>:    <span class="c-green">#5B2EFF</span>;
+  <span class="c-blue">--pula-mist</span>:      <span class="c-green">#F5F5F2</span>;
+  <span class="c-blue">--pula-rule</span>:      <span class="c-green">#E8E8E4</span>;
+  <span class="c-blue">--pula-stone</span>:     <span class="c-green">#6B6B6B</span>;
+  <span class="c-blue">--pula-error</span>:     <span class="c-green">#E53333</span>;
+
+  <span class="c-gray">/* Typography */</span>
+  <span class="c-blue">--font-ui</span>:        <span class="c-green">'Product Sans', 'Google Sans', Helvetica, Arial, sans-serif</span>;
+  <span class="c-blue">--font-serif</span>:     <span class="c-green">'Times New Roman MT', 'Times New Roman', Times, serif</span>;
+
+  <span class="c-gray">/* Spacing (base 8px) */</span>
+  <span class="c-blue">--s1</span>:<span class="c-green">4px</span>; <span class="c-blue">--s2</span>:<span class="c-green">8px</span>; <span class="c-blue">--s3</span>:<span class="c-green">12px</span>; <span class="c-blue">--s4</span>:<span class="c-green">16px</span>;
+  <span class="c-blue">--s5</span>:<span class="c-green">24px</span>; <span class="c-blue">--s6</span>:<span class="c-green">32px</span>; <span class="c-blue">--s7</span>:<span class="c-green">48px</span>; <span class="c-blue">--s8</span>:<span class="c-green">64px</span>;
+
+  <span class="c-gray">/* Border Radius */</span>
+  <span class="c-blue">--r-xs</span>:<span class="c-green">6px</span>; <span class="c-blue">--r-sm</span>:<span class="c-green">8px</span>; <span class="c-blue">--r-md</span>:<span class="c-green">12px</span>;
+  <span class="c-blue">--r-lg</span>:<span class="c-green">16px</span>; <span class="c-blue">--r-xl</span>:<span class="c-green">24px</span>; <span class="c-blue">--r-pill</span>:<span class="c-green">999px</span>;
+
+  <span class="c-gray">/* Motion */</span>
+  <span class="c-blue">--ease-out</span>:    <span class="c-green">cubic-bezier(0.16, 1, 0.3, 1)</span>;
+  <span class="c-blue">--ease-spring</span>: <span class="c-green">cubic-bezier(0.34, 1.56, 0.64, 1)</span>;
+  <span class="c-blue">--dur-fast</span>:<span class="c-green">150ms</span>; <span class="c-blue">--dur-mid</span>:<span class="c-green">250ms</span>; <span class="c-blue">--dur-slow</span>:<span class="c-green">400ms</span>;
+}</pre>
+  </div>
+
+  <div class="ornament reveal" style="border-color:rgba(255,255,255,0.1);">
+    <div class="ornament-line" style="background:rgba(255,255,255,0.1);"></div>
+    <div class="ornament-text" style="color:rgba(255,255,255,0.3);">Règles de développement</div>
+    <div class="ornament-line" style="background:rgba(255,255,255,0.1);"></div>
+  </div>
+
+  <div class="reveal">
+    <table class="impl-table">
+      <thead><tr><th>Règle</th><th>Détail</th></tr></thead>
+      <tbody>
+        <tr><td style="font-weight:600;">Touch targets</td><td>Minimum 44×44px pour tout élément interactif. Aucune exception sur mobile.</td></tr>
+        <tr><td style="font-weight:600;">Contraste texte</td><td>Ratio minimum 4.5:1 pour le corps (WCAG AA). Blanc sur orange interdit pour le texte long.</td></tr>
+        <tr><td style="font-weight:600;">prefers-reduced-motion</td><td>Toujours vérifier et désactiver les animations si demandé.</td></tr>
+        <tr><td style="font-weight:600;">Montants financiers</td><td>Toujours formater avec séparateur de milliers. Jamais d'ambiguïté sur la devise. <span class="code">247 500 FCFA</span> pas <span class="code">247500</span>.</td></tr>
+        <tr><td style="font-weight:600;">États de chargement</td><td>Skeleton loader pour les montants, jamais de spinner seul sur le solde.</td></tr>
+        <tr><td style="font-weight:600;">Gestion d'erreurs</td><td>Message humain toujours. Code technique jamais visible. Toujours proposer une action de sortie.</td></tr>
+        <tr><td style="font-weight:600;">Navigation mobile</td><td>Bottom nav bar. 3–4 items max. Tab Send toujours en premier.</td></tr>
+        <tr><td style="font-weight:600;">Idempotency UI</td><td>Désactiver les boutons de confirmation après le premier clic. Prévenir les doubles envois.</td></tr>
+        <tr><td style="font-weight:600;">Dark / Light mode</td><td>MVP : Light mode uniquement. Les sections hero et sidebar restent toujours dark.</td></tr>
+        <tr><td style="font-weight:600;">Internationalisation</td><td>Prévoir i18n dès le départ. Langues cibles : Français, Anglais, Fon (Bénin).</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<footer>
+  <div>
+    <div class="foot-brand">Pula<span>pay</span></div>
+    <div style="font-family:var(--font-serif);font-style:italic;font-size:12px;color:var(--stone);margin-top:4px;">"Finally… someone gets it."</div>
+  </div>
+  <div class="foot-meta">
+    Design Context & System v1.0<br>
+    Next.js · React · TypeScript · Tailwind<br>
+    Bénin · Afrique de l'Ouest · 2026
+  </div>
+</footer>
+
+</main>
+
+<script>
+// Scroll reveal
+const io = new IntersectionObserver((entries) => {
+  entries.forEach((entry, i) => {
+    if (entry.isIntersecting) {
+      setTimeout(() => entry.target.classList.add('visible'), i * 45);
+    }
+  });
+}, { threshold: 0.07 });
+document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+// Initial visible check
+setTimeout(() => {
+  document.querySelectorAll('.reveal').forEach(el => {
+    const r = el.getBoundingClientRect();
+    if (r.top < window.innerHeight) el.classList.add('visible');
+  });
+}, 80);
+
+// Active nav
+const sections = document.querySelectorAll('[id]');
+const navLinks = document.querySelectorAll('.nav-link');
+const navObs = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      navLinks.forEach(n => n.classList.toggle('active', n.getAttribute('href') === '#' + e.target.id));
+    }
+  });
+}, { threshold: 0.25 });
+sections.forEach(s => navObs.observe(s));
+</script>
+</body>
+</html>

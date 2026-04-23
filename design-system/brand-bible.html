@@ -1,0 +1,1207 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pulapay — Brand Bible v1.0</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,300;0,400;0,700;1,300;1,700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --white:   #FFFFFF;
+  --green:   #1F8A70;
+  --green-l: #E8F5F1;
+  --orange:  #FF6B00;
+  --orange-l:#FFF0E6;
+  --violet:  #5B2EFF;
+  --violet-l:#EDE8FF;
+  --ink:     #0D0D0D;
+  --stone:   #6B6B6B;
+  --mist:    #F4F4F2;
+  --rule:    #E8E8E4;
+}
+
+*{margin:0;padding:0;box-sizing:border-box;}
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--white);
+  font-family: 'DM Sans', sans-serif;
+  color: var(--ink);
+  overflow-x: hidden;
+}
+
+/* ── GRAIN ── */
+body::after {
+  content:'';
+  position:fixed;inset:0;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.025'/%3E%3C/svg%3E");
+  pointer-events:none;z-index:9999;
+}
+
+/* ── NAV SIDEBAR ── */
+.sidebar {
+  position: fixed;
+  left: 0; top: 0; bottom: 0;
+  width: 220px;
+  background: var(--ink);
+  padding: 36px 0 36px;
+  display: flex;
+  flex-direction: column;
+  z-index: 100;
+  border-right: 1px solid rgba(255,255,255,0.06);
+}
+
+.sidebar-logo {
+  font-family: 'Fraunces', serif;
+  font-size: 20px;
+  color: var(--white);
+  padding: 0 24px 32px;
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+  margin-bottom: 20px;
+}
+.sidebar-logo span {
+  display: block;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 10px;
+  font-weight: 300;
+  color: rgba(255,255,255,0.35);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin-top: 4px;
+}
+
+.nav-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 24px;
+  font-size: 12px;
+  font-weight: 400;
+  color: rgba(255,255,255,0.4);
+  cursor: pointer;
+  transition: all 0.2s;
+  text-decoration: none;
+  letter-spacing: 0.2px;
+  border-left: 2px solid transparent;
+}
+.nav-item:hover { color: rgba(255,255,255,0.85); }
+.nav-item.active {
+  color: var(--white);
+  border-left-color: var(--orange);
+  background: rgba(255,255,255,0.04);
+}
+.nav-num {
+  font-size: 10px;
+  color: rgba(255,255,255,0.2);
+  font-weight: 300;
+  min-width: 16px;
+}
+
+.sidebar-bottom {
+  margin-top: auto;
+  padding: 20px 24px 0;
+  border-top: 1px solid rgba(255,255,255,0.06);
+}
+.sidebar-tag {
+  font-size: 10px;
+  color: rgba(255,255,255,0.25);
+  font-weight: 300;
+  line-height: 1.6;
+  font-style: italic;
+}
+
+/* ── MAIN ── */
+main {
+  margin-left: 220px;
+  min-height: 100vh;
+}
+
+/* ── HERO ── */
+.hero {
+  min-height: 100vh;
+  background: var(--ink);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 80px 80px 80px;
+  position: relative;
+  overflow: hidden;
+}
+
+.hero-grid {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
+  background-size: 60px 60px;
+}
+
+.hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(255,107,0,0.12);
+  border: 1px solid rgba(255,107,0,0.25);
+  color: var(--orange);
+  font-size: 11px;
+  font-weight: 500;
+  padding: 6px 14px;
+  border-radius: 20px;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  margin-bottom: 40px;
+  width: fit-content;
+}
+.hero-dot { width:6px;height:6px;border-radius:50%;background:var(--orange);animation:pulse 2s infinite; }
+@keyframes pulse{0%,100%{opacity:1;}50%{opacity:0.4;}}
+
+.hero-title {
+  font-family: 'Fraunces', serif;
+  font-size: clamp(56px, 7vw, 88px);
+  font-weight: 700;
+  color: var(--white);
+  line-height: 1.0;
+  letter-spacing: -2px;
+  margin-bottom: 16px;
+}
+.hero-title em {
+  font-style: italic;
+  color: var(--orange);
+}
+
+.hero-sub {
+  font-size: 16px;
+  font-weight: 300;
+  color: rgba(255,255,255,0.45);
+  margin-bottom: 60px;
+  letter-spacing: 0.3px;
+}
+
+.hero-pills {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+.pill {
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.1);
+  color: rgba(255,255,255,0.55);
+  font-size: 12px;
+  font-weight: 400;
+  padding: 7px 14px;
+  border-radius: 20px;
+}
+
+.hero-corner {
+  position: absolute;
+  bottom: 60px;
+  right: 80px;
+  text-align: right;
+}
+.hero-corner-text {
+  font-family: 'Fraunces', serif;
+  font-style: italic;
+  font-size: 18px;
+  color: rgba(255,255,255,0.2);
+  line-height: 1.6;
+}
+.hero-corner-text strong { color: rgba(255,107,0,0.5); font-style: normal; }
+
+/* ── SECTIONS ── */
+section {
+  padding: 80px 80px;
+  border-bottom: 1px solid var(--rule);
+}
+section:nth-child(even) { background: var(--mist); }
+
+.section-header {
+  display: flex;
+  align-items: flex-start;
+  gap: 20px;
+  margin-bottom: 52px;
+}
+.section-num {
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--stone);
+  padding-top: 6px;
+  min-width: 28px;
+}
+.section-title {
+  font-family: 'Fraunces', serif;
+  font-size: clamp(32px, 4vw, 48px);
+  font-weight: 700;
+  line-height: 1.1;
+  letter-spacing: -1px;
+  color: var(--ink);
+}
+.section-title em { font-style: italic; color: var(--orange); }
+
+/* ── CARDS GRID ── */
+.grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; }
+.grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+
+.card {
+  background: var(--white);
+  border: 1px solid var(--rule);
+  border-radius: 12px;
+  padding: 28px;
+}
+.card-icon { font-size: 22px; margin-bottom: 16px; }
+.card-label {
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--stone);
+  margin-bottom: 10px;
+}
+.card-title {
+  font-family: 'Fraunces', serif;
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 1.25;
+  margin-bottom: 10px;
+}
+.card-text {
+  font-size: 13px;
+  font-weight: 300;
+  line-height: 1.7;
+  color: var(--stone);
+}
+
+/* ── POSITIONING CARD (HERO OF SECTION 1) ── */
+.positioning-block {
+  background: var(--ink);
+  border-radius: 16px;
+  padding: 48px;
+  margin-bottom: 32px;
+  position: relative;
+  overflow: hidden;
+}
+.positioning-block::before {
+  content: '';
+  position: absolute;
+  top: -60px; right: -60px;
+  width: 200px; height: 200px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255,107,0,0.15) 0%, transparent 70%);
+}
+.positioning-text {
+  font-family: 'Fraunces', serif;
+  font-size: 28px;
+  font-weight: 300;
+  font-style: italic;
+  color: var(--white);
+  line-height: 1.5;
+  max-width: 600px;
+}
+.positioning-text strong { font-style: normal; font-weight: 700; color: var(--orange); }
+
+/* ── COLOR SWATCHES ── */
+.swatch-row { display: flex; gap: 12px; flex-wrap: wrap; }
+.swatch {
+  border-radius: 12px;
+  overflow: hidden;
+  flex: 1;
+  min-width: 140px;
+}
+.swatch-color {
+  height: 100px;
+  display: flex;
+  align-items: flex-end;
+  padding: 12px;
+}
+.swatch-info { padding: 14px 16px; background: var(--white); border: 1px solid var(--rule); border-top: none; border-radius: 0 0 12px 12px; }
+.swatch-name { font-size: 13px; font-weight: 500; margin-bottom: 3px; }
+.swatch-hex { font-size: 11px; color: var(--stone); letter-spacing: 1px; margin-bottom: 6px; }
+.swatch-role { font-size: 11px; color: var(--stone); font-weight: 300; line-height: 1.5; }
+.swatch-tag {
+  display: inline-block;
+  font-size: 10px;
+  padding: 2px 8px;
+  border-radius: 10px;
+  margin-top: 6px;
+}
+.tag-primary { background: var(--green-l); color: var(--green); }
+.tag-action  { background: var(--orange-l); color: var(--orange); }
+.tag-accent  { background: var(--violet-l); color: var(--violet); }
+
+/* ── TYPOGRAPHY DEMO ── */
+.type-demo {
+  background: var(--white);
+  border: 1px solid var(--rule);
+  border-radius: 12px;
+  padding: 36px;
+  margin-bottom: 16px;
+}
+.type-row {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  padding: 20px 0;
+  border-bottom: 1px solid var(--rule);
+  gap: 20px;
+}
+.type-row:last-child { border-bottom: none; }
+.type-meta { font-size: 11px; color: var(--stone); min-width: 100px; font-weight: 300; }
+.type-sample { font-family: 'DM Sans', sans-serif; }
+
+/* ── VOICE RULES ── */
+.rule-block {
+  background: var(--white);
+  border: 1px solid var(--rule);
+  border-radius: 12px;
+  overflow: hidden;
+  margin-bottom: 12px;
+}
+.rule-yes, .rule-no {
+  padding: 18px 24px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  font-size: 14px;
+  line-height: 1.5;
+}
+.rule-yes { border-bottom: 1px solid var(--rule); }
+.rule-icon { font-size: 16px; flex-shrink: 0; }
+.rule-label {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin-right: 8px;
+}
+.rule-yes .rule-label { color: var(--green); }
+.rule-no .rule-label  { color: #CC3333; }
+.rule-yes-bg { background: rgba(31,138,112,0.04); }
+.rule-no-bg  { background: rgba(204,51,51,0.03); }
+
+/* ── ARCHETYPE ── */
+.archetype-block {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-bottom: 32px;
+}
+.arch-card {
+  border-radius: 12px;
+  padding: 32px;
+  position: relative;
+  overflow: hidden;
+}
+.arch-card.sage  { background: var(--ink); }
+.arch-card.every { background: var(--green); }
+.arch-name {
+  font-family: 'Fraunces', serif;
+  font-size: 32px;
+  font-weight: 700;
+  color: var(--white);
+  margin-bottom: 8px;
+}
+.arch-desc { font-size: 13px; color: rgba(255,255,255,0.6); line-height: 1.7; font-weight: 300; }
+.arch-traits { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 16px; }
+.arch-trait {
+  background: rgba(255,255,255,0.1);
+  color: rgba(255,255,255,0.75);
+  font-size: 11px;
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-weight: 400;
+}
+
+/* ── WORDS ── */
+.word-cloud {
+  display: flex; gap: 8px; flex-wrap: wrap; margin-top: 16px;
+}
+.word {
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 400;
+}
+.word-avoid { background: #FFF0F0; color: #CC3333; text-decoration: line-through; }
+.word-use   { background: var(--green-l); color: var(--green); font-weight: 500; }
+
+/* ── SIGNATURE PHRASES ── */
+.sig-list { display: flex; flex-direction: column; gap: 10px; }
+.sig-item {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  background: var(--white);
+  border: 1px solid var(--rule);
+  border-left: 3px solid var(--orange);
+  border-radius: 0 10px 10px 0;
+  padding: 16px 20px;
+}
+.sig-text {
+  font-family: 'Fraunces', serif;
+  font-size: 18px;
+  font-weight: 300;
+  font-style: italic;
+  color: var(--ink);
+}
+
+/* ── ARCHITECTURE ── */
+.arch-tree {
+  background: var(--ink);
+  border-radius: 16px;
+  padding: 48px;
+}
+.arch-master {
+  background: var(--orange);
+  color: white;
+  border-radius: 12px;
+  padding: 20px 32px;
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  font-family: 'Fraunces', serif;
+  font-size: 24px;
+  font-weight: 700;
+  margin-bottom: 32px;
+}
+.arch-connector {
+  display: flex;
+  gap: 16px;
+  padding-left: 40px;
+}
+.arch-product {
+  background: rgba(255,255,255,0.07);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 10px;
+  padding: 16px 20px;
+  color: rgba(255,255,255,0.7);
+  font-size: 14px;
+  font-weight: 400;
+}
+.arch-product strong { display: block; color: white; font-size: 16px; font-weight: 500; margin-bottom: 4px; }
+.arch-product.future { opacity: 0.45; border-style: dashed; }
+
+/* ── BRAND RULE ── */
+.golden-rule {
+  background: var(--ink);
+  border-radius: 16px;
+  padding: 60px 80px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.golden-rule::before {
+  content: '"';
+  position: absolute;
+  top: -20px; left: 40px;
+  font-family: 'Fraunces', serif;
+  font-size: 200px;
+  color: rgba(255,107,0,0.06);
+  line-height: 1;
+}
+.golden-q {
+  font-family: 'Fraunces', serif;
+  font-size: 28px;
+  font-weight: 300;
+  font-style: italic;
+  color: rgba(255,255,255,0.5);
+  line-height: 1.6;
+  margin-bottom: 20px;
+}
+.golden-a {
+  font-family: 'Fraunces', serif;
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--orange);
+  line-height: 1.6;
+}
+
+/* ── PHOTO GRID ── */
+.photo-do-dont {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+.photo-col { border-radius: 12px; overflow: hidden; }
+.photo-header {
+  padding: 14px 20px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+.photo-do   .photo-header { background: var(--green-l); color: var(--green); }
+.photo-dont .photo-header { background: #FFF0F0; color: #CC3333; }
+.photo-list {
+  background: var(--white);
+  border: 1px solid var(--rule);
+  border-top: none;
+  border-radius: 0 0 12px 12px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.photo-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  font-size: 13px;
+  font-weight: 300;
+  color: var(--stone);
+  line-height: 1.5;
+}
+.photo-item span:first-child { flex-shrink: 0; font-size: 14px; }
+
+/* ── CHECKLIST ── */
+.checklist {
+  background: var(--white);
+  border: 1px solid var(--rule);
+  border-radius: 12px;
+  overflow: hidden;
+}
+.check-item {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 16px 24px;
+  border-bottom: 1px solid var(--rule);
+  font-size: 14px;
+  font-weight: 300;
+  color: var(--ink);
+  cursor: pointer;
+  transition: background 0.15s;
+}
+.check-item:last-child { border-bottom: none; }
+.check-item:hover { background: var(--mist); }
+.check-box {
+  width: 20px; height: 20px;
+  border: 2px solid var(--rule);
+  border-radius: 5px;
+  flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+  transition: all 0.2s;
+  font-size: 11px;
+  color: transparent;
+}
+.check-item.checked .check-box {
+  background: var(--green);
+  border-color: var(--green);
+  color: white;
+}
+.check-item.checked .check-text { color: var(--stone); text-decoration: line-through; }
+
+/* ── SCROLL ANIMATIONS ── */
+.reveal {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.5s ease, transform 0.5s ease;
+}
+.reveal.visible { opacity: 1; transform: translateY(0); }
+
+/* ── FOOTER ── */
+footer {
+  background: var(--ink);
+  padding: 60px 80px;
+  margin-left: 0;
+}
+.footer-inner {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+}
+.footer-logo {
+  font-family: 'Fraunces', serif;
+  font-size: 32px;
+  color: var(--white);
+}
+.footer-tag {
+  font-size: 13px;
+  font-style: italic;
+  color: rgba(255,255,255,0.3);
+  font-family: 'Fraunces', serif;
+}
+.footer-version {
+  font-size: 11px;
+  color: rgba(255,255,255,0.2);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+@media (max-width: 900px) {
+  .sidebar { display: none; }
+  main { margin-left: 0; }
+  section { padding: 60px 24px; }
+  .hero { padding: 60px 24px; }
+  .grid-2,.grid-3,.grid-4 { grid-template-columns: 1fr; }
+  .archetype-block { grid-template-columns: 1fr; }
+  .photo-do-dont { grid-template-columns: 1fr; }
+  footer { padding: 40px 24px; }
+  .footer-inner { flex-direction: column; gap: 20px; }
+  .golden-rule { padding: 40px 24px; }
+  .arch-connector { flex-wrap: wrap; padding-left: 0; }
+}
+</style>
+</head>
+<body>
+
+<!-- SIDEBAR -->
+<nav class="sidebar">
+  <div class="sidebar-logo">Pulapay <span>Brand Bible v1.0</span></div>
+
+  <a class="nav-item active" href="#hero">    <span class="nav-num">00</span> Fondation</a>
+  <a class="nav-item" href="#positioning">    <span class="nav-num">01</span> Positionnement</a>
+  <a class="nav-item" href="#personality">    <span class="nav-num">02</span> Personnalité</a>
+  <a class="nav-item" href="#voice">          <span class="nav-num">03</span> Voix & Ton</a>
+  <a class="nav-item" href="#architecture">   <span class="nav-num">04</span> Architecture</a>
+  <a class="nav-item" href="#colors">         <span class="nav-num">05</span> Couleurs</a>
+  <a class="nav-item" href="#typography">     <span class="nav-num">06</span> Typographie</a>
+  <a class="nav-item" href="#photography">    <span class="nav-num">07</span> Photographie</a>
+  <a class="nav-item" href="#illustration">   <span class="nav-num">08</span> Illustration</a>
+  <a class="nav-item" href="#checklist">      <span class="nav-num">09</span> Checklist</a>
+  <a class="nav-item" href="#rule">           <span class="nav-num">✦</span> Règle d'or</a>
+
+  <div class="sidebar-bottom">
+    <div class="sidebar-tag">"Enfin, quelqu'un<br>qui comprend."</div>
+  </div>
+</nav>
+
+<!-- MAIN -->
+<main>
+
+<!-- ── HERO ── -->
+<section id="hero" class="hero" style="border-bottom:none;">
+  <div class="hero-grid"></div>
+  <div style="position:relative;">
+    <div class="hero-badge"><div class="hero-dot"></div> Brand Bible</div>
+    <div class="hero-title">Pula<em>pay</em></div>
+    <div class="hero-sub">Un compte. Un solde. C'est tout. — Brand Bible v1.0</div>
+    <div class="hero-pills">
+      <div class="pill">Emotional Lane: "Finally, someone gets it."</div>
+      <div class="pill">Archétype: Sage + Everyman</div>
+      <div class="pill">Émotion: Soulagement</div>
+      <div class="pill">UEMOA · Base Blockchain</div>
+    </div>
+  </div>
+  <div class="hero-corner">
+    <div class="hero-corner-text">
+      "Ton argent.<br>Fais-en ce que tu veux."<br>
+      <strong>— Pulapay</strong>
+    </div>
+  </div>
+</section>
+
+<!-- ── 01 POSITIONNEMENT ── -->
+<section id="positioning">
+  <div class="section-header reveal">
+    <div class="section-num">01</div>
+    <div class="section-title">Fondation<br><em>stratégique</em></div>
+  </div>
+
+  <div class="positioning-block reveal">
+    <div class="positioning-text">
+      Nous ne sommes pas une banque.<br>
+      Nous ne sommes pas une super-app.<br><br>
+      Nous sommes <strong>une couche de simplification.</strong>
+    </div>
+  </div>
+
+  <div class="grid-3 reveal">
+    <div class="card">
+      <div class="card-label">Positionnement</div>
+      <div class="card-title">Compte financier universel africain</div>
+      <div class="card-text">Un seul solde. Tous les opérateurs. Local et international. Rien de plus.</div>
+    </div>
+    <div class="card">
+      <div class="card-label">Promesse centrale</div>
+      <div class="card-title" style="font-style:italic;color:var(--orange);">"Ton argent. Fais-en ce que tu veux."</div>
+      <div class="card-text">Pas de conditions. Pas de friction. Pas de surprises.</div>
+    </div>
+    <div class="card">
+      <div class="card-label">Émotion principale</div>
+      <div class="card-title">Soulagement.</div>
+      <div class="card-text">Réaction attendue : <strong>"Ah. Enfin."</strong><br><br>Secondaires : clarté, contrôle, confiance.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ── 02 PERSONNALITÉ ── -->
+<section id="personality">
+  <div class="section-header reveal">
+    <div class="section-num">02</div>
+    <div class="section-title">Personnalité<br><em>de marque</em></div>
+  </div>
+
+  <div class="archetype-block reveal">
+    <div class="arch-card sage">
+      <div class="arch-name">Sage</div>
+      <div class="arch-desc">Comprend le problème en profondeur. Lucide. Ne juge pas. Explique simplement ce que les autres compliquent.</div>
+      <div class="arch-traits">
+        <div class="arch-trait">Calme</div>
+        <div class="arch-trait">Lucide</div>
+        <div class="arch-trait">Empathique</div>
+      </div>
+    </div>
+    <div class="arch-card every">
+      <div class="arch-name">Everyman</div>
+      <div class="arch-desc">Parle la même langue que ses utilisateurs. A vécu le problème. Accessible. Jamais supérieur.</div>
+      <div class="arch-traits">
+        <div class="arch-trait">Pratique</div>
+        <div class="arch-trait">Honnête</div>
+        <div class="arch-trait">Moderne</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="grid-2 reveal">
+    <div class="card">
+      <div class="card-label">Pulapay parle comme…</div>
+      <div style="display:flex;flex-direction:column;gap:8px;margin-top:12px;">
+        <div style="display:flex;align-items:center;gap:10px;font-size:13px;font-weight:300;color:var(--stone);">✓ <span>Un ami calme qui a vécu le problème</span></div>
+        <div style="display:flex;align-items:center;gap:10px;font-size:13px;font-weight:300;color:var(--stone);">✓ <span>Quelqu'un de pratique et d'honnête</span></div>
+        <div style="display:flex;align-items:center;gap:10px;font-size:13px;font-weight:300;color:var(--stone);">✓ <span>Quelqu'un qui simplifie, pas qui impressionne</span></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-label">Pulapay ne parle PAS comme…</div>
+      <div style="display:flex;flex-direction:column;gap:8px;margin-top:12px;">
+        <div style="display:flex;align-items:center;gap:10px;font-size:13px;font-weight:300;color:#CC3333;">✗ <span>Une banque traditionnelle</span></div>
+        <div style="display:flex;align-items:center;gap:10px;font-size:13px;font-weight:300;color:#CC3333;">✗ <span>Un maximaliste crypto</span></div>
+        <div style="display:flex;align-items:center;gap:10px;font-size:13px;font-weight:300;color:#CC3333;">✗ <span>Un coach motivationnel</span></div>
+        <div style="display:flex;align-items:center;gap:10px;font-size:13px;font-weight:300;color:#CC3333;">✗ <span>Un "tech bro" qui hype</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── 03 VOIX ── -->
+<section id="voice">
+  <div class="section-header reveal">
+    <div class="section-num">03</div>
+    <div class="section-title">Voix<br><em>& Ton</em></div>
+  </div>
+
+  <div class="grid-2 reveal" style="margin-bottom:32px;">
+    <div>
+      <div class="rule-block">
+        <div class="rule-yes rule-yes-bg">
+          <div class="rule-icon">✓</div>
+          <div><span class="rule-label">Dire</span><strong>"Tu n'as plus besoin de choisir un opérateur."</strong></div>
+        </div>
+        <div class="rule-no rule-no-bg">
+          <div class="rule-icon">✗</div>
+          <div><span class="rule-label">Éviter</span>"Interopérabilité multi-rails."</div>
+        </div>
+      </div>
+      <div class="rule-block" style="margin-top:12px;">
+        <div class="rule-yes rule-yes-bg">
+          <div class="rule-icon">✓</div>
+          <div><span class="rule-label">Dire</span><strong>"Tu peux recevoir de l'argent de partout."</strong></div>
+        </div>
+        <div class="rule-no rule-no-bg">
+          <div class="rule-icon">✗</div>
+          <div><span class="rule-label">Éviter</span>"Infrastructure stablecoin cross-border."</div>
+        </div>
+      </div>
+      <div class="rule-block" style="margin-top:12px;">
+        <div class="rule-yes rule-yes-bg">
+          <div class="rule-icon">✓</div>
+          <div><span class="rule-label">CTA</span><strong>"Essaie. Tu verras."</strong></div>
+        </div>
+        <div class="rule-no rule-no-bg">
+          <div class="rule-icon">✗</div>
+          <div><span class="rule-label">CTA</span>"Télécharge maintenant ! Offre limitée !"</div>
+        </div>
+      </div>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:12px;">
+      <div class="card">
+        <div class="card-label">Règles d'écriture</div>
+        <div style="display:flex;flex-direction:column;gap:8px;margin-top:12px;">
+          <div style="font-size:13px;font-weight:300;color:var(--stone);line-height:1.6;">— Phrases <strong style="color:var(--ink);">courtes</strong>. Une idée par ligne.</div>
+          <div style="font-size:13px;font-weight:300;color:var(--stone);line-height:1.6;">— Zéro <strong style="color:var(--ink);">jargon</strong>. Zéro buzzword.</div>
+          <div style="font-size:13px;font-weight:300;color:var(--stone);line-height:1.6;">— Zéro promesse <strong style="color:var(--ink);">floue ou exagérée</strong>.</div>
+          <div style="font-size:13px;font-weight:300;color:var(--stone);line-height:1.6;">— N'explique pas la tech. Explique le <strong style="color:var(--ink);">soulagement</strong>.</div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-label">Structure type d'un post</div>
+        <div style="font-size:12px;font-weight:300;color:var(--stone);line-height:1.9;margin-top:8px;font-family:'Fraunces',serif;font-style:italic;">
+          1. Une situation réelle<br>
+          2. Une frustration connue<br>
+          3. Une pause —<br>
+          4. Une simplification<br>
+          5. Une conclusion calme
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="reveal">
+    <div class="card-label" style="margin-bottom:14px;">Mots à éviter</div>
+    <div class="word-cloud" style="margin-bottom:24px;">
+      <div class="word word-avoid">Révolutionnaire</div>
+      <div class="word word-avoid">Disruptif</div>
+      <div class="word word-avoid">Next-gen</div>
+      <div class="word word-avoid">Écosystème</div>
+      <div class="word word-avoid">Innovation radicale</div>
+      <div class="word word-avoid">Solution innovante</div>
+    </div>
+    <div class="card-label" style="margin-bottom:14px;">Mots à utiliser</div>
+    <div class="word-cloud" style="margin-bottom:32px;">
+      <div class="word word-use">Simple.</div>
+      <div class="word word-use">Clair.</div>
+      <div class="word word-use">Ça marche.</div>
+      <div class="word word-use">Enfin.</div>
+      <div class="word word-use">Un compte.</div>
+      <div class="word word-use">C'est tout.</div>
+    </div>
+
+    <div class="card-label" style="margin-bottom:14px;">Signatures de langage</div>
+    <div class="sig-list">
+      <div class="sig-item"><div class="sig-text">"Un compte. Un solde. C'est tout."</div></div>
+      <div class="sig-item"><div class="sig-text">"On a simplifié."</div></div>
+      <div class="sig-item"><div class="sig-text">"Enfin."</div></div>
+      <div class="sig-item"><div class="sig-text">"Enfin, quelqu'un qui comprend."</div></div>
+      <div class="sig-item"><div class="sig-text">"Ton argent. Fais-en ce que tu veux."</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ── 04 ARCHITECTURE ── -->
+<section id="architecture">
+  <div class="section-header reveal">
+    <div class="section-num">04</div>
+    <div class="section-title">Architecture<br><em>de marque</em></div>
+  </div>
+
+  <div class="arch-tree reveal">
+    <div class="arch-master">◆ Pulapay <span style="font-size:13px;font-weight:300;opacity:0.6;margin-left:8px;">Master Brand</span></div>
+    <div class="arch-connector">
+      <div class="arch-product"><strong>Pulapay Account</strong>Produit principal · Actif</div>
+      <div class="arch-product future"><strong>Pulapay Business</strong>Extension future · B2B</div>
+      <div class="arch-product future"><strong>Pulapay API</strong>Extension future · Développeurs</div>
+      <div class="arch-product future"><strong>Pulapay Card</strong>Extension future · Premium</div>
+    </div>
+    <div style="margin-top:28px;font-size:12px;color:rgba(255,255,255,0.3);font-weight:300;">
+      Modèle : <strong style="color:rgba(255,255,255,0.5);">Branded House</strong> — toutes les extensions héritent de la marque mère. Simplicité + cohérence.
+    </div>
+  </div>
+</section>
+
+<!-- ── 05 COULEURS ── -->
+<section id="colors">
+  <div class="section-header reveal">
+    <div class="section-num">05</div>
+    <div class="section-title">Identité<br><em>visuelle</em></div>
+  </div>
+
+  <div class="swatch-row reveal" style="margin-bottom:16px;">
+    <div class="swatch">
+      <div class="swatch-color" style="background:#FFFFFF;border:1px solid var(--rule);border-radius:12px 12px 0 0;">
+        <span style="font-size:11px;color:#aaa;font-weight:300;">dominant</span>
+      </div>
+      <div class="swatch-info">
+        <div class="swatch-name">Blanc</div>
+        <div class="swatch-hex">#FFFFFF</div>
+        <div class="swatch-role">Clarté, respiration.<br>60–70% des layouts.</div>
+        <span class="swatch-tag tag-primary">Dominant</span>
+      </div>
+    </div>
+    <div class="swatch">
+      <div class="swatch-color" style="background:#0D0D0D;border-radius:12px 12px 0 0;">
+        <span style="font-size:11px;color:#555;font-weight:300;">ancrage</span>
+      </div>
+      <div class="swatch-info">
+        <div class="swatch-name">Encre</div>
+        <div class="swatch-hex">#0D0D0D</div>
+        <div class="swatch-role">Contraste, autorité.<br>Textes principaux.</div>
+        <span class="swatch-tag tag-primary">Texte</span>
+      </div>
+    </div>
+    <div class="swatch">
+      <div class="swatch-color" style="background:#1F8A70;border-radius:12px 12px 0 0;"></div>
+      <div class="swatch-info">
+        <div class="swatch-name">Vert Pulapay</div>
+        <div class="swatch-hex">#1F8A70</div>
+        <div class="swatch-role">Confiance, stabilité.<br>Confirmation, succès.</div>
+        <span class="swatch-tag tag-primary">Principal</span>
+      </div>
+    </div>
+    <div class="swatch">
+      <div class="swatch-color" style="background:#FF6B00;border-radius:12px 12px 0 0;"></div>
+      <div class="swatch-info">
+        <div class="swatch-name">Orange Pulse</div>
+        <div class="swatch-hex">#FF6B00</div>
+        <div class="swatch-role">Action, énergie maîtrisée.<br>CTA, accents.</div>
+        <span class="swatch-tag tag-action">Action</span>
+      </div>
+    </div>
+    <div class="swatch">
+      <div class="swatch-color" style="background:#5B2EFF;border-radius:12px 12px 0 0;"></div>
+      <div class="swatch-info">
+        <div class="swatch-name">Violet Vision</div>
+        <div class="swatch-hex">#5B2EFF</div>
+        <div class="swatch-role">Ambition, futur.<br>Usage premium uniquement.</div>
+        <span class="swatch-tag tag-accent">Accent rare</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="card reveal">
+    <div class="card-label">Règles d'utilisation</div>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:16px;">
+      <div style="font-size:13px;font-weight:300;color:var(--stone);line-height:1.7;">
+        <strong style="color:var(--ink);display:block;margin-bottom:4px;">Blanc</strong>
+        Dominant. 60–70% de l'espace. Beaucoup de respiration.
+      </div>
+      <div style="font-size:13px;font-weight:300;color:var(--stone);line-height:1.7;">
+        <strong style="color:var(--orange);display:block;margin-bottom:4px;">Orange</strong>
+        Réservé aux CTA et points d'attention. Jamais en fond dominant.
+      </div>
+      <div style="font-size:13px;font-weight:300;color:var(--stone);line-height:1.7;">
+        <strong style="color:var(--violet);display:block;margin-bottom:4px;">Violet</strong>
+        Rare. Premium uniquement. Jamais concurrent de l'orange.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── 06 TYPO ── -->
+<section id="typography">
+  <div class="section-header reveal">
+    <div class="section-num">06</div>
+    <div class="section-title">Typo<br><em>graphie</em></div>
+  </div>
+
+  <div class="type-demo reveal">
+    <div class="type-row">
+      <div class="type-meta">Titre · Bold<br>32–88px</div>
+      <div class="type-sample" style="font-size:40px;font-weight:700;letter-spacing:-1px;line-height:1.1;">Un compte. Un solde.</div>
+    </div>
+    <div class="type-row">
+      <div class="type-meta">Sous-titre · Medium<br>18–24px</div>
+      <div class="type-sample" style="font-size:22px;font-weight:500;">Reçois. Garde. Envoie. C'est tout.</div>
+    </div>
+    <div class="type-row">
+      <div class="type-meta">Corps · Regular<br>13–16px</div>
+      <div class="type-sample" style="font-size:15px;font-weight:300;color:var(--stone);line-height:1.7;max-width:500px;">Envoyer de l'argent ici, c'est compliqué. Tu dois demander le réseau. Tu dois calculer les frais. Ça ne devrait pas être comme ça.</div>
+    </div>
+    <div class="type-row">
+      <div class="type-meta">Label · Medium<br>10–12px upper.</div>
+      <div class="type-sample" style="font-size:11px;font-weight:500;letter-spacing:2px;text-transform:uppercase;color:var(--stone);">Pulapay Account · Un solde universel</div>
+    </div>
+  </div>
+
+  <div class="grid-2 reveal">
+    <div class="card">
+      <div class="card-label">Police principale</div>
+      <div class="card-title" style="font-size:24px;">Product Sans</div>
+      <div class="card-text">Alternative : Inter · SF Pro · Circular<br><br>Moderne, sans-serif. Lisible à toutes tailles. Accessible sur toutes les plateformes.</div>
+    </div>
+    <div class="card">
+      <div class="card-label">Règles</div>
+      <div style="display:flex;flex-direction:column;gap:8px;margin-top:12px;">
+        <div style="font-size:13px;font-weight:300;color:var(--stone);">✓ Maximum 2 familles de polices</div>
+        <div style="font-size:13px;font-weight:300;color:var(--stone);">✓ Jamais de typographie décorative</div>
+        <div style="font-size:13px;font-weight:300;color:var(--stone);">✓ Maximum 6 mots par headline slide</div>
+        <div style="font-size:13px;font-weight:300;color:var(--stone);">✓ Contraste fort : noir sur blanc</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── 07 PHOTO ── -->
+<section id="photography">
+  <div class="section-header reveal">
+    <div class="section-num">07</div>
+    <div class="section-title">Style<br><em>photographique</em></div>
+  </div>
+
+  <div class="photo-do-dont reveal">
+    <div class="photo-col photo-do">
+      <div class="photo-header">✓ Pulapay ressemble à ça</div>
+      <div class="photo-list">
+        <div class="photo-item"><span>☀️</span><span>Lumière naturelle. Journée. Intérieur lumineux.</span></div>
+        <div class="photo-item"><span>👥</span><span>Personnes réelles — pas de modèles trop parfaits.</span></div>
+        <div class="photo-item"><span>📱</span><span>Téléphone en main. Geste naturel. Moment ordinaire.</span></div>
+        <div class="photo-item"><span>😌</span><span>Émotion : soulagement, concentration, fluidité.</span></div>
+        <div class="photo-item"><span>🌍</span><span>Contextes africains reconnaissables — marchés, bureaux, rues.</span></div>
+        <div class="photo-item"><span>🎨</span><span>Couleurs chaudes, naturelles, peu de saturation forcée.</span></div>
+      </div>
+    </div>
+    <div class="photo-col photo-dont">
+      <div class="photo-header">✗ Pulapay n'est pas ça</div>
+      <div class="photo-list">
+        <div class="photo-item"><span>🚫</span><span>Photos stock artificielles — sourires plastiques, bureaux américains.</span></div>
+        <div class="photo-item"><span>🚫</span><span>Mise en scène dramatique, lumières studio sombres.</span></div>
+        <div class="photo-item"><span>🚫</span><span>Filtres lourds, ambiance "crypto sombre".</span></div>
+        <div class="photo-item"><span>🚫</span><span>Codes visuels bancaires traditionnels — costumes, architecture froide.</span></div>
+        <div class="photo-item"><span>🚫</span><span>Personnes regardant des graphiques ou des hologrammes.</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="positioning-block reveal" style="margin-top:24px;">
+    <div class="positioning-text" style="font-size:22px;">
+      "Pulapay doit ressembler à <strong>la vie réelle.</strong><br>
+      Pas à une publicité bancaire."
+    </div>
+  </div>
+</section>
+
+<!-- ── 08 ILLUSTRATION ── -->
+<section id="illustration">
+  <div class="section-header reveal">
+    <div class="section-num">08</div>
+    <div class="section-title">Illustrations<br><em>& Graphisme</em></div>
+  </div>
+
+  <div class="grid-3 reveal">
+    <div class="card">
+      <div class="card-icon">✦</div>
+      <div class="card-label">Illustrations</div>
+      <div class="card-title">Minimalistes & arrondies</div>
+      <div class="card-text">Formes simples. Couleurs limitées à la palette officielle. Jamais trop décoratif.</div>
+    </div>
+    <div class="card">
+      <div class="card-icon">⌇</div>
+      <div class="card-label">Iconographie</div>
+      <div class="card-title">Lignes fines & claires</div>
+      <div class="card-text">Icônes outline. Cohérentes. Sans complexité. Un concept = une icône.</div>
+    </div>
+    <div class="card">
+      <div class="card-icon">◦</div>
+      <div class="card-label">Motifs signature</div>
+      <div class="card-title">Micro-points discrets</div>
+      <div class="card-text">Points noirs sur fond clair. Formes organiques légères. Éléments glass subtils — infrastructure invisible.</div>
+    </div>
+  </div>
+
+  <!-- Visual demo of patterns -->
+  <div class="grid-2 reveal" style="margin-top:16px;">
+    <div style="background:var(--white);border:1px solid var(--rule);border-radius:12px;padding:32px;position:relative;overflow:hidden;min-height:160px;">
+      <div style="position:absolute;inset:0;background-image:radial-gradient(circle, var(--ink) 1px, transparent 1px);background-size:18px 18px;opacity:0.07;"></div>
+      <div style="position:relative;font-family:'Fraunces',serif;font-size:22px;font-weight:700;color:var(--ink);">Micro-points<br>sur fond blanc.</div>
+      <div style="font-size:11px;color:var(--stone);margin-top:8px;font-weight:300;position:relative;">Motif signature Pulapay</div>
+    </div>
+    <div style="background:var(--ink);border-radius:12px;padding:32px;position:relative;overflow:hidden;min-height:160px;">
+      <div style="position:absolute;inset:0;background: radial-gradient(ellipse at 80% 20%, rgba(255,107,0,0.15) 0%, transparent 60%), radial-gradient(ellipse at 20% 80%, rgba(31,138,112,0.1) 0%, transparent 60%);"></div>
+      <div style="position:relative;font-family:'Fraunces',serif;font-size:22px;font-weight:700;color:var(--white);">Glass &<br><em style="color:var(--orange);">organique</em></div>
+      <div style="font-size:11px;color:rgba(255,255,255,0.35);margin-top:8px;font-weight:300;position:relative;">Gradient mesh subtil</div>
+    </div>
+  </div>
+</section>
+
+<!-- ── 09 CHECKLIST ── -->
+<section id="checklist">
+  <div class="section-header reveal">
+    <div class="section-num">09</div>
+    <div class="section-title">Checklist<br><em>avant publication</em></div>
+  </div>
+
+  <div class="checklist reveal">
+    <div class="check-item" onclick="toggle(this)">
+      <div class="check-box">✓</div>
+      <div class="check-text">Est-ce assez <strong>simple</strong> ? Enlever encore un mot.</div>
+    </div>
+    <div class="check-item" onclick="toggle(this)">
+      <div class="check-box">✓</div>
+      <div class="check-text">Est-ce <strong>honnête</strong> ? Pas de promesse floue ou exagérée.</div>
+    </div>
+    <div class="check-item" onclick="toggle(this)">
+      <div class="check-box">✓</div>
+      <div class="check-text">Est-ce que ça <strong>enlève du bruit</strong> plutôt qu'en ajouter ?</div>
+    </div>
+    <div class="check-item" onclick="toggle(this)">
+      <div class="check-box">✓</div>
+      <div class="check-text">Est-ce que je <strong>dirais ça à un ami</strong> ? Pas à un investisseur, à un ami.</div>
+    </div>
+    <div class="check-item" onclick="toggle(this)">
+      <div class="check-box">✓</div>
+      <div class="check-text">Pas de <strong>jargon fintech</strong> : interopérabilité, blockchain, stablecoin, rails.</div>
+    </div>
+    <div class="check-item" onclick="toggle(this)">
+      <div class="check-box">✓</div>
+      <div class="check-text">Le CTA est <strong>calme</strong>, pas agressif. "Essaie." plutôt que "Télécharge maintenant !"</div>
+    </div>
+    <div class="check-item" onclick="toggle(this)">
+      <div class="check-box">✓</div>
+      <div class="check-text">La photo utilise de la <strong>lumière naturelle</strong> avec des personnes réelles.</div>
+    </div>
+    <div class="check-item" onclick="toggle(this)">
+      <div class="check-box">✓</div>
+      <div class="check-text">Les couleurs restent dans la <strong>palette officielle</strong>. Orange uniquement sur les CTA.</div>
+    </div>
+    <div class="check-item" onclick="toggle(this)">
+      <div class="check-box">✓</div>
+      <div class="check-text">Est-ce que ça <strong>ressemble à Pulapay</strong> ou à une fintech générique ?</div>
+    </div>
+    <div class="check-item" onclick="toggle(this)">
+      <div class="check-box">✓</div>
+      <div class="check-text">L'émotion transmise est le <strong>soulagement</strong>. Pas l'urgence, pas la peur.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ── RÈGLE D'OR ── -->
+<section id="rule" style="background:var(--ink);border-bottom:none;">
+  <div class="golden-rule reveal">
+    <div class="golden-q">
+      Si ça ressemble à une fintech<br>qui essaie d'être cool…<br>ce n'est pas Pulapay.
+    </div>
+    <div class="golden-a">
+      Si ça ressemble à quelqu'un<br>qui comprend vraiment…<br>c'est Pulapay. 🧡
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div>
+      <div class="footer-logo">Pulapay</div>
+      <div class="footer-tag">"Enfin, quelqu'un qui comprend."</div>
+    </div>
+    <div class="footer-version">Brand Bible v1.0 · 2026</div>
+  </div>
+</footer>
+
+</main>
+
+<script>
+// Intersection Observer for reveal animations
+const reveals = document.querySelectorAll('.reveal');
+const io = new IntersectionObserver((entries) => {
+  entries.forEach((e, i) => {
+    if(e.isIntersecting) {
+      setTimeout(() => e.target.classList.add('visible'), i * 60);
+    }
+  });
+}, { threshold: 0.1 });
+reveals.forEach(el => io.observe(el));
+
+// Checklist toggle
+function toggle(el) {
+  el.classList.toggle('checked');
+}
+
+// Active nav highlight
+const sections = document.querySelectorAll('section[id], .hero[id]');
+const navItems = document.querySelectorAll('.nav-item');
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if(e.isIntersecting) {
+      navItems.forEach(n => {
+        n.classList.toggle('active', n.getAttribute('href') === '#' + e.target.id);
+      });
+    }
+  });
+}, { threshold: 0.3 });
+sections.forEach(s => observer.observe(s));
+</script>
+</body>
+</html>

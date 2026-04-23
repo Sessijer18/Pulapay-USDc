@@ -1,0 +1,2221 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pulapay — Brand Kit 2026</title>
+
+<!-- Product Sans via Google Fonts (closest: Nunito/Rubik as fallback. We'll use the actual Google Product Sans CDN workaround) -->
+<link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@300;400;500;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+/* ═══════════════════════════════════════════
+   PULAPAY BRAND KIT — DESIGN TOKENS
+   Product Sans (Nunito fallback) + Times New Roman MT
+═══════════════════════════════════════════ */
+
+@import url('https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,300;1,700&display=swap');
+
+:root {
+  /* ── PALETTE ── */
+  --ink:        #0D0D0D;
+  --white:      #FFFFFF;
+  --green:      #1F8A70;
+  --green-deep: #166357;
+  --green-light:#E8F5F1;
+  --orange:     #FF6B00;
+  --orange-mid: #FF8533;
+  --orange-light:#FFF0E6;
+  --violet:     #5B2EFF;
+  --violet-light:#EDE8FF;
+  --stone:      #6B6B6B;
+  --mist:       #F6F6F4;
+  --rule:       #E8E8E4;
+  --smoke:      #D4D4CE;
+
+  /* ── TYPOGRAPHY ── */
+  --font-product: 'Google Sans', 'Nunito', -apple-system, sans-serif;
+  --font-times:   'Times New Roman MT', 'Times New Roman', Times, Georgia, serif;
+
+  /* ── SPACING ── */
+  --gap-xs: 8px;
+  --gap-sm: 16px;
+  --gap-md: 32px;
+  --gap-lg: 64px;
+  --gap-xl: 96px;
+
+  /* ── RADIUS ── */
+  --r-sm: 8px;
+  --r-md: 16px;
+  --r-lg: 24px;
+  --r-xl: 40px;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: var(--font-product);
+  background: var(--white);
+  color: var(--ink);
+  overflow-x: hidden;
+}
+
+/* ── GRAIN OVERLAY ── */
+body::after {
+  content: '';
+  position: fixed; inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.02'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 9999;
+}
+
+/* ═══════════════ SIDEBAR ═══════════════ */
+.sidebar {
+  position: fixed;
+  left: 0; top: 0; bottom: 0;
+  width: 240px;
+  background: var(--ink);
+  display: flex;
+  flex-direction: column;
+  z-index: 200;
+  border-right: 1px solid rgba(255,255,255,0.05);
+}
+
+.sidebar-brand {
+  padding: 32px 28px 28px;
+  border-bottom: 1px solid rgba(255,255,255,0.07);
+}
+
+.sb-logo {
+  font-family: var(--font-product);
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--white);
+  letter-spacing: -0.5px;
+}
+.sb-logo span { color: var(--orange); }
+
+.sb-sub {
+  font-size: 10px;
+  font-weight: 400;
+  color: rgba(255,255,255,0.3);
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  margin-top: 5px;
+}
+
+.nav-list {
+  flex: 1;
+  padding: 20px 0;
+  overflow-y: auto;
+  list-style: none;
+}
+
+.nav-item a {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 11px 28px;
+  font-size: 12px;
+  font-weight: 500;
+  color: rgba(255,255,255,0.38);
+  text-decoration: none;
+  transition: all 0.2s;
+  border-left: 2px solid transparent;
+  letter-spacing: 0.3px;
+}
+.nav-item a:hover { color: rgba(255,255,255,0.75); }
+.nav-item a.active {
+  color: var(--white);
+  border-left-color: var(--orange);
+  background: rgba(255,255,255,0.04);
+}
+
+.nav-icon {
+  width: 18px;
+  height: 18px;
+  opacity: 0.5;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.nav-item a.active .nav-icon { opacity: 1; }
+
+.nav-section {
+  padding: 20px 28px 8px;
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.18);
+}
+
+.sidebar-footer {
+  padding: 20px 28px;
+  border-top: 1px solid rgba(255,255,255,0.06);
+}
+.sf-tagline {
+  font-family: var(--font-times);
+  font-style: italic;
+  font-size: 11px;
+  color: rgba(255,255,255,0.2);
+  line-height: 1.6;
+}
+.sf-version {
+  font-size: 10px;
+  color: rgba(255,255,255,0.15);
+  margin-top: 6px;
+  font-weight: 300;
+}
+
+/* ═══════════════ MAIN ═══════════════ */
+main { margin-left: 240px; }
+
+/* ═══════════════ COVER ═══════════════ */
+#cover {
+  min-height: 100vh;
+  background: var(--ink);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 80px;
+  position: relative;
+  overflow: hidden;
+}
+
+.cover-grid {
+  position: absolute; inset: 0;
+  background-image:
+    linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+  background-size: 48px 48px;
+}
+
+.cover-glow-1 {
+  position: absolute;
+  top: -100px; right: -100px;
+  width: 600px; height: 600px;
+  background: radial-gradient(ellipse, rgba(255,107,0,0.08) 0%, transparent 70%);
+  border-radius: 50%;
+}
+.cover-glow-2 {
+  position: absolute;
+  bottom: -80px; left: 30%;
+  width: 500px; height: 400px;
+  background: radial-gradient(ellipse, rgba(31,138,112,0.06) 0%, transparent 70%);
+  border-radius: 50%;
+}
+
+.cover-badge {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(255,107,0,0.1);
+  border: 1px solid rgba(255,107,0,0.2);
+  color: var(--orange);
+  font-size: 10px;
+  font-weight: 600;
+  padding: 6px 14px;
+  border-radius: 20px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin-bottom: 36px;
+  width: fit-content;
+}
+
+.cover-badge-dot {
+  width: 5px; height: 5px;
+  border-radius: 50%;
+  background: var(--orange);
+  animation: blink 2s ease-in-out infinite;
+}
+@keyframes blink { 0%,100%{opacity:1}50%{opacity:0.3} }
+
+.cover-headline {
+  position: relative;
+  font-family: var(--font-product);
+  font-size: clamp(52px, 6vw, 80px);
+  font-weight: 800;
+  color: var(--white);
+  line-height: 1.0;
+  letter-spacing: -2px;
+  margin-bottom: 12px;
+}
+
+.cover-subline {
+  position: relative;
+  font-family: var(--font-times);
+  font-style: italic;
+  font-size: clamp(22px, 3vw, 36px);
+  color: rgba(255,255,255,0.35);
+  margin-bottom: 60px;
+  font-weight: 400;
+  letter-spacing: -0.5px;
+}
+.cover-subline strong {
+  color: var(--orange);
+  font-style: normal;
+  font-family: var(--font-product);
+  font-weight: 700;
+}
+
+.cover-meta {
+  position: relative;
+  display: flex;
+  gap: 32px;
+  align-items: center;
+}
+
+.cover-tag {
+  font-size: 11px;
+  font-weight: 400;
+  color: rgba(255,255,255,0.25);
+  letter-spacing: 0.5px;
+}
+.cover-tag strong {
+  color: rgba(255,255,255,0.55);
+  font-weight: 600;
+}
+
+.cover-divider {
+  width: 1px;
+  height: 24px;
+  background: rgba(255,255,255,0.1);
+}
+
+/* ═══════════════ SECTION BASE ═══════════════ */
+section {
+  padding: var(--gap-xl) 80px;
+  border-bottom: 1px solid var(--rule);
+  position: relative;
+}
+section.alt { background: var(--mist); }
+section.dark {
+  background: var(--ink);
+  border-bottom: none;
+}
+
+.section-label {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 48px;
+}
+.sl-num {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--orange);
+  font-family: var(--font-product);
+}
+.sl-line {
+  flex: 1;
+  max-width: 40px;
+  height: 1px;
+  background: var(--orange);
+  opacity: 0.4;
+}
+.sl-title {
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--stone);
+}
+
+.section-title {
+  font-family: var(--font-product);
+  font-size: clamp(36px, 4vw, 52px);
+  font-weight: 800;
+  color: var(--ink);
+  line-height: 1.05;
+  letter-spacing: -1.5px;
+  margin-bottom: 16px;
+}
+.section-title em {
+  font-family: var(--font-times);
+  font-style: italic;
+  font-weight: 400;
+  color: var(--green);
+  letter-spacing: -1px;
+}
+.section-title.light { color: var(--white); }
+.section-title.light em { color: var(--orange); }
+
+.section-intro {
+  font-size: 16px;
+  font-weight: 400;
+  color: var(--stone);
+  line-height: 1.65;
+  max-width: 560px;
+  margin-bottom: 56px;
+}
+.section-intro.light { color: rgba(255,255,255,0.45); }
+
+/* ═══════════════ 01 — LOGO ═══════════════ */
+.logo-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 2px;
+  margin-bottom: 48px;
+}
+
+.logo-cell {
+  border-radius: var(--r-md);
+  padding: 52px 40px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+  position: relative;
+  overflow: hidden;
+}
+
+.logo-cell.on-white {
+  background: var(--white);
+  border: 1px solid var(--rule);
+}
+.logo-cell.on-ink { background: var(--ink); }
+.logo-cell.on-green { background: var(--green); }
+
+.logo-wordmark {
+  font-family: var(--font-product);
+  font-size: 36px;
+  font-weight: 800;
+  letter-spacing: -1px;
+  line-height: 1;
+}
+.logo-wordmark .p-mark { color: var(--orange); }
+.logo-wordmark.dark-text { color: var(--ink); }
+.logo-wordmark.light-text { color: var(--white); }
+
+.logo-tagline {
+  font-family: var(--font-times);
+  font-style: italic;
+  font-size: 11px;
+  font-weight: 400;
+  letter-spacing: 0.5px;
+}
+.logo-tagline.dim-dark { color: rgba(0,0,0,0.35); }
+.logo-tagline.dim-light { color: rgba(255,255,255,0.4); }
+
+.logo-cell-label {
+  position: absolute;
+  bottom: 16px;
+  right: 20px;
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+}
+.label-dark { color: rgba(0,0,0,0.25); }
+.label-light { color: rgba(255,255,255,0.2); }
+
+/* ── LOGO RULES ── */
+.logo-rules {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+}
+
+.rule-card {
+  background: var(--mist);
+  border: 1px solid var(--rule);
+  border-radius: var(--r-md);
+  padding: 28px 32px;
+}
+.rule-card.do { border-left: 3px solid var(--green); }
+.rule-card.dont { border-left: 3px solid #E5333A; }
+
+.rc-header {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin-bottom: 16px;
+}
+.rc-header.do-col { color: var(--green); }
+.rc-header.dont-col { color: #E5333A; }
+
+.rc-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  margin-bottom: 10px;
+  font-size: 13px;
+  font-weight: 400;
+  color: var(--stone);
+  line-height: 1.5;
+}
+.rc-dot {
+  width: 5px; height: 5px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  margin-top: 6px;
+}
+.rc-dot.green { background: var(--green); }
+.rc-dot.red { background: #E5333A; }
+
+/* ═══════════════ 02 — PALETTE ═══════════════ */
+.palette-primary {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1fr;
+  gap: 16px;
+  margin-bottom: 32px;
+}
+
+.swatch {
+  border-radius: var(--r-md);
+  overflow: hidden;
+  position: relative;
+}
+
+.swatch-body {
+  height: 140px;
+  display: flex;
+  align-items: flex-end;
+  padding: 16px;
+  position: relative;
+}
+
+.swatch-name-overlay {
+  font-family: var(--font-product);
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: -0.3px;
+}
+.overlay-light { color: rgba(255,255,255,0.9); }
+.overlay-dark { color: rgba(0,0,0,0.6); }
+
+.swatch-info {
+  background: var(--white);
+  border: 1px solid var(--rule);
+  border-top: none;
+  padding: 14px 16px;
+}
+.si-hex {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--ink);
+  font-family: 'Courier New', monospace;
+  letter-spacing: 0.5px;
+}
+.si-name {
+  font-size: 11px;
+  font-weight: 400;
+  color: var(--stone);
+  margin-top: 3px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+.si-role {
+  font-size: 11px;
+  color: var(--stone);
+  margin-top: 6px;
+  font-style: italic;
+}
+
+.palette-secondary {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 12px;
+}
+
+.swatch-sm .swatch-body { height: 80px; }
+
+/* ═══════════════ 03 — TYPOGRAPHY ═══════════════ */
+.type-system {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  border: 1px solid var(--rule);
+  border-radius: var(--r-md);
+  overflow: hidden;
+  margin-bottom: 48px;
+}
+
+.type-row {
+  display: grid;
+  grid-template-columns: 200px 1fr 200px;
+  align-items: center;
+  gap: 40px;
+  padding: 32px 40px;
+  border-bottom: 1px solid var(--rule);
+  transition: background 0.2s;
+}
+.type-row:last-child { border-bottom: none; }
+.type-row:hover { background: var(--mist); }
+
+.tr-meta { display: flex; flex-direction: column; gap: 4px; }
+.tr-role {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--orange);
+}
+.tr-spec {
+  font-size: 12px;
+  font-weight: 400;
+  color: var(--stone);
+  line-height: 1.5;
+}
+
+.tr-sample { line-height: 1.1; }
+
+.tr-usage {
+  font-size: 12px;
+  font-weight: 400;
+  color: var(--stone);
+  line-height: 1.5;
+  text-align: right;
+  font-style: italic;
+}
+
+/* ── FONT SHOWCASE ── */
+.font-showcase {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  margin-bottom: 40px;
+}
+
+.font-card {
+  border: 1px solid var(--rule);
+  border-radius: var(--r-md);
+  overflow: hidden;
+}
+
+.fc-header {
+  background: var(--ink);
+  padding: 24px 32px;
+}
+.fc-name {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--white);
+  letter-spacing: 0.3px;
+}
+.fc-role {
+  font-size: 10px;
+  font-weight: 400;
+  color: rgba(255,255,255,0.35);
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  margin-top: 4px;
+}
+
+.fc-demo {
+  padding: 36px 32px;
+  background: var(--white);
+}
+
+.fc-alpha {
+  font-size: 28px;
+  font-weight: 700;
+  letter-spacing: -0.5px;
+  line-height: 1.3;
+  color: var(--ink);
+  margin-bottom: 16px;
+  word-break: break-all;
+}
+.fc-alpha.times-style {
+  font-family: var(--font-times);
+  font-style: italic;
+  font-weight: 400;
+  font-size: 32px;
+}
+.fc-alpha.product-style {
+  font-family: var(--font-product);
+  font-weight: 800;
+}
+
+.fc-weights {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.fc-weight-row {
+  display: flex;
+  align-items: baseline;
+  gap: 16px;
+  font-size: 14px;
+  color: var(--ink);
+}
+.fw-label {
+  font-size: 10px;
+  color: var(--stone);
+  font-weight: 400;
+  min-width: 80px;
+  font-family: var(--font-product) !important;
+  font-style: normal !important;
+}
+
+/* ═══════════════ 04 — VOICE & TONE ═══════════════ */
+.voice-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 32px;
+  margin-bottom: 48px;
+}
+
+.voice-card {
+  border-radius: var(--r-lg);
+  padding: 40px;
+  position: relative;
+  overflow: hidden;
+}
+
+.voice-card.dark-card {
+  background: var(--ink);
+}
+.voice-card.light-card {
+  background: var(--mist);
+  border: 1px solid var(--rule);
+}
+
+.vc-icon {
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+.vc-label {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  color: var(--orange);
+  margin-bottom: 12px;
+}
+.vc-headline {
+  font-family: var(--font-product);
+  font-size: 22px;
+  font-weight: 800;
+  letter-spacing: -0.5px;
+  margin-bottom: 10px;
+}
+.vc-headline.dark-text { color: var(--white); }
+.vc-headline.light-text { color: var(--ink); }
+
+.vc-body {
+  font-size: 14px;
+  line-height: 1.65;
+  font-weight: 400;
+}
+.vc-body.dark-text { color: rgba(255,255,255,0.45); }
+.vc-body.light-text { color: var(--stone); }
+
+.vc-quote {
+  margin-top: 20px;
+  padding: 16px 20px;
+  border-radius: var(--r-sm);
+  font-family: var(--font-times);
+  font-style: italic;
+  font-size: 14px;
+  line-height: 1.5;
+}
+.vc-quote.dark-q {
+  background: rgba(255,255,255,0.05);
+  color: rgba(255,255,255,0.6);
+  border-left: 2px solid var(--orange);
+}
+.vc-quote.light-q {
+  background: rgba(0,0,0,0.04);
+  color: var(--stone);
+  border-left: 2px solid var(--green);
+}
+
+/* ── COMPARISON TABLE ── */
+.comparison-table {
+  width: 100%;
+  border-collapse: collapse;
+  border-radius: var(--r-md);
+  overflow: hidden;
+  border: 1px solid var(--rule);
+  margin-bottom: 40px;
+}
+.ct-head {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  background: var(--ink);
+}
+.ct-head-cell {
+  padding: 16px 28px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+.cth-do { color: var(--green); border-right: 1px solid rgba(255,255,255,0.08); }
+.cth-dont { color: #E5333A; }
+
+.ct-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  border-bottom: 1px solid var(--rule);
+}
+.ct-row:last-child { border-bottom: none; }
+.ct-row:nth-child(even) { background: var(--mist); }
+
+.ct-cell {
+  padding: 16px 28px;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.5;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.ct-cell.do-cell {
+  color: var(--ink);
+  border-right: 1px solid var(--rule);
+}
+.ct-cell.dont-cell { color: var(--stone); }
+.ct-cell-icon { font-size: 12px; flex-shrink: 0; }
+
+/* ═══════════════ 05 — UI COMPONENTS ═══════════════ */
+.components-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 32px;
+}
+
+.comp-block {
+  border: 1px solid var(--rule);
+  border-radius: var(--r-md);
+  overflow: hidden;
+}
+
+.cb-label {
+  background: var(--mist);
+  border-bottom: 1px solid var(--rule);
+  padding: 14px 24px;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--stone);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.cb-tag {
+  background: var(--ink);
+  color: rgba(255,255,255,0.5);
+  font-size: 9px;
+  padding: 3px 8px;
+  border-radius: 20px;
+  letter-spacing: 1px;
+}
+
+.cb-body {
+  padding: 32px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  background: var(--white);
+}
+
+/* Buttons */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-family: var(--font-product);
+  font-weight: 600;
+  font-size: 14px;
+  border-radius: var(--r-xl);
+  cursor: pointer;
+  border: none;
+  transition: all 0.2s;
+  letter-spacing: 0.2px;
+  text-decoration: none;
+}
+.btn-primary {
+  background: var(--orange);
+  color: var(--white);
+  padding: 14px 28px;
+}
+.btn-primary:hover { background: var(--orange-mid); transform: translateY(-1px); }
+
+.btn-secondary {
+  background: var(--ink);
+  color: var(--white);
+  padding: 14px 28px;
+}
+.btn-ghost {
+  background: transparent;
+  color: var(--ink);
+  padding: 13px 28px;
+  border: 1.5px solid var(--rule);
+}
+.btn-green {
+  background: var(--green);
+  color: var(--white);
+  padding: 14px 28px;
+}
+.btn-sm {
+  font-size: 12px;
+  padding: 10px 20px;
+}
+
+/* Badges */
+.badge-row {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 11px;
+  font-weight: 600;
+  padding: 5px 12px;
+  border-radius: 20px;
+  letter-spacing: 0.3px;
+}
+.badge-orange { background: var(--orange-light); color: var(--orange); }
+.badge-green  { background: var(--green-light); color: var(--green-deep); }
+.badge-violet { background: var(--violet-light); color: var(--violet); }
+.badge-ink    { background: var(--ink); color: var(--white); }
+.badge-dot { width: 5px; height: 5px; border-radius: 50%; }
+.bd-orange { background: var(--orange); }
+.bd-green { background: var(--green); }
+
+/* Card component */
+.ui-card {
+  background: var(--white);
+  border: 1px solid var(--rule);
+  border-radius: var(--r-lg);
+  padding: 24px;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.05);
+}
+
+.uc-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+.uc-label {
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--stone);
+  letter-spacing: 0.3px;
+}
+.uc-badge { font-size: 11px; font-weight: 600; color: var(--green); }
+
+.uc-amount {
+  font-family: var(--font-product);
+  font-size: 36px;
+  font-weight: 800;
+  letter-spacing: -1.5px;
+  color: var(--ink);
+  margin-bottom: 4px;
+}
+.uc-currency {
+  font-size: 14px;
+  font-weight: 400;
+  color: var(--stone);
+  letter-spacing: -0.3px;
+}
+
+.uc-actions {
+  display: flex;
+  gap: 8px;
+  margin-top: 20px;
+}
+.uca-btn {
+  flex: 1;
+  background: var(--mist);
+  border: none;
+  border-radius: var(--r-sm);
+  padding: 12px;
+  font-family: var(--font-product);
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--ink);
+  cursor: pointer;
+  text-align: center;
+  transition: background 0.2s;
+}
+.uca-btn:hover { background: var(--rule); }
+.uca-btn.primary-action {
+  background: var(--orange);
+  color: var(--white);
+}
+.uca-btn.primary-action:hover { background: var(--orange-mid); }
+
+/* Transaction list */
+.tx-list { display: flex; flex-direction: column; gap: 0; }
+.tx-item {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 13px 0;
+  border-bottom: 1px solid var(--rule);
+}
+.tx-item:last-child { border-bottom: none; }
+
+.tx-icon {
+  width: 38px; height: 38px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  flex-shrink: 0;
+}
+.txi-in  { background: var(--green-light); }
+.txi-out { background: var(--orange-light); }
+
+.tx-info { flex: 1; }
+.txi-name {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--ink);
+  letter-spacing: -0.2px;
+}
+.txi-time {
+  font-size: 11px;
+  font-weight: 400;
+  color: var(--stone);
+  margin-top: 2px;
+}
+
+.tx-amount {
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: -0.3px;
+}
+.amt-in  { color: var(--green); }
+.amt-out { color: var(--ink); }
+
+/* Input */
+.ui-input {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.input-label {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--ink);
+  letter-spacing: 0.2px;
+}
+.input-field {
+  background: var(--mist);
+  border: 1.5px solid var(--rule);
+  border-radius: var(--r-sm);
+  padding: 12px 16px;
+  font-family: var(--font-product);
+  font-size: 14px;
+  font-weight: 400;
+  color: var(--ink);
+  outline: none;
+  transition: border-color 0.2s;
+}
+.input-field:focus { border-color: var(--green); }
+.input-field.active-input { border-color: var(--green); }
+
+/* ═══════════════ 06 — SPACING & GRID ═══════════════ */
+.spacing-demo {
+  display: flex;
+  align-items: flex-end;
+  gap: 40px;
+  padding: 40px;
+  background: var(--mist);
+  border-radius: var(--r-md);
+  border: 1px solid var(--rule);
+  margin-bottom: 40px;
+}
+
+.sp-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+
+.sp-block {
+  background: var(--ink);
+  width: 32px;
+  border-radius: 4px;
+}
+
+.sp-label {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--ink);
+  font-family: 'Courier New', monospace;
+}
+.sp-sub {
+  font-size: 10px;
+  color: var(--stone);
+  text-align: center;
+}
+
+/* ═══════════════ 07 — MOTION ═══════════════ */
+.motion-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  margin-bottom: 40px;
+}
+
+.motion-card {
+  border: 1px solid var(--rule);
+  border-radius: var(--r-md);
+  padding: 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  cursor: pointer;
+  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+.motion-card:hover { transform: translateY(-4px); }
+
+.mc-demo {
+  width: 48px; height: 48px;
+  border-radius: var(--r-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+}
+.mc-title {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--ink);
+  letter-spacing: -0.3px;
+}
+.mc-spec {
+  font-size: 12px;
+  color: var(--stone);
+  line-height: 1.5;
+  font-family: 'Courier New', monospace;
+}
+.mc-use {
+  font-size: 11px;
+  color: var(--stone);
+  font-style: italic;
+}
+
+/* ═══════════════ 08 — SOCIAL TEMPLATES ═══════════════ */
+.social-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 24px;
+  margin-bottom: 48px;
+}
+
+.social-card {
+  border-radius: var(--r-md);
+  overflow: hidden;
+  position: relative;
+}
+
+.sc-aspect {
+  aspect-ratio: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 28px;
+  position: relative;
+  overflow: hidden;
+}
+
+.sc-1 { background: var(--ink); }
+.sc-2 { background: var(--green); }
+.sc-3 { background: var(--orange); }
+
+.sc-pattern-dots {
+  position: absolute; inset: 0;
+  background-image: radial-gradient(circle, rgba(255,255,255,0.06) 1px, transparent 1px);
+  background-size: 20px 20px;
+}
+
+.sc-logo {
+  position: absolute;
+  top: 20px; left: 24px;
+  font-family: var(--font-product);
+  font-weight: 800;
+  font-size: 16px;
+  color: var(--white);
+  letter-spacing: -0.5px;
+}
+.sc-logo .orange { color: var(--orange); }
+.sc-logo .white { color: var(--white); }
+
+.sc-headline {
+  font-family: var(--font-product);
+  font-size: 22px;
+  font-weight: 800;
+  color: var(--white);
+  line-height: 1.1;
+  letter-spacing: -0.5px;
+  position: relative;
+}
+
+.sc-sub {
+  font-family: var(--font-times);
+  font-style: italic;
+  font-size: 13px;
+  color: rgba(255,255,255,0.6);
+  margin-top: 6px;
+  position: relative;
+}
+
+.sc-format-label {
+  background: var(--ink);
+  padding: 10px 16px;
+  font-size: 10px;
+  font-weight: 600;
+  color: rgba(255,255,255,0.45);
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  text-align: center;
+}
+
+/* ═══════════════ 09 — POSITIONING ═══════════════ */
+.positioning-matrix {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2px;
+  background: var(--rule);
+  border-radius: var(--r-md);
+  overflow: hidden;
+  margin-bottom: 48px;
+}
+
+.pm-cell {
+  background: var(--white);
+  padding: 40px;
+  position: relative;
+}
+.pm-cell.highlight {
+  background: var(--ink);
+}
+
+.pm-label {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin-bottom: 16px;
+}
+.pm-label.light { color: rgba(255,255,255,0.35); }
+.pm-label.dark { color: var(--stone); }
+
+.pm-title {
+  font-size: 20px;
+  font-weight: 800;
+  letter-spacing: -0.5px;
+  margin-bottom: 10px;
+  font-family: var(--font-product);
+}
+.pm-title.light { color: var(--white); }
+.pm-title.dark { color: var(--ink); }
+
+.pm-body {
+  font-size: 13px;
+  font-weight: 400;
+  line-height: 1.6;
+}
+.pm-body.light { color: rgba(255,255,255,0.4); }
+.pm-body.dark { color: var(--stone); }
+
+.pm-star {
+  position: absolute;
+  top: 24px; right: 24px;
+  width: 32px; height: 32px;
+  background: var(--orange);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+}
+
+/* ═══════════════ 10 — GOLDEN RULE ═══════════════ */
+.golden-section {
+  min-height: 60vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  background: var(--ink);
+  position: relative;
+  overflow: hidden;
+  padding: var(--gap-xl) 80px;
+}
+
+.gs-glow {
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  width: 600px; height: 400px;
+  background: radial-gradient(ellipse, rgba(255,107,0,0.06) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.gs-eyebrow {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--orange);
+  margin-bottom: 28px;
+  position: relative;
+}
+
+.gs-quote {
+  font-family: var(--font-times);
+  font-style: italic;
+  font-size: clamp(28px, 4vw, 48px);
+  color: rgba(255,255,255,0.85);
+  font-weight: 400;
+  line-height: 1.3;
+  max-width: 700px;
+  letter-spacing: -0.5px;
+  position: relative;
+  margin-bottom: 12px;
+}
+
+.gs-attr {
+  font-family: var(--font-product);
+  font-size: 13px;
+  font-weight: 500;
+  color: rgba(255,255,255,0.25);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  position: relative;
+  margin-top: 8px;
+}
+
+/* ── FOOTER ── */
+footer {
+  background: var(--ink);
+  border-top: 1px solid rgba(255,255,255,0.06);
+  padding: 40px 80px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.foot-brand {
+  font-family: var(--font-product);
+  font-size: 18px;
+  font-weight: 800;
+  color: var(--white);
+  letter-spacing: -0.5px;
+}
+.foot-brand .orange { color: var(--orange); }
+
+.foot-meta {
+  font-size: 12px;
+  color: rgba(255,255,255,0.2);
+  font-weight: 300;
+}
+
+/* ── SCROLL REVEAL ── */
+.reveal {
+  opacity: 0;
+  transform: translateY(16px);
+  transition: opacity 0.5s ease, transform 0.5s ease;
+}
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ── DIVIDER ── */
+.ornament-divider {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin: 40px 0;
+}
+.od-line { flex: 1; height: 1px; background: var(--rule); }
+.od-mark {
+  font-family: var(--font-times);
+  font-style: italic;
+  font-size: 13px;
+  color: var(--stone);
+}
+</style>
+</head>
+
+<body>
+
+<!-- ═══════ SIDEBAR ═══════ -->
+<aside class="sidebar">
+  <div class="sidebar-brand">
+    <div class="sb-logo">Pula<span>pay</span></div>
+    <div class="sb-sub">Brand Kit · 2026</div>
+  </div>
+
+  <ul class="nav-list">
+    <li class="nav-section">Identity</li>
+    <li class="nav-item"><a href="#cover" class="active"><span class="nav-icon">◈</span>Cover</a></li>
+    <li class="nav-item"><a href="#logo"><span class="nav-icon">⊕</span>Logo</a></li>
+    <li class="nav-item"><a href="#palette"><span class="nav-icon">◉</span>Couleurs</a></li>
+    <li class="nav-item"><a href="#typography"><span class="nav-icon">Aa</span>Typographie</a></li>
+
+    <li class="nav-section">Brand</li>
+    <li class="nav-item"><a href="#voice"><span class="nav-icon">◎</span>Voix & Ton</a></li>
+    <li class="nav-item"><a href="#positioning"><span class="nav-icon">◇</span>Positionnement</a></li>
+
+    <li class="nav-section">Design</li>
+    <li class="nav-item"><a href="#components"><span class="nav-icon">⊞</span>Composants UI</a></li>
+    <li class="nav-item"><a href="#motion"><span class="nav-icon">◌</span>Motion</a></li>
+    <li class="nav-item"><a href="#social"><span class="nav-icon">◫</span>Social</a></li>
+
+    <li class="nav-section">Rules</li>
+    <li class="nav-item"><a href="#golden"><span class="nav-icon">✦</span>Règle d'or</a></li>
+  </ul>
+
+  <div class="sidebar-footer">
+    <div class="sf-tagline">"Finally… someone gets it."</div>
+    <div class="sf-version">Brand Kit v1.0 · Confidentiel</div>
+  </div>
+</aside>
+
+<!-- ═══════ MAIN ═══════ -->
+<main>
+
+<!-- ── COVER ── -->
+<div id="cover">
+  <div class="cover-grid"></div>
+  <div class="cover-glow-1"></div>
+  <div class="cover-glow-2"></div>
+
+  <div class="cover-badge">
+    <div class="cover-badge-dot"></div>
+    Brand Kit Officiel
+  </div>
+
+  <div class="cover-headline">Pulapay<br>Brand Kit</div>
+  <div class="cover-subline">
+    L'identité d'une <strong>nouvelle interface</strong><br>
+    pour l'argent en Afrique.
+  </div>
+
+  <div class="cover-meta">
+    <div class="cover-tag"><strong>Version</strong> 1.0</div>
+    <div class="cover-divider"></div>
+    <div class="cover-tag"><strong>Usage</strong> Interne & Partenaires</div>
+    <div class="cover-divider"></div>
+    <div class="cover-tag"><strong>Date</strong> Mars 2026</div>
+    <div class="cover-divider"></div>
+    <div class="cover-tag"><strong>Territoire</strong> Afrique de l'Ouest</div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════ -->
+<!-- ── 01 LOGO ──────────────────────────── -->
+<!-- ══════════════════════════════════════ -->
+<section id="logo">
+  <div class="section-label reveal">
+    <div class="sl-num">01</div>
+    <div class="sl-line"></div>
+    <div class="sl-title">Logo & Marque</div>
+  </div>
+
+  <h2 class="section-title reveal">Le <em>logo</em><br>Pulapay.</h2>
+  <p class="section-intro reveal">
+    Le logo Pulapay est un wordmark pur. Sa force vient de sa lisibilité,
+    du contraste entre le poids du texte et la ponctuation orange qui signe notre identité.
+    Ne jamais déformer, habiller, ou complexifier.
+  </p>
+
+  <div class="logo-grid reveal">
+    <div class="logo-cell on-white">
+      <div class="logo-wordmark dark-text">Pula<span class="p-mark" style="color:var(--orange)">pay</span></div>
+      <div class="logo-tagline dim-dark">Ton argent. Un seul compte.</div>
+      <div class="logo-cell-label label-dark">Fond blanc · Usage principal</div>
+    </div>
+    <div class="logo-cell on-ink">
+      <div class="logo-wordmark light-text">Pula<span class="p-mark">pay</span></div>
+      <div class="logo-tagline dim-light">Ton argent. Un seul compte.</div>
+      <div class="logo-cell-label label-light">Fond sombre · Usage alternatif</div>
+    </div>
+    <div class="logo-cell on-green">
+      <div class="logo-wordmark light-text">Pula<span class="p-mark">pay</span></div>
+      <div class="logo-tagline dim-light">Ton argent. Un seul compte.</div>
+      <div class="logo-cell-label label-light">Fond vert · Contexte accent</div>
+    </div>
+  </div>
+
+  <!-- Zone d'exclusion -->
+  <div class="ornament-divider reveal">
+    <div class="od-line"></div>
+    <div class="od-mark">Zone d'exclusion & Règles d'usage</div>
+    <div class="od-line"></div>
+  </div>
+
+  <div class="logo-rules reveal">
+    <div class="rule-card do">
+      <div class="rc-header do-col">✓ Autorisé</div>
+      <div class="rc-item"><div class="rc-dot green"></div><span>Logo sur fonds blancs, noirs, et vert officiel</span></div>
+      <div class="rc-item"><div class="rc-dot green"></div><span>Proportions préservées à 100%</span></div>
+      <div class="rc-item"><div class="rc-dot green"></div><span>Taille minimum 120px de large en digital</span></div>
+      <div class="rc-item"><div class="rc-dot green"></div><span>Zone d'exclusion = hauteur du "P" autour du logo</span></div>
+      <div class="rc-item"><div class="rc-dot green"></div><span>Version monochrome blanc ou noir si nécessaire</span></div>
+    </div>
+    <div class="rule-card dont">
+      <div class="rc-header dont-col">✗ Interdit</div>
+      <div class="rc-item"><div class="rc-dot red"></div><span>Déformer, étirer, ou comprimer les proportions</span></div>
+      <div class="rc-item"><div class="rc-dot red"></div><span>Changer la couleur orange en une autre couleur</span></div>
+      <div class="rc-item"><div class="rc-dot red"></div><span>Ajouter des ombres, dégradés ou effets au logo</span></div>
+      <div class="rc-item"><div class="rc-dot red"></div><span>Placer sur un fond à faible contraste</span></div>
+      <div class="rc-item"><div class="rc-dot red"></div><span>Utiliser une police différente pour recréer le logo</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════ -->
+<!-- ── 02 PALETTE ──────────────────────── -->
+<!-- ══════════════════════════════════════ -->
+<section id="palette" class="alt">
+  <div class="section-label reveal">
+    <div class="sl-num">02</div>
+    <div class="sl-line"></div>
+    <div class="sl-title">Palette Couleurs</div>
+  </div>
+
+  <h2 class="section-title reveal">Couleurs <em>primaires.</em></h2>
+  <p class="section-intro reveal">
+    Cinq couleurs. Une hiérarchie stricte. L'encre domine, l'orange agit,
+    le vert rassure. Jamais d'improvisation chromatique.
+  </p>
+
+  <!-- Primary -->
+  <div class="palette-primary reveal">
+    <div class="swatch">
+      <div class="swatch-body" style="background:#0D0D0D;">
+        <div class="swatch-name-overlay overlay-light" style="font-size:20px;font-weight:800;letter-spacing:-0.5px;">Encre</div>
+      </div>
+      <div class="swatch-info">
+        <div class="si-hex">#0D0D0D</div>
+        <div class="si-name">Ink — Noir Pulapay</div>
+        <div class="si-role">Couleur dominante. Corps de texte, backgrounds sombres, UI principale.</div>
+      </div>
+    </div>
+    <div class="swatch">
+      <div class="swatch-body" style="background:#FF6B00;">
+        <div class="swatch-name-overlay overlay-light" style="font-size:20px;font-weight:800;letter-spacing:-0.5px;">Orange</div>
+      </div>
+      <div class="swatch-info">
+        <div class="si-hex">#FF6B00</div>
+        <div class="si-name">Orange — Signal Pulapay</div>
+        <div class="si-role">CTA, accent, énergie. Usage parcimonieux = impact maximum.</div>
+      </div>
+    </div>
+    <div class="swatch">
+      <div class="swatch-body" style="background:#1F8A70;">
+        <div class="swatch-name-overlay overlay-light" style="font-size:20px;font-weight:800;letter-spacing:-0.5px;">Vert</div>
+      </div>
+      <div class="swatch-info">
+        <div class="si-hex">#1F8A70</div>
+        <div class="si-name">Green — Confiance</div>
+        <div class="si-role">Succès, positif, reçu, confirmations, éléments secondaires.</div>
+      </div>
+    </div>
+    <div class="swatch">
+      <div class="swatch-body" style="background:#FFFFFF;border:1px solid #E8E8E4;">
+        <div class="swatch-name-overlay overlay-dark" style="font-size:20px;font-weight:800;letter-spacing:-0.5px;">Blanc</div>
+      </div>
+      <div class="swatch-info">
+        <div class="si-hex">#FFFFFF</div>
+        <div class="si-name">White — Espace</div>
+        <div class="si-role">Espace, clarté, respiration. La couleur du silence.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Secondary -->
+  <div class="ornament-divider reveal">
+    <div class="od-line"></div>
+    <div class="od-mark">Palette secondaire — Support & Nuances</div>
+    <div class="od-line"></div>
+  </div>
+
+  <div class="palette-secondary reveal">
+    <div class="swatch swatch-sm">
+      <div class="swatch-body" style="background:#5B2EFF;">
+        <div class="swatch-name-overlay overlay-light" style="font-size:13px;font-weight:700;">Violet</div>
+      </div>
+      <div class="swatch-info">
+        <div class="si-hex">#5B2EFF</div>
+        <div class="si-name">Accent futur</div>
+      </div>
+    </div>
+    <div class="swatch swatch-sm">
+      <div class="swatch-body" style="background:#F6F6F4;border:1px solid #E8E8E4;">
+        <div class="swatch-name-overlay overlay-dark" style="font-size:13px;font-weight:700;">Brume</div>
+      </div>
+      <div class="swatch-info">
+        <div class="si-hex">#F6F6F4</div>
+        <div class="si-name">Background alt</div>
+      </div>
+    </div>
+    <div class="swatch swatch-sm">
+      <div class="swatch-body" style="background:#E8F5F1;">
+        <div class="swatch-name-overlay overlay-dark" style="font-size:13px;font-weight:700;">Vert clair</div>
+      </div>
+      <div class="swatch-info">
+        <div class="si-hex">#E8F5F1</div>
+        <div class="si-name">Tint succès</div>
+      </div>
+    </div>
+    <div class="swatch swatch-sm">
+      <div class="swatch-body" style="background:#FFF0E6;">
+        <div class="swatch-name-overlay overlay-dark" style="font-size:13px;font-weight:700;">Orange clair</div>
+      </div>
+      <div class="swatch-info">
+        <div class="si-hex">#FFF0E6</div>
+        <div class="si-name">Tint CTA</div>
+      </div>
+    </div>
+    <div class="swatch swatch-sm">
+      <div class="swatch-body" style="background:#6B6B6B;">
+        <div class="swatch-name-overlay overlay-light" style="font-size:13px;font-weight:700;">Pierre</div>
+      </div>
+      <div class="swatch-info">
+        <div class="si-hex">#6B6B6B</div>
+        <div class="si-name">Corps secondaire</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════ -->
+<!-- ── 03 TYPOGRAPHY ────────────────────── -->
+<!-- ══════════════════════════════════════ -->
+<section id="typography">
+  <div class="section-label reveal">
+    <div class="sl-num">03</div>
+    <div class="sl-line"></div>
+    <div class="sl-title">Typographie</div>
+  </div>
+
+  <h2 class="section-title reveal">Deux polices.<br><em>Un seul caractère.</em></h2>
+  <p class="section-intro reveal">
+    Product Sans comme police principale — moderne, lisible, directe.
+    Times New Roman MT en accent serif — pour l'élégance, les citations, et les moments émotionnels.
+    La tension entre les deux crée l'identité.
+  </p>
+
+  <!-- Font showcase -->
+  <div class="font-showcase reveal">
+    <div class="font-card">
+      <div class="fc-header">
+        <div class="fc-name">Product Sans</div>
+        <div class="fc-role">Police principale · Interface & Titres</div>
+      </div>
+      <div class="fc-demo">
+        <div class="fc-alpha product-style" style="font-family:var(--font-product);">
+          ABCDEFGHIJKLM<br>NOPQRSTUVWXYZ<br>abcdefghijklmn<br>opqrstuvwxyz<br>0123456789
+        </div>
+        <div class="fc-weights">
+          <div class="fc-weight-row"><span class="fw-label">Light 300</span><span style="font-family:var(--font-product);font-weight:300;font-size:18px;">Ton argent. Un seul compte.</span></div>
+          <div class="fc-weight-row"><span class="fw-label">Regular 400</span><span style="font-family:var(--font-product);font-weight:400;font-size:18px;">Ton argent. Un seul compte.</span></div>
+          <div class="fc-weight-row"><span class="fw-label">Medium 500</span><span style="font-family:var(--font-product);font-weight:500;font-size:18px;">Ton argent. Un seul compte.</span></div>
+          <div class="fc-weight-row"><span class="fw-label">Bold 700</span><span style="font-family:var(--font-product);font-weight:700;font-size:18px;">Ton argent. Un seul compte.</span></div>
+          <div class="fc-weight-row"><span class="fw-label">ExtraBold 800</span><span style="font-family:var(--font-product);font-weight:800;font-size:18px;">Ton argent. Un seul compte.</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="font-card">
+      <div class="fc-header">
+        <div class="fc-name">Times New Roman MT</div>
+        <div class="fc-role">Police accent · Citations & Moments émotionnels</div>
+      </div>
+      <div class="fc-demo">
+        <div class="fc-alpha times-style" style="font-family:var(--font-times);">
+          ABCDEFGHIJKLM<br>NOPQRSTUVWXYZ<br><em>abcdefghijklmn<br>opqrstuvwxyz</em><br>0123456789
+        </div>
+        <div class="fc-weights">
+          <div class="fc-weight-row"><span class="fw-label">Regular</span><span style="font-family:var(--font-times);font-size:18px;">Ton argent. Un seul compte.</span></div>
+          <div class="fc-weight-row"><span class="fw-label">Italic</span><span style="font-family:var(--font-times);font-style:italic;font-size:18px;">Ton argent. Un seul compte.</span></div>
+          <div class="fc-weight-row"><span class="fw-label">Bold</span><span style="font-family:var(--font-times);font-weight:700;font-size:18px;">Ton argent. Un seul compte.</span></div>
+          <div class="fc-weight-row"><span class="fw-label">Bold Italic</span><span style="font-family:var(--font-times);font-weight:700;font-style:italic;font-size:18px;">Ton argent. Un seul compte.</span></div>
+          <div class="fc-weight-row"><span class="fw-label">Usage type</span><span style="font-family:var(--font-times);font-style:italic;font-size:14px;color:var(--stone);">Citations, slogans, headlines émotionnels</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Type scale -->
+  <div class="section-label reveal">
+    <div class="sl-num">—</div>
+    <div class="sl-line"></div>
+    <div class="sl-title">Échelle typographique</div>
+  </div>
+
+  <div class="type-system reveal">
+    <div class="type-row">
+      <div class="tr-meta">
+        <div class="tr-role">Display</div>
+        <div class="tr-spec">Product Sans 800<br>64–88px / -2px tracking</div>
+      </div>
+      <div class="tr-sample" style="font-family:var(--font-product);font-size:52px;font-weight:800;letter-spacing:-2px;line-height:1.0;">Un compte.<br>Un solde.</div>
+      <div class="tr-usage">Hero sections<br>Landing pages</div>
+    </div>
+
+    <div class="type-row">
+      <div class="tr-meta">
+        <div class="tr-role">Headline serif</div>
+        <div class="tr-spec">Times NR MT Italic<br>36–52px / -1px tracking</div>
+      </div>
+      <div class="tr-sample" style="font-family:var(--font-times);font-style:italic;font-size:40px;font-weight:400;letter-spacing:-1px;color:var(--green);">Finally… someone gets it.</div>
+      <div class="tr-usage">Slogans<br>Moments émotionnels</div>
+    </div>
+
+    <div class="type-row">
+      <div class="tr-meta">
+        <div class="tr-role">Titre H2</div>
+        <div class="tr-spec">Product Sans 700<br>28–36px / -0.5px</div>
+      </div>
+      <div class="tr-sample" style="font-family:var(--font-product);font-size:30px;font-weight:700;letter-spacing:-0.5px;">Envoie de l'argent comme un message.</div>
+      <div class="tr-usage">Sous-titres<br>Section headers</div>
+    </div>
+
+    <div class="type-row">
+      <div class="tr-meta">
+        <div class="tr-role">Corps</div>
+        <div class="tr-spec">Product Sans 400<br>14–16px / 0px / 1.65 leading</div>
+      </div>
+      <div class="tr-sample" style="font-family:var(--font-product);font-size:15px;font-weight:400;line-height:1.65;color:var(--stone);max-width:420px;">Envoyer de l'argent ici, c'est compliqué. Tu dois demander le réseau. Tu dois calculer les frais. Ça ne devrait pas être comme ça.</div>
+      <div class="tr-usage">Paragraphes<br>Descriptions</div>
+    </div>
+
+    <div class="type-row">
+      <div class="tr-meta">
+        <div class="tr-role">Caption</div>
+        <div class="tr-spec">Times NR MT Italic<br>12–14px / +0.5px</div>
+      </div>
+      <div class="tr-sample" style="font-family:var(--font-times);font-style:italic;font-size:13px;color:var(--stone);">"Pulapay = envoyer de l'argent comme envoyer un message."</div>
+      <div class="tr-usage">Sous-titres légers<br>Notes, citations</div>
+    </div>
+
+    <div class="type-row">
+      <div class="tr-meta">
+        <div class="tr-role">Label</div>
+        <div class="tr-spec">Product Sans 600<br>10–11px / +2px / uppercase</div>
+      </div>
+      <div class="tr-sample" style="font-family:var(--font-product);font-size:11px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--stone);">Solde Pulapay · Mobile Money · Envoi confirmé</div>
+      <div class="tr-usage">UI labels<br>Tags, badges</div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════ -->
+<!-- ── 04 VOICE & TONE ──────────────────── -->
+<!-- ══════════════════════════════════════ -->
+<section id="voice" class="alt">
+  <div class="section-label reveal">
+    <div class="sl-num">04</div>
+    <div class="sl-line"></div>
+    <div class="sl-title">Voix & Ton</div>
+  </div>
+
+  <h2 class="section-title reveal">Ce que Pulapay <em>dit</em><br>et comment.</h2>
+  <p class="section-intro reveal">
+    La voix Pulapay est directe, humaine, jamais condescendante.
+    Elle parle comme un ami qui a enfin compris le problème.
+    Pas comme une banque. Pas comme une startup qui essaie d'être cool.
+  </p>
+
+  <div class="voice-grid reveal">
+    <div class="voice-card dark-card">
+      <div class="vc-icon">🎯</div>
+      <div class="vc-label">Directe</div>
+      <div class="vc-headline dark-text">On va droit au but.</div>
+      <div class="vc-body dark-text">Pas de phrases longues. Pas de jargon. On dit ce qu'on fait en une phrase, clairement.</div>
+      <div class="vc-quote dark-q">"Envoie de l'argent. C'est tout."</div>
+    </div>
+
+    <div class="voice-card light-card">
+      <div class="vc-icon">🤝</div>
+      <div class="vc-label">Humaine</div>
+      <div class="vc-headline light-text">On parle à une personne.</div>
+      <div class="vc-body light-text">On dit "tu", pas "vous". On parle avec empathie, sans être paternaliste.</div>
+      <div class="vc-quote light-q">"Ton argent. Pas le nôtre. Le tien."</div>
+    </div>
+
+    <div class="voice-card light-card">
+      <div class="vc-icon">🌍</div>
+      <div class="vc-label">Africaine-native</div>
+      <div class="vc-headline light-text">Pas "adapté". Conçu ici.</div>
+      <div class="vc-body light-text">On ne traduit pas une expérience occidentale. On crée la nôtre, pour nos réalités.</div>
+      <div class="vc-quote light-q">"Construit pour toi. Pas adapté pour toi."</div>
+    </div>
+
+    <div class="voice-card dark-card">
+      <div class="vc-icon">✦</div>
+      <div class="vc-label">Confiante</div>
+      <div class="vc-headline dark-text">On ne se justifie pas.</div>
+      <div class="vc-body dark-text">La confiance vient du produit. On affirme, on ne supplie pas. Le ton est calme, pas agressif.</div>
+      <div class="vc-quote dark-q">"C'est simple. Vraiment."</div>
+    </div>
+  </div>
+
+  <!-- Comparison -->
+  <div class="section-label reveal" style="margin-top:48px;">
+    <div class="sl-num">—</div>
+    <div class="sl-line"></div>
+    <div class="sl-title">Exemples de langage — Bon vs Mauvais</div>
+  </div>
+
+  <div class="reveal">
+    <div class="ct-head">
+      <div class="ct-head-cell cth-do">✓ Pulapay dit ça</div>
+      <div class="ct-head-cell cth-dont">✗ Pulapay ne dit jamais ça</div>
+    </div>
+    <div class="ct-row">
+      <div class="ct-cell do-cell"><span class="ct-cell-icon">✓</span>Envoie de l'argent comme un message.</div>
+      <div class="ct-cell dont-cell"><span class="ct-cell-icon">✗</span>Effectuez un transfert de fonds via notre plateforme sécurisée.</div>
+    </div>
+    <div class="ct-row">
+      <div class="ct-cell do-cell"><span class="ct-cell-icon">✓</span>Un compte. C'est tout ce qu'il te faut.</div>
+      <div class="ct-cell dont-cell"><span class="ct-cell-icon">✗</span>Découvrez notre solution financière multi-rail innovante.</div>
+    </div>
+    <div class="ct-row">
+      <div class="ct-cell do-cell"><span class="ct-cell-icon">✓</span>Argent reçu. 14 500 F CFA.</div>
+      <div class="ct-cell dont-cell"><span class="ct-cell-icon">✗</span>Transaction validée via protocole blockchain USDC.</div>
+    </div>
+    <div class="ct-row">
+      <div class="ct-cell do-cell"><span class="ct-cell-icon">✓</span>Ton solde. Toujours là.</div>
+      <div class="ct-cell dont-cell"><span class="ct-cell-icon">✗</span>Accédez à votre dashboard de gestion de liquidités.</div>
+    </div>
+    <div class="ct-row">
+      <div class="ct-cell do-cell"><span class="ct-cell-icon">✓</span>Essaie. Tu verras.</div>
+      <div class="ct-cell dont-cell"><span class="ct-cell-icon">✗</span>Téléchargez maintenant et profitez de notre offre limitée !</div>
+    </div>
+    <div class="ct-row">
+      <div class="ct-cell do-cell"><span class="ct-cell-icon">✓</span>Quelque chose s'est mal passé. Réessaie.</div>
+      <div class="ct-cell dont-cell"><span class="ct-cell-icon">✗</span>Erreur 4029 : échec de la transaction. Contactez le support.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════ -->
+<!-- ── 05 COMPONENTS ────────────────────── -->
+<!-- ══════════════════════════════════════ -->
+<section id="components">
+  <div class="section-label reveal">
+    <div class="sl-num">05</div>
+    <div class="sl-line"></div>
+    <div class="sl-title">Composants UI</div>
+  </div>
+
+  <h2 class="section-title reveal">L'interface <em>Pulapay.</em></h2>
+  <p class="section-intro reveal">
+    Chaque élément d'interface suit la philosophie du produit :
+    minimaliste, lisible, accessible. Inspiré de Cash App, Revolut et Apple Wallet.
+  </p>
+
+  <div class="components-grid reveal">
+
+    <!-- BUTTONS -->
+    <div class="comp-block">
+      <div class="cb-label">Boutons <span class="cb-tag">CTA</span></div>
+      <div class="cb-body">
+        <button class="btn btn-primary">Envoyer →</button>
+        <button class="btn btn-secondary">Créer mon compte</button>
+        <button class="btn btn-green">Recevoir</button>
+        <button class="btn btn-ghost">En savoir plus</button>
+        <div style="display:flex;gap:8px;">
+          <button class="btn btn-primary btn-sm">Confirmer</button>
+          <button class="btn btn-ghost btn-sm">Annuler</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- BADGES -->
+    <div class="comp-block">
+      <div class="cb-label">Badges & Status <span class="cb-tag">UI</span></div>
+      <div class="cb-body">
+        <div class="badge-row">
+          <span class="badge badge-orange"><span class="badge-dot bd-orange"></span>En cours</span>
+          <span class="badge badge-green"><span class="badge-dot bd-green"></span>Confirmé</span>
+          <span class="badge badge-violet">Mobile Money</span>
+          <span class="badge badge-ink">Nouveau</span>
+        </div>
+        <div class="badge-row" style="margin-top:8px;">
+          <span class="badge" style="background:var(--green-light);color:var(--green-deep);"><span class="badge-dot bd-green"></span>+14 500 F</span>
+          <span class="badge" style="background:var(--orange-light);color:var(--orange);">−8 000 F</span>
+          <span class="badge" style="background:var(--mist);color:var(--stone);">International</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- WALLET CARD -->
+    <div class="comp-block">
+      <div class="cb-label">Wallet Card <span class="cb-tag">Principal</span></div>
+      <div class="cb-body">
+        <div class="ui-card">
+          <div class="uc-header">
+            <div class="uc-label">Solde Pulapay</div>
+            <div class="uc-badge">✓ Actif</div>
+          </div>
+          <div class="uc-amount">247 500 <span class="uc-currency">F CFA</span></div>
+          <div style="font-size:12px;color:var(--stone);margin-top:4px;font-family:var(--font-times);font-style:italic;">Ton argent. Toujours là.</div>
+          <div class="uc-actions">
+            <button class="uca-btn primary-action">↑ Envoyer</button>
+            <button class="uca-btn">↓ Recevoir</button>
+            <button class="uca-btn">⊞ Plus</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TRANSACTION LIST -->
+    <div class="comp-block">
+      <div class="cb-label">Transactions <span class="cb-tag">Feed</span></div>
+      <div class="cb-body">
+        <div class="tx-list">
+          <div class="tx-item">
+            <div class="tx-icon txi-in">↓</div>
+            <div class="tx-info">
+              <div class="txi-name">Kofi Mensah</div>
+              <div class="txi-time">Aujourd'hui, 14:32 · Mobile Money</div>
+            </div>
+            <div class="tx-amount amt-in">+25 000 F</div>
+          </div>
+          <div class="tx-item">
+            <div class="tx-icon txi-out" style="color:var(--orange);">↑</div>
+            <div class="tx-info">
+              <div class="txi-name">Fatou Diallo</div>
+              <div class="txi-time">Hier, 09:15 · Pulapay</div>
+            </div>
+            <div class="tx-amount amt-out">−8 000 F</div>
+          </div>
+          <div class="tx-item">
+            <div class="tx-icon txi-in">↓</div>
+            <div class="tx-info">
+              <div class="txi-name">Client international</div>
+              <div class="txi-time">Lun, 16:48 · Carte bancaire</div>
+            </div>
+            <div class="tx-amount amt-in">+112 000 F</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- INPUT -->
+    <div class="comp-block">
+      <div class="cb-label">Champs de saisie <span class="cb-tag">Forms</span></div>
+      <div class="cb-body">
+        <div class="ui-input">
+          <div class="input-label">Numéro ou nom</div>
+          <input class="input-field active-input" type="text" value="Amara Touré" placeholder="Qui reçoit ?">
+        </div>
+        <div class="ui-input" style="margin-top:8px;">
+          <div class="input-label">Montant</div>
+          <input class="input-field" type="text" placeholder="0 F CFA">
+        </div>
+        <div class="ui-input" style="margin-top:8px;">
+          <div class="input-label">Note (optionnel)</div>
+          <input class="input-field" type="text" placeholder="Pour quoi ?">
+        </div>
+      </div>
+    </div>
+
+    <!-- NOTIFICATIONS -->
+    <div class="comp-block">
+      <div class="cb-label">Notifications <span class="cb-tag">Feedback</span></div>
+      <div class="cb-body">
+        <div style="background:var(--green-light);border:1px solid var(--green);border-radius:var(--r-sm);padding:14px 16px;display:flex;gap:12px;align-items:center;">
+          <span style="font-size:18px;">✓</span>
+          <div>
+            <div style="font-size:13px;font-weight:600;color:var(--green-deep);">Argent envoyé !</div>
+            <div style="font-size:12px;color:var(--green);margin-top:2px;">14 500 F CFA → Kofi Mensah</div>
+          </div>
+        </div>
+        <div style="background:var(--orange-light);border:1px solid var(--orange);border-radius:var(--r-sm);padding:14px 16px;display:flex;gap:12px;align-items:center;margin-top:8px;">
+          <span style="font-size:18px;">💰</span>
+          <div>
+            <div style="font-size:13px;font-weight:600;color:var(--orange);">Argent reçu !</div>
+            <div style="font-size:12px;color:var(--orange);margin-top:2px;">+50 000 F CFA de Fatou</div>
+          </div>
+        </div>
+        <div style="background:var(--mist);border:1px solid var(--rule);border-radius:var(--r-sm);padding:14px 16px;display:flex;gap:12px;align-items:center;margin-top:8px;">
+          <span style="font-size:18px;">⚠️</span>
+          <div>
+            <div style="font-size:13px;font-weight:600;color:var(--ink);">Quelque chose s'est mal passé.</div>
+            <div style="font-size:12px;color:var(--stone);margin-top:2px;">Réessaie dans quelques secondes.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════ -->
+<!-- ── 06 MOTION ─────────────────────────── -->
+<!-- ══════════════════════════════════════ -->
+<section id="motion" class="alt">
+  <div class="section-label reveal">
+    <div class="sl-num">06</div>
+    <div class="sl-line"></div>
+    <div class="sl-title">Motion & Animation</div>
+  </div>
+
+  <h2 class="section-title reveal">Le mouvement <em>avec intention.</em></h2>
+  <p class="section-intro reveal">
+    L'animation chez Pulapay est fonctionnelle. Elle guide, confirme, rassure.
+    Jamais pour décorer. Chaque transition renforce la sensation de contrôle.
+  </p>
+
+  <div class="motion-grid reveal">
+    <div class="motion-card" style="border-top:3px solid var(--orange);">
+      <div class="mc-demo" style="background:var(--orange-light);">⚡</div>
+      <div class="mc-title">Micro-feedback</div>
+      <div class="mc-spec">duration: 150ms<br>easing: ease-out</div>
+      <div class="mc-use">Hover, press, tap — feedback immédiat qui confirme l'action.</div>
+    </div>
+    <div class="motion-card" style="border-top:3px solid var(--green);">
+      <div class="mc-demo" style="background:var(--green-light);">✓</div>
+      <div class="mc-title">Confirmation</div>
+      <div class="mc-spec">duration: 300ms<br>easing: cubic-bezier(0.34, 1.56, 0.64, 1)</div>
+      <div class="mc-use">Succès transaction, envoi confirmé — rebond léger qui célèbre.</div>
+    </div>
+    <div class="motion-card" style="border-top:3px solid var(--violet);">
+      <div class="mc-demo" style="background:var(--violet-light);">→</div>
+      <div class="mc-title">Navigation</div>
+      <div class="mc-spec">duration: 250ms<br>easing: ease-in-out</div>
+      <div class="mc-use">Transitions d'écran — direction logique (envoi = droite, retour = gauche).</div>
+    </div>
+    <div class="motion-card">
+      <div class="mc-demo" style="background:var(--mist);">↑</div>
+      <div class="mc-title">Page load</div>
+      <div class="mc-spec">duration: 400ms<br>stagger: 60ms delay</div>
+      <div class="mc-use">Chargement du solde — reveal progressif du bas vers le haut.</div>
+    </div>
+    <div class="motion-card">
+      <div class="mc-demo" style="background:var(--orange-light);">◎</div>
+      <div class="mc-title">Loading state</div>
+      <div class="mc-spec">duration: loop 1.5s<br>easing: ease-in-out</div>
+      <div class="mc-use">Pulsation douce sur le solde pendant chargement. Jamais de spinner agressif.</div>
+    </div>
+    <div class="motion-card">
+      <div class="mc-demo" style="background:var(--mist);">✗</div>
+      <div class="mc-title">À éviter</div>
+      <div class="mc-spec">No: flash, bounce,<br>spin, parallax lourd</div>
+      <div class="mc-use">L'argent = sérieux. Pas de confetti, d'effets explosifs ou d'animations non-fonctionnelles.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════ -->
+<!-- ── 07 SOCIAL ─────────────────────────── -->
+<!-- ══════════════════════════════════════ -->
+<section id="social">
+  <div class="section-label reveal">
+    <div class="sl-num">07</div>
+    <div class="sl-line"></div>
+    <div class="sl-title">Templates Social</div>
+  </div>
+
+  <h2 class="section-title reveal">La marque <em>en mouvement.</em></h2>
+  <p class="section-intro reveal">
+    Trois registres visuels pour les réseaux sociaux. Chaque format
+    répond à un contexte différent, mais reste immédiatement reconnaissable comme Pulapay.
+  </p>
+
+  <div class="social-grid reveal">
+    <div class="social-card">
+      <div class="sc-aspect sc-1">
+        <div class="sc-pattern-dots"></div>
+        <div class="sc-logo">Pula<span class="orange">pay</span></div>
+        <div>
+          <div class="sc-headline">Un compte.<br>Tout passe.</div>
+          <div class="sc-sub">Mobile Money. Cartes. International.</div>
+        </div>
+      </div>
+      <div class="sc-format-label">Instagram · Square 1:1 · Dark</div>
+    </div>
+
+    <div class="social-card">
+      <div class="sc-aspect sc-2">
+        <div class="sc-pattern-dots"></div>
+        <div class="sc-logo">Pula<span class="white">pay</span></div>
+        <div>
+          <div class="sc-headline">Envoie<br>comme un<br>message.</div>
+          <div class="sc-sub" style="font-family:var(--font-times);font-style:italic;">Finally… someone gets it.</div>
+        </div>
+      </div>
+      <div class="sc-format-label">Instagram · Square 1:1 · Green</div>
+    </div>
+
+    <div class="social-card">
+      <div class="sc-aspect sc-3">
+        <div class="sc-pattern-dots"></div>
+        <div class="sc-logo">Pula<span class="white">pay</span></div>
+        <div>
+          <div class="sc-headline">Ton argent.<br>Un seul<br>solde.</div>
+          <div class="sc-sub">Bêta ouverte bientôt.</div>
+        </div>
+      </div>
+      <div class="sc-format-label">Instagram · Square 1:1 · Orange</div>
+    </div>
+  </div>
+
+  <!-- Template rules -->
+  <div class="logo-rules reveal">
+    <div class="rule-card do">
+      <div class="rc-header do-col">✓ Règles visuelles social</div>
+      <div class="rc-item"><div class="rc-dot green"></div><span>Logo toujours visible en haut à gauche</span></div>
+      <div class="rc-item"><div class="rc-dot green"></div><span>Maximum 6 mots par headline</span></div>
+      <div class="rc-item"><div class="rc-dot green"></div><span>Une seule couleur de fond par post (pas de dégradés complexes)</span></div>
+      <div class="rc-item"><div class="rc-dot green"></div><span>Micro-dots pattern comme signature visuelle</span></div>
+      <div class="rc-item"><div class="rc-dot green"></div><span>Times NR MT italic pour les sous-titres émotionnels</span></div>
+    </div>
+    <div class="rule-card dont">
+      <div class="rc-header dont-col">✗ À ne jamais faire</div>
+      <div class="rc-item"><div class="rc-dot red"></div><span>Photos stock avec sourires artificiels</span></div>
+      <div class="rc-item"><div class="rc-dot red"></div><span>Emojis en excès ou langage "startup hype"</span></div>
+      <div class="rc-item"><div class="rc-dot red"></div><span>Mentionner blockchain, USDC ou stablecoin</span></div>
+      <div class="rc-item"><div class="rc-dot red"></div><span>CTA agressifs ("Télécharge MAINTENANT !!!")</span></div>
+      <div class="rc-item"><div class="rc-dot red"></div><span>Surcharger le visuel avec trop d'éléments</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════ -->
+<!-- ── 08 POSITIONING ───────────────────── -->
+<!-- ══════════════════════════════════════ -->
+<section id="positioning" class="alt">
+  <div class="section-label reveal">
+    <div class="sl-num">08</div>
+    <div class="sl-line"></div>
+    <div class="sl-title">Positionnement</div>
+  </div>
+
+  <h2 class="section-title reveal">Où Pulapay <em>se place.</em></h2>
+  <p class="section-intro reveal">
+    Pulapay n'est pas une banque. Pas une app de remittance. Pas un wallet crypto.
+    C'est une nouvelle catégorie : le compte financier universel africain.
+  </p>
+
+  <div class="positioning-matrix reveal">
+    <div class="pm-cell highlight">
+      <div class="pm-label light">Notre position ★</div>
+      <div class="pm-title light">Compte universel</div>
+      <div class="pm-body light">Un seul compte. Tous les rails. Zéro complexité. Conçu pour les réalités africaines, pas adapté depuis ailleurs.</div>
+      <div class="pm-star">★</div>
+    </div>
+    <div class="pm-cell">
+      <div class="pm-label dark">Mobile Money operators</div>
+      <div class="pm-title dark">Siloed & captif</div>
+      <div class="pm-body dark">Fort en local, limité à un opérateur. Ne fonctionne pas cross-network, pas de carte, pas d'international.</div>
+    </div>
+    <div class="pm-cell">
+      <div class="pm-label dark">Néo-banques (Kuda, Carbon)</div>
+      <div class="pm-title dark">Bank-shaped</div>
+      <div class="pm-body dark">Meilleure UX qu'une banque traditionnelle, mais toujours "bank-first". Pas conçu pour Mobile Money natif.</div>
+    </div>
+    <div class="pm-cell">
+      <div class="pm-label dark">Remittance apps (Wave, Chipper)</div>
+      <div class="pm-title dark">Corridor-first</div>
+      <div class="pm-body dark">Bons pour un usage spécifique. Pas un compte quotidien. Pas une expérience complète de gestion d'argent.</div>
+    </div>
+  </div>
+
+  <!-- Statements -->
+  <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;" class="reveal">
+    <div style="background:var(--ink);border-radius:var(--r-md);padding:32px;position:relative;overflow:hidden;">
+      <div style="position:absolute;top:0;right:0;width:80px;height:80px;background:radial-gradient(circle,rgba(255,107,0,0.2) 0%,transparent 70%);"></div>
+      <div style="font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--orange);margin-bottom:12px;">Pour qui</div>
+      <div style="font-family:var(--font-product);font-size:18px;font-weight:700;color:var(--white);margin-bottom:8px;letter-spacing:-0.3px;">Africains 18–35 ans digital-first</div>
+      <div style="font-family:var(--font-times);font-style:italic;font-size:13px;color:rgba(255,255,255,0.4);">Entrepreneurs, freelances, créateurs, travailleurs du digital.</div>
+    </div>
+    <div style="background:var(--white);border:1px solid var(--rule);border-radius:var(--r-md);padding:32px;">
+      <div style="font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--green);margin-bottom:12px;">Le problème</div>
+      <div style="font-family:var(--font-product);font-size:18px;font-weight:700;color:var(--ink);margin-bottom:8px;letter-spacing:-0.3px;">L'argent est fragmenté</div>
+      <div style="font-family:var(--font-times);font-style:italic;font-size:13px;color:var(--stone);">"J'ai trop d'applications. Je sais jamais combien j'ai vraiment."</div>
+    </div>
+    <div style="background:var(--green);border-radius:var(--r-md);padding:32px;">
+      <div style="font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,0.6);margin-bottom:12px;">La réponse</div>
+      <div style="font-family:var(--font-product);font-size:18px;font-weight:700;color:var(--white);margin-bottom:8px;letter-spacing:-0.3px;">Un compte universel</div>
+      <div style="font-family:var(--font-times);font-style:italic;font-size:13px;color:rgba(255,255,255,0.65);">"Ton argent. Un seul compte. Un seul solde."</div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════ -->
+<!-- ── 09 GOLDEN RULE ───────────────────── -->
+<!-- ══════════════════════════════════════ -->
+<section id="golden" class="dark" style="padding:0;">
+  <div class="golden-section">
+    <div class="gs-glow"></div>
+    <div class="gs-eyebrow reveal">La règle d'or Pulapay</div>
+    <div class="gs-quote reveal">
+      "Si ça ressemble à une fintech qui essaie d'être cool —<br>
+      ce n'est pas Pulapay.<br><br>
+      Si ça ressemble à quelqu'un<br>
+      qui comprend vraiment —<br>
+      <span style="color:var(--orange);">c'est Pulapay.</span>"
+    </div>
+    <div class="gs-attr reveal">Brand Kit Pulapay · 2026 · Africa First</div>
+  </div>
+</section>
+
+<footer>
+  <div class="foot-brand">Pula<span class="orange">pay</span></div>
+  <div class="foot-meta">Brand Kit v1.0 · Confidentiel · © Pulapay 2026</div>
+</footer>
+
+</main>
+
+<script>
+// Scroll reveal
+const revealEls = document.querySelectorAll('.reveal');
+const io = new IntersectionObserver((entries) => {
+  entries.forEach((entry, i) => {
+    if (entry.isIntersecting) {
+      setTimeout(() => entry.target.classList.add('visible'), i * 50);
+    }
+  });
+}, { threshold: 0.08 });
+revealEls.forEach(el => io.observe(el));
+
+// Active nav
+const sections = document.querySelectorAll('main > section[id], #cover');
+const navLinks = document.querySelectorAll('.nav-item a');
+
+const navObs = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      navLinks.forEach(link => {
+        link.classList.toggle('active',
+          link.getAttribute('href') === '#' + entry.target.id);
+      });
+    }
+  });
+}, { threshold: 0.35 });
+
+sections.forEach(s => navObs.observe(s));
+
+// Trigger initial reveal for above-fold
+setTimeout(() => {
+  document.querySelectorAll('.reveal').forEach(el => {
+    const rect = el.getBoundingClientRect();
+    if (rect.top < window.innerHeight) el.classList.add('visible');
+  });
+}, 100);
+</script>
+</body>
+</html>
